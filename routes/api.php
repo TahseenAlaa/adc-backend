@@ -27,6 +27,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index', [PatientsController::class, 'index'])->name('index');
         Route::get('/{id}', [PatientsController::class, 'show'])->name('show');
         Route::post('/store', [PatientsController::class, 'store'])->name('store');
+        Route::delete('/destroy/{id}', [PatientsController::class, 'destroy'])->name('destroy');
     });
     // END Patients
 });

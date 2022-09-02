@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patients;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Resources\PatientsResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Requests\PatientsStoreRequest;
+use Illuminate\Http\Response;
 
 class PatientsController extends Controller
 {
@@ -134,11 +138,22 @@ class PatientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Application|ResponseFactory|Response
      */
     public function destroy($id)
     {
-        //
+        // Delete patient record (Soft Delete)
+        try {
+            Patients::find($id)->delete();
+
+            return response([
+                'date' => 'Delete Succeed!'
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'data' => 'Delete Failed!' . $e
+            ]);
+        }
     }
 }
