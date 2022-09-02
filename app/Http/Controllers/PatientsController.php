@@ -44,12 +44,13 @@ class PatientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return AnonymousResourceCollection
      */
     public function show($id)
     {
-        //
+        // Get patients by id
+        return PatientsResource::collection(Patients::where('id', '=', $id)->get());
     }
 
     /**

@@ -25,6 +25,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Patients
     Route::prefix('/patients')->name('patients.')->group(function () {
         Route::get('/index', [PatientsController::class, 'index'])->name('index');
+        Route::get('/{id}', [PatientsController::class, 'show'])->name('show');
     });
     // END Patients
 });
