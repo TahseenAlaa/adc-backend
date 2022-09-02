@@ -11,6 +11,7 @@ use App\Http\Resources\PatientsResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Requests\PatientsStoreRequest;
 use Illuminate\Http\Response;
+use App\Http\Requests\PatientsUpdateRequest;
 
 class PatientsController extends Controller
 {
@@ -126,13 +127,67 @@ class PatientsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PatientsUpdateRequest $request
+     * @param int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientsUpdateRequest $request, $id)
     {
-        //
+        // Update patients data
+        $updatePatient = Patients::where('id', '=', $id)->update([
+        "full_name"       => $request->full_name,
+        "phone"           => $request->phone,
+        "occupation"      => $request->occupation,
+        "gender"          => $request->gender,
+        "birthdate"       => $request->birthdate,
+        "address"         => $request->address,
+        "smoker"          => $request->smoker,
+        "drinker"         => $request->drinker,
+        "family_dm"       => $request->family_dm,
+        "gestational_dm"  => $request->gestational_dm,
+        "weight_baby"     => $request->weight_baby,
+        "hypert"          => $request->hypert,
+        "family_ihd"      => $request->family_ihd,
+        "parity"          => $request->parity,
+        "smbg"            => $request->smbg,
+        "ihd"             => $request->ihd,
+        "cva"             => $request->cva,
+        "pvd"             => $request->pvd,
+        "neuro"           => $request->neuro,
+        "weight"          => $request->weight,
+        "height"          => $request->height,
+        "wc"              => $request->wc,
+        "bmi"             => $request->bmi,
+        "hip"             => $request->hip,
+        "retino"          => $request->retino,
+        "nonpro"          => $request->nonpro,
+        "prolif"          => $request->prolif,
+        "macul"           => $request->macul,
+        "insul"           => $request->insul,
+        "amput"           => $request->amput,
+        "ed"              => $request->ed,
+        "nafld"           => $request->nafld,
+        "dermo"           => $request->dermo,
+        "dfoot"           => $request->dfoot,
+        "date_insulin"    => $request->date_insulin,
+        "duration_insulin" => $request->duration_insulin,
+        "duration_dm"     => $request->duration_dm,
+        "glycemic"        => $request->glycemic,
+        "lipid"           => $request->lipid,
+        "pressure"        => $request->pressure,
+        "f_height"        => $request->f_height,
+        "m_height"        => $request->m_height,
+        "mid_height"      => $request->mid_height,
+        "fa1c"            => $request->fa1c,
+        "sa2c"            => $request->sa2c,
+        "referral"        => $request->referral,
+        "created_by"      => 1, // TODO Auth ID
+        "updated_by"      => 2, // TODO Auth ID
+        ]);
+
+        return response([
+            'data' => PatientsResource::collection(Patients::where('id', '=', $id)->get())
+        ]);
     }
 
     /**
