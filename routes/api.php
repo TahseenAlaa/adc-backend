@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientsController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // START API v1
 Route::prefix('/v1')->name('api.v1.')->group(function () {
+    // START Auth
+    Route::prefix('/auth')->name('auth.')->group(function () {
+        Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
+    });
+    // END Auth
+
     // START Patients
     Route::prefix('/patients')->name('patients.')->group(function () {
         Route::get('/index', [PatientsController::class, 'index'])->name('index');
