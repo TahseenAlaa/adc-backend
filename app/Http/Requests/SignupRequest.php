@@ -29,7 +29,7 @@ class SignupRequest extends FormRequest
             'email'       => 'bail|required|string',
             'profile_pic' => 'bail|nullable|string',
             'job_title'   => 'bail|required|string',
-            'password'    => 'bail|required|string|confirmed',
+            'password'    => 'bail|required|string',
         ];
     }
 }
