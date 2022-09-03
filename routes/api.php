@@ -27,6 +27,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     Route::prefix('/auth')->name('auth.')->group(function () {
         Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
         Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
     });
     // END Auth
 
