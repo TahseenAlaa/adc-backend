@@ -22,14 +22,13 @@ return new class extends Migration
             $table->string('profile_pic')->nullable();
             $table->string('job_title')->nullable();
             $table->integer('added_by');
-            $table->timestamp('last_login_at');
             $table->integer('profile_id')->nullable();
-            $table->string('token');
-            $table->timestamp('token_gd');
             $table->integer('permission_id')->nullable();
             $table->integer('role')->nullable();
+            $table->timestamp('last_login_at');
             $table->string('last_login_ip');
             $table->string('password');
+            $table->boolean('enabled')->default(1)->comment('1 Active, 0 Disabled');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
