@@ -48,8 +48,21 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function login() {
-        //
+    public function login(LoginRequest $request) {
+
+        $user = User::where('email', '=', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response([
+                'message' => 'Invalid credentials'
+            ], 401);
+        } else {
+            $token = $user->createToken($user->full_name)->plainTextToken;
+            return response([
+                'user' => $user,
+                'token' => $token
+            ], 200);
+        }
     }
 
     public function logout(Request $request) {
