@@ -12,6 +12,10 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Requests\PatientsStoreRequest;
 use Illuminate\Http\Response;
 use App\Http\Requests\PatientsUpdateRequest;
+use App\Http\Requests\searchByFullNamePatientsRequest;
+use App\Http\Requests\searchByPhonePatientsRequest;
+use App\Http\Requests\searchByPatientIDPatientsRequest;
+
 
 class PatientsController extends Controller
 {
@@ -210,5 +214,47 @@ class PatientsController extends Controller
                 'data' => 'Delete Failed!' . $e
             ]);
         }
+    }
+
+    /** Search patients by full name
+     *
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function searchByFullName(Request $request) {
+
+        $patientInfo = Patients::where('full_name', 'LIKE', '%' . $request->name . '%')->first();
+
+        return response([
+            'data' => $patientInfo
+        ]);
+    }
+
+    /** Search patients by phone
+     *
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function searchByPhone(Request $request) {
+
+        $patientInfo = Patients::where('phone', '=', $request->phone)->first();
+
+        return response([
+            'data' => $patientInfo
+        ]);
+    }
+
+    /** Search patients by Patient ID
+     *
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function searchByPatientId(Request $request) {
+
+        $PatientInfo = Patients::where('id', '=', $request->patient)->first();
+
+        return response([
+            'data' => $PatientInfo
+        ]);
     }
 }
