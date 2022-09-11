@@ -5,16 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Patients;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Http\Resources\PatientsResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Requests\PatientsStoreRequest;
 use Illuminate\Http\Response;
 use App\Http\Requests\PatientsUpdateRequest;
-use App\Http\Requests\searchByFullNamePatientsRequest;
-use App\Http\Requests\searchByPhonePatientsRequest;
-use App\Http\Requests\searchByPatientIDPatientsRequest;
 
 
 class PatientsController extends Controller
