@@ -114,7 +114,7 @@ class PatientsController extends Controller
     public function show($id)
     {
         // Get patients by id
-        return PatientsResource::collection(Patients::where('id', '=', $id)->get());
+        return PatientsResource::collection(Patients::where('id', '=', $id)->with(['patientHistory'])->get());
     }
 
     /**

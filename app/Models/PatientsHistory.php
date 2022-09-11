@@ -6,13 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Patients extends Model
+class PatientsHistory extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "esite_patients";
+    protected $table = "esite_patients_history";
 
-    public function patientHistory() {
-        return $this->hasMany(PatientsHistory::class, 'patient_id', 'id');
-    }
 }
