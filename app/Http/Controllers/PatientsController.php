@@ -223,7 +223,9 @@ class PatientsController extends Controller
      */
     public function searchByFullName(Request $request) {
 
-        $patientInfo = Patients::where('full_name', 'LIKE', '%' . $request->name . '%')->first();
+        $patientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
+            ->where('full_name', 'LIKE', '%' . $request->name . '%')
+            ->first();
 
         return response([
             'data' => $patientInfo
@@ -237,7 +239,9 @@ class PatientsController extends Controller
      */
     public function searchByPhone(Request $request) {
 
-        $patientInfo = Patients::where('phone', '=', $request->phone)->first();
+        $patientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
+            ->where('phone', '=', $request->phone)
+            ->first();
 
         return response([
             'data' => $patientInfo
@@ -251,7 +255,9 @@ class PatientsController extends Controller
      */
     public function searchByPatientId(Request $request) {
 
-        $PatientInfo = Patients::where('id', '=', $request->patient)->first();
+        $PatientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
+            ->where('id', '=', $request->patient)
+            ->first();
 
         return response([
             'data' => $PatientInfo
