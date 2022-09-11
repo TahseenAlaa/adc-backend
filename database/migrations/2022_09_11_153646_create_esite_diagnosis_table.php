@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('esite_diagnosis', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('symptoms');
             $table->integer('is_confirmed')->comment('0 -> suspected, 1 -> confirmed'); // 0 -> suspected, 1 -> confirmed
             $table->integer('doctor_id');
             $table->timestamps();
