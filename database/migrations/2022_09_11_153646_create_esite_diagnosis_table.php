@@ -18,9 +18,9 @@ return new class extends Migration
             $table->integer('patient_history_id')->nullable();
             $table->string('symptoms');
             $table->integer('is_confirmed')->comment('0 -> suspected, 1 -> confirmed'); // 0 -> suspected, 1 -> confirmed
-            $table->integer('doctor_id');
+            $table->string('clinical_notes')->nullable();
             $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

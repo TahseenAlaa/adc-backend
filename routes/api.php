@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\TreatmentController;
+use App\Http\Controllers\MedicalLabController;
+use App\Http\Controllers\PharmacyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,5 +47,15 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/search-by-patient-id/{patient}', [PatientsController::class, 'searchByPatientID'])->name('searchByPatientID');
     });
     // END Patients
+
+    // START Diagnosis
+    Route::prefix('/diagnosis')->name('diagnosis.')->group(function () {
+//        Route::get('/index', [DiagnosisController::class, 'index'])->name('index');
+        Route::get('/{id}', [DiagnosisController::class, 'show'])->name('show');
+        Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
+        Route::patch('/update/{id}', [DiagnosisController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [DiagnosisController::class, 'destroy'])->name('destroy');
+    });
+    // END Diagnosis
 });
 // END API v1
