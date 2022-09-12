@@ -14,9 +14,13 @@ class DiagnosisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $diagnosis = DiagnosisResource::collection(Diagnosis::where('patient_id', '=', $id)->get());
+
+        return response([
+            'data' => $diagnosis
+        ]);
     }
 
     /**
@@ -38,6 +42,7 @@ class DiagnosisController extends Controller
     public function store(DiagnosisStoreRequest $request)
     {
         $newDiagnosis = new Diagnosis;
+        $newDiagnosis->patient_id         = $request->patient_id;
         $newDiagnosis->patient_history_id = $request->patient_history_id;
         $newDiagnosis->symptoms           = $request->symptoms;
         $newDiagnosis->is_confirmed       = $request->is_confirmed;
