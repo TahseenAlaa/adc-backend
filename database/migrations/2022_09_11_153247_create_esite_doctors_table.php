@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('occupation')->nullable();
             $table->dateTime('birthday')->nullable();
+            $table->integer('created_by');
             $table->timestamps();
             $table->softDeletes();
         });

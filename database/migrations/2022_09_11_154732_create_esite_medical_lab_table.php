@@ -89,6 +89,8 @@ return new class extends Migration
             $table->string('egfr')->nullable();
             $table->string('hdma_r')->nullable();
             $table->string('osmolamity')->nullable();
+            $table->integer('created_by');
+            $table->integer('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('symptoms');
             $table->integer('is_confirmed')->comment('0 -> suspected, 1 -> confirmed'); // 0 -> suspected, 1 -> confirmed
             $table->integer('doctor_id');
+            $table->integer('created_by');
+            $table->integer('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });

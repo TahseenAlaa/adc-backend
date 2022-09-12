@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('dosage')->nullable();
             $table->integer('quantity');
             $table->longText('notes');
+            $table->integer('created_by');
+            $table->integer('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });

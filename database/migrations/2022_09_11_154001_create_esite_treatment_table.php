@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('dose')->nullable();
             $table->string('status')->nullable();
             $table->integer('doctor_id');
+            $table->integer('created_by');
+            $table->integer('updated_by');
             $table->timestamps();
             $table->softDeletes();
         });
