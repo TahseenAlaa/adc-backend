@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('esite_patients_history', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_id');
+            $table->integer('patient_id');
             $table->string('occupation')->nullable();
             $table->string('address')->nullable();
             $table->string('smoker')->nullable();
