@@ -59,12 +59,12 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Diagnosis
 
     // START Medical Lab
-    Route::prefix('/diagnosis')->name('diagnosis.')->group(function () {
-//        Route::get('/index', [DiagnosisController::class, 'index'])->name('index');
-        Route::get('/{id}', [DiagnosisController::class, 'show'])->name('show');
-        Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
-        Route::patch('/update/{id}', [DiagnosisController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [DiagnosisController::class, 'destroy'])->name('destroy');
+    Route::prefix('/lab')->name('lab.')->group(function () {
+        Route::get('/index/{patient_id}', [MedicalLabController::class, 'index'])->name('index'); // Show all tests
+        Route::get('/{patient_history_id}', [MedicalLabController::class, 'show'])->name('show'); // show the current test related to the current history
+        Route::post('/store', [MedicalLabController::class, 'store'])->name('store');
+        Route::patch('/update/{id}', [MedicalLabController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [MedicalLabController::class, 'destroy'])->name('destroy');
     });
     // END Medical Lab
 });
