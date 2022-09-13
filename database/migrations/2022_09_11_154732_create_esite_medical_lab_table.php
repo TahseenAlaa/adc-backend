@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('patient_id');
             $table->integer('patient_history_id')->nullable();
+            $table->string('test_name');
             $table->string('dm_f_blood_glucose', 100)->nullable();
             $table->string('dm_r_blood_glucose', 100)->nullable();
             $table->string('dm_hb_aic_turbo', 100)->nullable();
