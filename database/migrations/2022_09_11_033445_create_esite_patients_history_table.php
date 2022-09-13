@@ -59,7 +59,7 @@ return new class extends Migration
             $table->string('sa2c')->nullable();
             $table->string('referral')->nullable();
             $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

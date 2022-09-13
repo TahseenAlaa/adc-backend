@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->longText('notes');
             $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

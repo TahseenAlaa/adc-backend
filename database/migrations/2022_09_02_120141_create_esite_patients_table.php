@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('gender')->nullable();
             $table->timestamp('last_visit');
             $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
