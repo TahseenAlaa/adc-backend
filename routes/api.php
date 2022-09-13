@@ -80,11 +80,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
 
     // START Pharmacy Inventory
     Route::prefix('/pharmacy')->name('pharmacy.')->group(function () {
-        Route::get('/index', [MedicalLabController::class, 'index'])->name('index'); // List all
-        Route::get('/{id}', [TreatmentController::class, 'show'])->name('show');
-        Route::post('/store', [TreatmentController::class, 'store'])->name('store');
-        Route::post('/update/{id}', [TreatmentController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [TreatmentController::class, 'destroy'])->name('destroy');
+        Route::get('/index', [PharmacyController::class, 'index'])->name('index'); // List all
+        Route::get('/{id}', [PharmacyController::class, 'show'])->name('show');
+        Route::post('/store', [PharmacyController::class, 'store'])->name('store');
+        Route::post('/update/{id}', [PharmacyController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [PharmacyController::class, 'destroy'])->name('destroy');
     });
     // END Pharmacy Inventory
 });

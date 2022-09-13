@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('treatment_type')->nullable();
             $table->string('dosage')->nullable();
             $table->integer('quantity');
-            $table->longText('notes');
+            $table->longText('notes')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();

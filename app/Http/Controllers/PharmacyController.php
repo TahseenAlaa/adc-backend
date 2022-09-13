@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Resources\PharmacyResource;
+use App\Models\Pharmacy;
+use App\Http\Requests\PharmacyStoreRequest;
+use App\Http\Requests\PharmacyUpdateRequest;
 
 class PharmacyController extends Controller
 {
@@ -13,7 +16,9 @@ class PharmacyController extends Controller
      */
     public function index()
     {
-        //
+        return response([
+            'date' => PharmacyResource::collection(Pharmacy::all())
+        ]);
     }
 
     /**
@@ -32,9 +37,22 @@ class PharmacyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PharmacyStoreRequest $request)
     {
-        //
+        $newDrug = new Pharmacy;
+        $newDrug->name              = $request->name;
+        $newDrug->batch_no          = $request->batch_no;
+        $newDrug->expire_date       = $request->expire_date;
+        $newDrug->treatment_type    = $request->treatment_type;
+        $newDrug->dosage            = $request->dosage;
+        $newDrug->quantity          = $request->quantity;
+        $newDrug->notes             = $request->notes;
+        $newDrug->created_by        = 1; // TODO add AUTH ID
+        $newDrug->save();
+
+        return response([
+            'data' => $newDrug
+        ]);
     }
 
     /**
@@ -45,7 +63,9 @@ class PharmacyController extends Controller
      */
     public function show($id)
     {
-        //
+        return response([
+            'data' => PharmacyResource::collection(Pharmacy::where('id', '=', $id)->get())
+        ]);
     }
 
     /**
@@ -66,9 +86,22 @@ class PharmacyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PharmacyUpdateRequest $request, $id)
     {
-        //
+        Pharmacy::where('id', '=', $id)->update([
+            'name'              => $request->name,
+            'batch_no'          => $request->batch_no,
+            'expire_date'       => $request->expire_date,
+            'treatment_type'    => $request->treatment_type,
+            'dosage'            => $request->dosage,
+            'quantity'          => $request->quantity,
+            'notes'             => $request->notes,
+            'updated_by'        => 1 // TODO add AUTH ID
+        ]);
+
+        return response([
+            'data' => PharmacyResource::collection(Pharmacy::where('id', '=', $id)->get())
+        ]);
     }
 
     /**
@@ -79,6 +112,8 @@ class PharmacyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pharmacy::where('id', '=', $id)->delete();
+
+        return response(['Item deleted successfully!']);
     }
 }
