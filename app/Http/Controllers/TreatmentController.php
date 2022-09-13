@@ -84,7 +84,7 @@ class TreatmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TreatmentUpdateRequest $request, $id)
     {
         // Update status
         Treatment::where('patient_history_id', '=', $id)->update(['status' => $request->status]);
