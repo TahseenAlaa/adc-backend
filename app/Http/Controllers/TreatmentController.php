@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TreatmentResource;
 use App\Models\Treatment;
 use Illuminate\Http\Request;
+use App\Http\Requests\TreatmentStoreRequest;
 
 class TreatmentController extends Controller
 {
@@ -34,9 +35,20 @@ class TreatmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TreatmentStoreRequest $request)
     {
+        $newTreatment = new Treatment;
+        $newTreatment->patient_id = $request->patient_id;
+        $newTreatment->patient_history_id = $request->patient_history_id;
+        $newTreatment->name = $request->name;
+        $newTreatment->dose = $request->dose;
+        $newTreatment->status = 0; // 0 -> Pending, 1 -> Done
+        $newTreatment->created_by = 1; // TODO add Auth ID
+        $newTreatment->save();
 
+        return response([
+            'data' => $newTreatment
+        ]);
     }
 
     /**
