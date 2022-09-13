@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('patient_id');
             $table->integer('patient_history_id')->nullable();
+            $table->integer('drug_id'); // from Pharmacy
             $table->string('name');
             $table->string('dose')->nullable();
             $table->string('status')->nullable();
