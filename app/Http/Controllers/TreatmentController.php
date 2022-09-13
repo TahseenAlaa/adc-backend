@@ -6,6 +6,7 @@ use App\Http\Resources\TreatmentResource;
 use App\Models\Treatment;
 use Illuminate\Http\Request;
 use App\Http\Requests\TreatmentStoreRequest;
+use App\Http\Requests\TreatmentUpdateRequest;
 
 class TreatmentController extends Controller
 {
@@ -85,7 +86,15 @@ class TreatmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Update status
+        Treatment::where('patient_history_id', '=', $id)->update(['status' => $request->status]);
+
+        // Fetch treatment data
+        $updatedTreatment = TreatmentResource::collection(Treatment::where('patient_history_id', '=', $id)->get());
+
+        return response([
+            'data' => $updatedTreatment
+        ]);
     }
 
     /**

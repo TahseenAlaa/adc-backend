@@ -73,7 +73,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
 //        Route::get('/index/{patient_id}', [MedicalLabController::class, 'index'])->name('index'); //
         Route::get('/{patient_history_id}', [TreatmentController::class, 'show'])->name('show'); // show the current treatment related to the current history
         Route::post('/store', [TreatmentController::class, 'store'])->name('store');
-        Route::patch('/update/{id}', [TreatmentController::class, 'update'])->name('update');
+        Route::post('/update/{id}', [TreatmentController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [TreatmentController::class, 'destroy'])->name('destroy');
     });
     // END Medical Lab
