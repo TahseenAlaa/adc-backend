@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TreatmentResource;
+use App\Models\Treatment;
 use Illuminate\Http\Request;
 
 class TreatmentController extends Controller
@@ -34,7 +36,7 @@ class TreatmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -45,7 +47,10 @@ class TreatmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $treatmentList = TreatmentResource::collection(Treatment::where('patient_history_id', '=', $id)->get());
+        return response([
+            'data' => $treatmentList
+        ]);
     }
 
     /**
