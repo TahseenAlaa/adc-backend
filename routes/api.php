@@ -70,12 +70,22 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
 
     // START Medical Lab
     Route::prefix('/treatment')->name('treatment.')->group(function () {
-//        Route::get('/index/{patient_id}', [MedicalLabController::class, 'index'])->name('index'); //
+//        Route::get('/index/{patient_id}', [TreatmentController::class, 'index'])->name('index'); //
         Route::get('/{patient_history_id}', [TreatmentController::class, 'show'])->name('show'); // show the current treatment related to the current history
         Route::post('/store', [TreatmentController::class, 'store'])->name('store');
         Route::post('/update/{id}', [TreatmentController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [TreatmentController::class, 'destroy'])->name('destroy');
     });
     // END Medical Lab
+
+    // START Pharmacy Inventory
+    Route::prefix('/pharmacy')->name('pharmacy.')->group(function () {
+        Route::get('/index', [MedicalLabController::class, 'index'])->name('index'); // List all
+        Route::get('/{id}', [TreatmentController::class, 'show'])->name('show');
+        Route::post('/store', [TreatmentController::class, 'store'])->name('store');
+        Route::post('/update/{id}', [TreatmentController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [TreatmentController::class, 'destroy'])->name('destroy');
+    });
+    // END Pharmacy Inventory
 });
 // END API v1
