@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('esite_medical_lab', function (Blueprint $table) {
             $table->id();
+            $table->integer('patient_id');
             $table->integer('patient_history_id')->nullable();
             $table->string('dm_f_blood_glucose', 100)->nullable();
             $table->string('dm_r_blood_glucose', 100)->nullable();
