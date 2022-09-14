@@ -137,9 +137,70 @@ class MedicalLabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MedicalLabUpdateRequest $request, $id)
     {
-        //
+        MedicalLab::where('id', '=', $id)->update([
+            'test_name'                 => $request->test_name,
+            'dm_f_blood_glucose'        => $request->dm_f_blood_glucose,
+            'dm_r_blood_glucose'        => $request->dm_r_blood_glucose,
+            'dm_hb_aic_turbo'           => $request->dm_hb_aic_turbo,
+            'dm_hb_aic_single_pr'       => $request->dm_hb_aic_single_pr,
+            'dm_hb_aic_turbid'          => $request->dm_hb_aic_turbid,
+            'dm_hypoglycemia'           => $request->dm_hypoglycemia,
+            'dm_insulin'                => $request->dm_insulin,
+            'lipid_tg'                  => $request->lipid_tg,
+            'lipid_hdl'                 => $request->lipid_hdl,
+            'lipid_chol'                => $request->lipid_chol,
+            'lipid_ldl'                 => $request->lipid_ldl,
+            'lipid_vldl'                => $request->lipid_vldl,
+            'lipid_non_hdl_c'           => $request->lipid_non_hdl_c,
+            'lipid_ldh'                 => $request->lipid_ldh,
+            'kidney_proteinuria'        => $request->kidney_proteinuria,
+            'kidney_microalbuminuria'   => $request->kidney_microalbuminuria,
+            'kidney_creatinine'         => $request->kidney_creatinine,
+            'kidney_urea'               => $request->kidney_urea,
+            'kidney_bun'                => $request->kidney_bun,
+            'liver_s_albumin'           => $request->liver_s_albumin,
+            'liver_total_protein'       => $request->liver_total_protein,
+            'liver_ast'                 => $request->liver_ast,
+            'liver_alt'                 => $request->liver_alt,
+            'liver_ai_phos'             => $request->liver_ai_phos,
+            'liver_cpk'                 => $request->liver_cpk,
+            'electrolite_anion_gap'     => $request->electrolite_anion_gap,
+            'electrolite_bicarb'        => $request->electrolite_bicarb,
+            'electrolite_uric_acid'     => $request->electrolite_uric_acid,
+            'electrolite_calcitonin'    => $request->electrolite_calcitonin,
+            'electrolite_ca'            => $request->electrolite_ca,
+            'electrolite_na'            => $request->electrolite_na,
+            'electrolite_k'             => $request->electrolite_k,
+            'electrolite_ci'            => $request->electrolite_ci,
+            'electrolite_ferritin'      => $request->electrolite_ferritin,
+            'electrolite_pth'           => $request->electrolite_pth,
+            'electrolite_25_oh_wt_d'    => $request->electrolite_25_oh_wt_d,
+            'electrolite_ttg_iga'       => $request->electrolite_ttg_iga,
+            'ras_glucometer_type'       => $request->ras_glucometer_type,
+            'ras_renin'                 => $request->ras_renin,
+            'ras_aldosterone'           => $request->ras_aldosterone,
+            'ras_arr'                   => $request->ras_arr,
+            'ras_cp_peptide'            => $request->ras_cp_peptide,
+            'thyroid_tsh'               => $request->thyroid_tsh,
+            'thyroid_ft4'               => $request->thyroid_ft4,
+            'thyroid_tt4'               => $request->thyroid_tt4,
+            'thyroid_tt3'               => $request->thyroid_tt3,
+            'endocrine_gad'             => $request->endocrine_gad,
+            'endocrine_dhea_s'          => $request->endocrine_dhea_s,
+            'endocrine_cortisol'        => $request->endocrine_cortisol,
+            'endocrine_acth'            => $request->endocrine_acth,
+            'endocrine_gh_basal'        => $request->endocrine_gh_basal,
+            'endocrine_gh_1hr'          => $request->endocrine_gh_1hr,
+            'endocrine_gh_2hr'          => $request->endocrine_gh_2hr,
+            'status'                    => 1, // 0 -> Pending, 1 -> Done
+            'updated_by'                => 2, // TODO add AUTH ID
+        ]);
+
+        return response([
+            'data' => MedicalLabResource::collection(MedicalLab::where('id', '=', $id)->get())
+        ]);
     }
 
     /**
