@@ -217,4 +217,12 @@ class MedicalLabController extends Controller
             'data' => 'Items deleted successfully!'
         ]);
     }
+
+    public function showHistory($id) {
+        $patientID = MedicalLabResource::collection(MedicalLab::where('patient_id', '=', $id)->orderBy('created_at', 'desc')->get());
+
+        return response([
+            'data' => $patientID
+        ]);
+    }
 }
