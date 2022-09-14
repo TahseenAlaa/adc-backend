@@ -150,6 +150,10 @@ class MedicalLabController extends Controller
      */
     public function destroy($id)
     {
-        //
+        MedicalLab::where('id', '=', $id)->delete();
+
+        return response([
+            'data' => 'Items deleted successfully!'
+        ]);
     }
 }
