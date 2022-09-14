@@ -93,7 +93,6 @@ class PatientsController extends Controller
         $newPatient->sa2c            = $request->sa2c;
         $newPatient->referral        = $request->referral;
         $newPatient->created_by      = 1; // TODO Auth ID
-        $newPatient->updated_by      = 2; // TODO Auth ID
         $newPatient->save();
 
         return response([
@@ -181,7 +180,6 @@ class PatientsController extends Controller
         "fa1c"            => $request->fa1c,
         "sa2c"            => $request->sa2c,
         "referral"        => $request->referral,
-        "created_by"      => 1, // TODO Auth ID
         "updated_by"      => 2, // TODO Auth ID
         ]);
 

@@ -70,8 +70,7 @@ class PatientsUpdateRequest extends FormRequest
             'fa1c'          => 'bail|nullable|string',
             'sa2c'          => 'bail|nullable|string',
             'referral'      => 'bail|nullable|string',
-            'created_by'    => 'bail|nullable|numeric',
-            'updated_by'    => 'bail|nullable|numeric',
+            'updated_by'    => 'bail|required|numeric',
         ];
     }
 }
