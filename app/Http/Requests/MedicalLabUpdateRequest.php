@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MedicalLabStoreRequest extends FormRequest
+class MedicalLabUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -101,7 +101,6 @@ class MedicalLabStoreRequest extends FormRequest
             'egfr'                               => 'bail|string|nullable',
             'hdma_r'                             => 'bail|string|nullable',
             'osmolamity'                         => 'bail|string|nullable',
-
         ];
     }
 }

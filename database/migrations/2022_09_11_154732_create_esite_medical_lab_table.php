@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('lipid_chol', 100)->nullable();
             $table->string('lipid_ldl', 100)->nullable();
             $table->string('lipid_vldl', 100)->nullable();
-            $table->string('lipid_non_hdl-c', 100)->nullable();
+            $table->string('lipid_non_hdl_c', 100)->nullable();
             $table->string('lipid_ldh', 100)->nullable();
             $table->string('kidney_proteinuria', 100)->nullable();
             $table->string('kidney_microalbuminuria', 100)->nullable();
@@ -54,7 +54,7 @@ return new class extends Migration
             $table->string('electrolite_ferritin', 100)->nullable();
             $table->string('electrolite_pth', 100)->nullable();
             $table->string('electrolite_25_oh_wt_d', 100)->nullable();
-            $table->string('electrolite_ttg-iga', 100)->nullable();
+            $table->string('electrolite_ttg_iga', 100)->nullable();
             $table->string('ras_glucometer_type', 100)->nullable();
             $table->string('ras_renin', 100)->nullable();
             $table->string('ras_aldosterone', 100)->nullable();
