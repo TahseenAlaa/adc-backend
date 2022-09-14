@@ -47,6 +47,8 @@ class TreatmentController extends Controller
         $newTreatment->created_by = 1; // TODO add Auth ID
         $newTreatment->save();
 
+        // TODO update pharmacy inventory
+
         return response([
             'data' => $newTreatment
         ]);
@@ -87,7 +89,12 @@ class TreatmentController extends Controller
     public function update(TreatmentUpdateRequest $request, $id)
     {
         // Update status
-        Treatment::where('patient_history_id', '=', $id)->update(['status' => $request->status]);
+        Treatment::where('patient_history_id', '=', $id)->update([
+            'drug_id'  => $request->drug_id,
+            'name'     => $request->name,
+            'dose'     => $request->dose,
+            'status'   => $request->status,
+        ]);
 
         // Fetch treatment data
         $updatedTreatment = TreatmentResource::collection(Treatment::where('patient_history_id', '=', $id)->get());
@@ -105,6 +112,15 @@ class TreatmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Treatment::where('id', '=', $id)->delete();
+
+        // TODO update pharmacy inventory
+
+        return response([
+            'data' => 'Items deleted successfully!'
+        ]);
+
+
+
     }
 }
