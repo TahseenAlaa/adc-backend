@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PatientsHistoryResource;
 use App\Models\Patients;
 use App\Models\PatientsHistory;
 use Carbon\Carbon;
@@ -139,12 +140,20 @@ class PatientsController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return AnonymousResourceCollection
+     * @return Application|Response|ResponseFactory
      */
     public function show($id)
     {
-        // Get patients by id
-        return PatientsResource::collection(Patients::where('id', '=', $id)->with(['patientHistory'])->get());
+        // Patient with History
+        $getPatientInfo = PatientsResource::collection(
+            Patients::where('id', '=', $id)
+                ->with('patientHistory')
+                ->get());
+
+        return response([
+            'data' => $getPatientInfo,
+            'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
+        ], 200);
     }
 
     /**
