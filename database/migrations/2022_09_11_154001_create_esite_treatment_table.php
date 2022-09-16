@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('esite_treatment', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_id');
-            $table->integer('patient_history_id')->nullable();
-            $table->integer('drug_id'); // from Pharmacy
+            $table->string('patient_picture')->nullable();
+            $table->integer('drug_id')->nullable(); // from Pharmacy
             $table->string('name');
             $table->string('dose')->nullable();
             $table->string('status')->nullable();

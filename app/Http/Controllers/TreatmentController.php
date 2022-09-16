@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TreatmentResource;
 use App\Models\Treatment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\TreatmentStoreRequest;
 use App\Http\Requests\TreatmentUpdateRequest;
@@ -40,18 +41,32 @@ class TreatmentController extends Controller
     {
         $newTreatment = new Treatment;
         $newTreatment->patient_id = $request->patient_id;
-        $newTreatment->patient_history_id = $request->patient_history_id;
-        $newTreatment->name = $request->name;
-        $newTreatment->dose = $request->dose;
-        $newTreatment->status = 0; // 0 -> Pending, 1 -> Done
+        $newTreatment->drug_id    = $request->drug_id;
+        $newTreatment->name       = $request->name;
+        $newTreatment->dose       = $request->dose;
+        $newTreatment->status     = 0; // 0 -> Pending, 1 -> Done
         $newTreatment->created_by = 1; // TODO add Auth ID
+        if ($request->hasFile('patient_picture')) {
+            $newTreatment->addMediaFromRequest('patient_picture')
+                ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
+                ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '_esite.jpg')
+                ->withResponsiveImages()
+                ->toMediaCollection('patient_picture');
+        }
         $newTreatment->save();
 
         // TODO update pharmacy inventory
 
-        return response([
-            'data' => $newTreatment
-        ]);
+        if (isset($newTreatment->getMedia('patient_picture')[0])) {
+            return response([
+                'data'    => $newTreatment,
+                'picture' => $newTreatment->getMedia('patient_picture')[0]->original_url
+            ], 200);
+        } else {
+            return response([
+                'data'    => $newTreatment,
+            ], 200);
+        }
     }
 
     /**

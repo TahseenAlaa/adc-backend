@@ -24,10 +24,12 @@ class TreatmentUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'drug_id'   => 'bail|required|integer',
-            'name'      => 'bail|required|string',
-            'dose'      => 'bail|nullable|integer',
-            'status'    => 'bail|required|boolean',
+            'drug_id'             => 'bail|required|integer',
+            'patient_id'          => 'bail|required|integer',
+            'patient_picture'     => 'bail|nullable|image|file|max:10240',
+            'name'                => 'bail|required|string',
+            'dose'                => 'bail|required|integer',
+            'status'              => 'bail|nullable|boolean',
         ];
     }
 }
