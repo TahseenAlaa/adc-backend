@@ -25,6 +25,7 @@ class PatientsUpdateRequest extends FormRequest
     {
         return [
             'full_name'     => 'bail|required|string',
+            'patient_picture' => 'bail|nullable|image|file|max:10240',
             'phone'         => 'bail|nullable|string',
             'occupation'    => 'bail|nullable|string',
             'gender'        => 'bail|nullable|boolean',

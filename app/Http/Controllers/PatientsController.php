@@ -60,6 +60,7 @@ class PatientsController extends Controller
             // Store patient history
             $newPatientHistory = new PatientsHistory;
             $newPatientHistory->patient_id      = $newPatient->id;
+            $newPatientHistory->patient_picture_id = 123;
             $newPatientHistory->occupation      = $request->occupation;
             $newPatientHistory->address         = $request->address;
             $newPatientHistory->smoker          = $request->smoker;
@@ -103,14 +104,26 @@ class PatientsController extends Controller
             $newPatientHistory->sa2c            = $request->sa2c;
             $newPatientHistory->referral        = $request->referral;
             $newPatientHistory->created_by      = 1; // TODO Auth ID
+            $newPatientHistory->addMediaFromRequest('patient_picture')
+                ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
+                ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '.jpg')
+                ->withResponsiveImages()
+                ->toMediaCollection('patient_picture');
             $newPatientHistory->save();
 
             if ($newPatientHistory->exists) {
                 // Patient with History
+                $getPatientInfo = PatientsResource::collection(
+                    Patients::where('id', '=', $newPatient->id)
+                        ->with('patientHistory')
+                        ->get());
+
                 return response([
-                    'data' => PatientsResource::collection(Patients::where('id', '=', $newPatient->id)->with('patientHistory')->get())
+                    'data' => $getPatientInfo,
+                    'picture' => $getPatientInfo[0]->patientHistory[0]->getMedia('patient_picture')[0]->original_url
                 ], 200);
             }
+
             // Only pationt
             return response([
                 'data' => PatientsResource::collection(PatientsHistory::where('id', '=', $newPatient->id)->get())
