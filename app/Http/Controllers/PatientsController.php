@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patients;
+use App\Models\PatientsHistory;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
@@ -48,56 +50,76 @@ class PatientsController extends Controller
         $newPatient = new Patients;
         $newPatient->full_name       = $request->full_name;
         $newPatient->phone           = $request->phone;
-        $newPatient->occupation      = $request->occupation;
-        $newPatient->gender          = $request->gender;
         $newPatient->birthdate       = $request->birthdate;
-        $newPatient->address         = $request->address;
-        $newPatient->smoker          = $request->smoker;
-        $newPatient->drinker         = $request->drinker;
-        $newPatient->family_dm       = $request->family_dm;
-        $newPatient->gestational_dm  = $request->gestational_dm;
-        $newPatient->weight_baby     = $request->weight_baby;
-        $newPatient->hypert          = $request->hypert;
-        $newPatient->family_ihd      = $request->family_ihd;
-        $newPatient->parity          = $request->parity;
-        $newPatient->smbg            = $request->smbg;
-        $newPatient->ihd             = $request->ihd;
-        $newPatient->cva             = $request->cva;
-        $newPatient->pvd             = $request->pvd;
-        $newPatient->neuro           = $request->neuro;
-        $newPatient->weight          = $request->weight;
-        $newPatient->height          = $request->height;
-        $newPatient->wc              = $request->wc;
-        $newPatient->bmi             = $request->bmi;
-        $newPatient->hip             = $request->hip;
-        $newPatient->retino          = $request->retino;
-        $newPatient->nonpro          = $request->nonpro;
-        $newPatient->prolif          = $request->prolif;
-        $newPatient->macul           = $request->macul;
-        $newPatient->insul           = $request->insul;
-        $newPatient->amput           = $request->amput;
-        $newPatient->ed              = $request->ed;
-        $newPatient->nafld           = $request->nafld;
-        $newPatient->dermo           = $request->dermo;
-        $newPatient->dfoot           = $request->dfoot;
-        $newPatient->date_insulin    = $request->date_insulin;
-        $newPatient->duration_insulin = $request->duration_insulin;
-        $newPatient->duration_dm     = $request->duration_dm;
-        $newPatient->glycemic        = $request->glycemic;
-        $newPatient->lipid           = $request->lipid;
-        $newPatient->pressure        = $request->pressure;
-        $newPatient->f_height        = $request->f_height;
-        $newPatient->m_height        = $request->m_height;
-        $newPatient->mid_height      = $request->mid_height;
-        $newPatient->fa1c            = $request->fa1c;
-        $newPatient->sa2c            = $request->sa2c;
-        $newPatient->referral        = $request->referral;
+        $newPatient->gender          = $request->gender;
+        $newPatient->last_visit      = Carbon::now();
         $newPatient->created_by      = 1; // TODO Auth ID
         $newPatient->save();
 
+        if ($newPatient->exists) {
+            // Store patient history
+            $newPatientHistory = new PatientsHistory;
+            $newPatientHistory->patient_id      = $newPatient->id;
+            $newPatientHistory->occupation      = $request->occupation;
+            $newPatientHistory->address         = $request->address;
+            $newPatientHistory->smoker          = $request->smoker;
+            $newPatientHistory->drinker         = $request->drinker;
+            $newPatientHistory->family_dm       = $request->family_dm;
+            $newPatientHistory->gestational_dm  = $request->gestational_dm;
+            $newPatientHistory->weight_baby     = $request->weight_baby;
+            $newPatientHistory->hypert          = $request->hypert;
+            $newPatientHistory->family_ihd      = $request->family_ihd;
+            $newPatientHistory->parity          = $request->parity;
+            $newPatientHistory->smbg            = $request->smbg;
+            $newPatientHistory->ihd             = $request->ihd;
+            $newPatientHistory->cva             = $request->cva;
+            $newPatientHistory->pvd             = $request->pvd;
+            $newPatientHistory->neuro           = $request->neuro;
+            $newPatientHistory->weight          = $request->weight;
+            $newPatientHistory->height          = $request->height;
+            $newPatientHistory->wc              = $request->wc;
+            $newPatientHistory->bmi             = $request->bmi;
+            $newPatientHistory->hip             = $request->hip;
+            $newPatientHistory->retino          = $request->retino;
+            $newPatientHistory->nonpro          = $request->nonpro;
+            $newPatientHistory->prolif          = $request->prolif;
+            $newPatientHistory->macul           = $request->macul;
+            $newPatientHistory->insul           = $request->insul;
+            $newPatientHistory->amput           = $request->amput;
+            $newPatientHistory->ed              = $request->ed;
+            $newPatientHistory->nafld           = $request->nafld;
+            $newPatientHistory->dermo           = $request->dermo;
+            $newPatientHistory->dfoot           = $request->dfoot;
+            $newPatientHistory->date_insulin    = $request->date_insulin;
+            $newPatientHistory->duration_insulin = $request->duration_insulin;
+            $newPatientHistory->duration_dm     = $request->duration_dm;
+            $newPatientHistory->glycemic        = $request->glycemic;
+            $newPatientHistory->lipid           = $request->lipid;
+            $newPatientHistory->pressure        = $request->pressure;
+            $newPatientHistory->f_height        = $request->f_height;
+            $newPatientHistory->m_height        = $request->m_height;
+            $newPatientHistory->mid_height      = $request->mid_height;
+            $newPatientHistory->fa1c            = $request->fa1c;
+            $newPatientHistory->sa2c            = $request->sa2c;
+            $newPatientHistory->referral        = $request->referral;
+            $newPatientHistory->created_by      = 1; // TODO Auth ID
+            $newPatientHistory->save();
+
+            if ($newPatientHistory->exists) {
+                // Patient with History
+                return response([
+                    'data' => PatientsResource::collection(Patients::where('id', '=', $newPatient->id)->with('patientHistory')->get())
+                ], 200);
+            }
+            // Only pationt
+            return response([
+                'data' => PatientsResource::collection(PatientsHistory::where('id', '=', $newPatient->id)->get())
+            ], 200);
+        }
+
         return response([
-            'data' => new PatientsResource($newPatient)
-        ]);
+            'data' => 'Error!'
+        ], 500);
     }
 
     /**
