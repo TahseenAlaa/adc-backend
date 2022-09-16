@@ -121,7 +121,7 @@ class PatientsController extends Controller
 
                 return response([
                     'data' => $getPatientInfo,
-                    'picture' => $getPatientInfo[0]->patientHistory[0]->getMedia('patient_picture')[0]->original_url
+                    'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
                 ], 200);
             }
 
