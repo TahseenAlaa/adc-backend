@@ -106,14 +106,16 @@ class PatientsController extends Controller
             $newPatientHistory->sa2c            = $request->sa2c;
             $newPatientHistory->referral        = $request->referral;
             $newPatientHistory->created_by      = 1; // TODO Auth ID
-            $newPatientHistory->addMediaFromRequest('patient_picture')
-                ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
-                ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '.jpg')
-                ->withResponsiveImages()
-                ->toMediaCollection('patient_picture');
+            if ($request->hasFile('patient_picture'))  {
+                $newPatientHistory->addMediaFromRequest('patient_picture')
+                    ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
+                    ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '.jpg')
+                    ->withResponsiveImages()
+                    ->toMediaCollection('patient_picture');
+            }
             $newPatientHistory->save();
 
-            if ($newPatientHistory->exists) {
+            if (isset($newPatientHistory->getMedia('patient_picture')[0])) {
                 // Patient with History
                 $getPatientInfo = PatientsResource::collection(
                     Patients::where('id', '=', $newPatient->id)
