@@ -8,6 +8,7 @@ use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\MedicalLabController;
 use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,12 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
     });
     // END Auth
+
+    // START Dashboard
+    Route::prefix('/dashboard')->name('dashboard.')->group(function () {
+        Route::get('/index', [DashboardController::class, 'index'])->name('index');
+    });
+    // END Dashboard
 
     // START Patients
     Route::prefix('/patients')->name('patients.')->group(function () {
