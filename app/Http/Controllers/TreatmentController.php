@@ -110,14 +110,34 @@ class TreatmentController extends Controller
             'name'     => $request->name,
             'dose'     => $request->dose,
             'status'   => $request->status,
+            'updated_by' => 2 // TODO Auth ID
         ]);
 
-        // Fetch treatment data
-        $updatedTreatment = TreatmentResource::collection(Treatment::where('patient_history_id', '=', $id)->get());
+        // Store patient history
+        if ($request->hasFile('patient_picture')) {
+            try {
+                Treatment::where('patient_history_id', '=', $id)->latest()->first()->clearMediaCollection('patient_picture');
+            } finally {
+                Treatment::where('patient_id', '=', $id)->latest()->first()->addMediaFromRequest('patient_picture')
+                    ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
+                    ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '.jpg')
+                    ->withResponsiveImages()
+                    ->toMediaCollection('patient_picture');
+            }
+        }
 
-        return response([
-            'data' => $updatedTreatment
-        ]);
+        $getTreatmentInfo = Treatment::where('patient_history_id', '=', $id)->latest()->first();
+
+        if (isset($getTreatmentInfo->getMedia('patient_picture')[0])) {
+            return response([
+                'data' => $getTreatmentInfo,
+                'picture' => $getTreatmentInfo->getMedia('patient_picture')[0]->original_url
+            ]);
+        } else {
+            return response([
+                'data' => $getTreatmentInfo
+            ]);
+        }
     }
 
     /**
