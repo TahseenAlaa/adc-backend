@@ -40,12 +40,13 @@ class TreatmentController extends Controller
     public function store(TreatmentStoreRequest $request)
     {
         $newTreatment = new Treatment;
-        $newTreatment->patient_id = $request->patient_id;
-        $newTreatment->drug_id    = $request->drug_id;
-        $newTreatment->name       = $request->name;
-        $newTreatment->dose       = $request->dose;
-        $newTreatment->status     = 0; // 0 -> Pending, 1 -> Done
-        $newTreatment->created_by = 1; // TODO add Auth ID
+        $newTreatment->patient_id          = $request->patient_id;
+        $newTreatment->patient_history_id  = $request->patient_history_id;
+        $newTreatment->name                = $request->name;
+        $newTreatment->drug_id             = $request->drug_id;
+        $newTreatment->dose                = $request->dose;
+        $newTreatment->status              = 0; // 0 -> Pending, 1 -> Done
+        $newTreatment->created_by          = 1; // TODO add Auth ID
         if ($request->hasFile('patient_picture')) {
             $newTreatment->addMediaFromRequest('patient_picture')
                 ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
