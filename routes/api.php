@@ -21,10 +21,6 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 
 // START API v1
 Route::prefix('/v1')->name('api.v1.')->group(function () {
@@ -33,6 +29,9 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/signup', [AuthController::class, 'signup'])->middleware('auth:sanctum')->name('signup');
         Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+        Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+            return $request->user();
+        });
     });
     // END Auth
 
