@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('esite_patients', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('full_name');
             $table->string('phone')->nullable();
             $table->timestamp('birthdate')->nullable();

@@ -15,6 +15,7 @@ use App\Http\Requests\PatientsStoreRequest;
 use Illuminate\Http\Response;
 use App\Http\Requests\PatientsUpdateRequest;
 use mysql_xdevapi\Exception;
+use Illuminate\Support\Str;
 
 
 class PatientsController extends Controller
@@ -50,6 +51,7 @@ class PatientsController extends Controller
     {
         // Store new patient data
         $newPatient = new Patients;
+        $newPatient->uuid            = Str::uuid()->toString();
         $newPatient->full_name       = $request->full_name;
         $newPatient->phone           = $request->phone;
         $newPatient->birthdate       = $request->birthdate;
@@ -62,6 +64,7 @@ class PatientsController extends Controller
             // Store patient history
             $newPatientHistory = new PatientsHistory;
             $newPatientHistory->patient_id      = $newPatient->id;
+            $newPatientHistory->uuid            = Str::uuid()->toString();
             $newPatientHistory->patient_picture_id = 123;
             $newPatientHistory->occupation      = $request->occupation;
             $newPatientHistory->address         = $request->address;
