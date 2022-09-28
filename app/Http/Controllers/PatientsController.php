@@ -300,7 +300,7 @@ class PatientsController extends Controller
 
         $patientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
             ->where('full_name', 'LIKE', '%' . $request->name . '%')
-            ->first();
+            ->get();
 
         return response([
             'data' => $patientInfo
@@ -316,7 +316,7 @@ class PatientsController extends Controller
 
         $patientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
             ->where('phone', '=', $request->phone)
-            ->first();
+            ->get();
 
         return response([
             'data' => $patientInfo
@@ -332,7 +332,7 @@ class PatientsController extends Controller
 
         $PatientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
             ->where('id', '=', $request->patient)
-            ->first();
+            ->get();
 
         return response([
             'data' => $PatientInfo
