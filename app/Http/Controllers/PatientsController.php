@@ -301,7 +301,7 @@ class PatientsController extends Controller
      */
     public function searchByFullName(Request $request) {
 
-        $patientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
+        $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
             ->where('full_name', 'LIKE', '%' . $request->name . '%')
             ->get();
 
@@ -317,7 +317,7 @@ class PatientsController extends Controller
      */
     public function searchByPhone(Request $request) {
 
-        $patientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
+        $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
             ->where('phone', '=', $request->phone)
             ->get();
 
@@ -333,7 +333,7 @@ class PatientsController extends Controller
      */
     public function searchByPatientId(Request $request) {
 
-        $PatientInfo = Patients::select(['id', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
+        $PatientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
             ->where('id', '=', $request->patient)
             ->get();
 
