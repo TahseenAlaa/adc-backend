@@ -14,7 +14,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Requests\PatientsStoreRequest;
 use Illuminate\Http\Response;
 use App\Http\Requests\PatientsUpdateRequest;
-use mysql_xdevapi\Exception;
 use Illuminate\Support\Str;
 
 
@@ -54,10 +53,10 @@ class PatientsController extends Controller
         $newPatient->uuid            = Str::uuid()->toString();
         $newPatient->full_name       = $request->full_name;
         $newPatient->phone           = $request->phone;
-        $newPatient->birthdate       = $request->birthdate;
+        $newPatient->birthdate       = $request->birthday;
         $newPatient->gender          = $request->gender;
         $newPatient->last_visit      = Carbon::now();
-        $newPatient->created_by      = 1; // TODO Auth ID
+        $newPatient->created_by      = auth('sanctum')->user()->id;
         $newPatient->save();
 
         if ($newPatient->exists) {
@@ -108,7 +107,7 @@ class PatientsController extends Controller
             $newPatientHistory->fa1c            = $request->fa1c;
             $newPatientHistory->sa2c            = $request->sa2c;
             $newPatientHistory->referral        = $request->referral;
-            $newPatientHistory->created_by      = 1; // TODO Auth ID
+            $newPatientHistory->created_by      = auth('sanctum')->user()->id;
             if ($request->hasFile('patient_picture'))  {
                 $newPatientHistory->addMediaFromRequest('patient_picture')
                     ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
@@ -152,13 +151,13 @@ class PatientsController extends Controller
     {
         // Patient with History
         $getPatientInfo = PatientsResource::collection(
-            Patients::where('id', '=', $id)
+            Patients::where('uuid', '=', $id)
                 ->with('patientHistory')
                 ->get());
 
         return response([
-            'data' => $getPatientInfo,
-            'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
+            'data' => $getPatientInfo, // TODO return picture with results
+//            'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
         ], 200);
     }
 
@@ -189,7 +188,7 @@ class PatientsController extends Controller
         "birthdate"       => $request->birthdate,
         "gender"          => $request->gender,
         "last_visit"      => Carbon::now(),
-        "updated_by"      => 1 // TODO Auth ID
+        "updated_by"      => auth('sanctum')->user()->id,
         ]);
 
         // Update patient history
@@ -236,7 +235,7 @@ class PatientsController extends Controller
             "fa1c"            => $request->fa1c,
             "sa2c"            => $request->sa2c,
             "referral"        => $request->referral,
-            "updated_by"      => 2, // TODO Auth ID
+            "updated_by"      => auth('sanctum')->user()->id
         ]);
 
         // Store patient picture
