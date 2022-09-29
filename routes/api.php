@@ -26,7 +26,7 @@ use App\Http\Controllers\DashboardController;
 Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Auth
     Route::prefix('/auth')->name('auth.')->group(function () {
-        Route::post('/signup', [AuthController::class, 'signup'])->middleware('auth:sanctum')->name('signup');
+        Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
         Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
         Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -51,6 +51,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/search-by-full-name/{name}', [PatientsController::class, 'searchByFullName'])->name('searchByFullName');
         Route::get('/search-by-phone/{phone}', [PatientsController::class, 'searchByPhone'])->name('searchByPhone');
         Route::get('/search-by-patient-id/{patient}', [PatientsController::class, 'searchByPatientID'])->name('searchByPatientID');
+        Route::post('/store-by-dr', [PatientsController::class, 'storePatientInfoByDr'])->name('storeByDoctor');
     });
     // END Patients
 
