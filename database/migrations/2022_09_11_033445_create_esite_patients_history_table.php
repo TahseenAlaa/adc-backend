@@ -70,6 +70,7 @@ return new class extends Migration
             $table->string('waist_circumference_by_dr')->nullable();
             $table->string('bmi_by_dr')->nullable();
             $table->longText('clinical_notes')->nullable();
+            $table->date('next_visit')->nullable();
             $table->string('created_by_dr')->nullable();
             // END - This will be added by the doctor
             $table->string('created_by');
