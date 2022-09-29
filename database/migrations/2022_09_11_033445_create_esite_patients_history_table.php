@@ -60,6 +60,18 @@ return new class extends Migration
             $table->string('fa1c')->nullable();
             $table->string('sa2c')->nullable();
             $table->string('referral')->nullable();
+            // START - This will be added by the doctor
+            $table->string('patient_number')->nullable();
+            $table->string('age_at_visit')->nullable();
+            $table->string('blood_pressure_systolic')->nullable();
+            $table->string('blood_pressure_diastolic')->nullable();
+            $table->string('weight_by_dr')->nullable();
+            $table->string('height_by_dr')->nullable();
+            $table->string('waist_circumference_by_dr')->nullable();
+            $table->string('bmi_by_dr')->nullable();
+            $table->longText('clinical_notes')->nullable();
+            $table->string('created_by_dr')->nullable();
+            // END - This will be added by the doctor
             $table->string('created_by');
             $table->string('updated_by')->nullable();
             $table->timestamps();
