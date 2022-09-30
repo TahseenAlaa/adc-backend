@@ -51,6 +51,7 @@ class MedicalLabController extends Controller
         $newTest->dm_r_blood_glucose           = $request->dm_r_blood_glucose;
         $newTest->dm_hb_aic_turbo              = $request->dm_hb_aic_turbo;
         $newTest->dm_hb_aic_single_pr          = $request->dm_hb_aic_single_pr;
+        $newTest->dm_hb_aic_dual_pr            = $request->dm_hb_aic_dual_pr;
         $newTest->dm_hb_aic_turbid             = $request->dm_hb_aic_turbid;
         $newTest->dm_hypoglycemia              = $request->dm_hypoglycemia;
         $newTest->dm_insulin                   = $request->dm_insulin;
@@ -146,14 +147,18 @@ class MedicalLabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MedicalLabUpdateRequest $request, $id)
+    public function update(MedicalLabUpdateRequest $request)
     {
-        MedicalLab::where('id', '=', $id)->update([
-            'test_name'                 => $request->test_name,
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $medicalLabId = MedicalLab::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
+        MedicalLab::where('id', '=', $medicalLabId->id)->update([
+//            'test_name'                 => $request->test_name,
             'dm_f_blood_glucose'        => $request->dm_f_blood_glucose,
             'dm_r_blood_glucose'        => $request->dm_r_blood_glucose,
             'dm_hb_aic_turbo'           => $request->dm_hb_aic_turbo,
             'dm_hb_aic_single_pr'       => $request->dm_hb_aic_single_pr,
+            'dm_hb_aic_dual_pr'         => $request->dm_hb_aic_dual_pr,
             'dm_hb_aic_turbid'          => $request->dm_hb_aic_turbid,
             'dm_hypoglycemia'           => $request->dm_hypoglycemia,
             'dm_insulin'                => $request->dm_insulin,
@@ -203,12 +208,35 @@ class MedicalLabController extends Controller
             'endocrine_gh_basal'        => $request->endocrine_gh_basal,
             'endocrine_gh_1hr'          => $request->endocrine_gh_1hr,
             'endocrine_gh_2hr'          => $request->endocrine_gh_2hr,
-            'status'                    => 1, // 0 -> Pending, 1 -> Done
-            'updated_by'                => 2, // TODO add AUTH ID
+            'endocrine_gh_3hr'          => $request->endocrine_gh_3hr,
+            'endocrine_metanephric'     => $request->endocrine_metanephric,
+            'endocrine_n_metaneph'      => $request->endocrine_n_metaneph,
+            'endocrine_17_ch_pro'       => $request->endocrine_17_ch_pro,
+            'endocrine_17_ch_pro_1hr_after_syn'    => $request->endocrine_17_ch_pro_1hr_after_syn,
+            'endocrine_tpo'             => $request->endocrine_tpo,
+            'endocrine_trab'            => $request->endocrine_trab,
+            'endocrine_thyrolobulin'    => $request->endocrine_thyrolobulin,
+            'endocrine_ig_f1'           => $request->endocrine_ig_f1,
+            'endocrine_testosterone'    => $request->endocrine_testosterone,
+            'endocrine_free_testosterone'  => $request->endocrine_free_testosterone,
+            'endocrine_shbg'            => $request->endocrine_shbg,
+            'endocrine_fsh'             => $request->endocrine_fsh,
+            'endocrine_lh'              => $request->endocrine_lh,
+            'endocrine_prolactin'       => $request->endocrine_prolactin,
+            'endocrine_estradiol'       => $request->endocrine_estradiol,
+            'endocrine_progestrone'     => $request->endocrine_progestrone,
+            'endocrine_b_hcg'           => $request->endocrine_b_hcg,
+            'egfr'                      => $request->egfr,
+            'hdma_r'                    => $request->hdma_r,
+            'osmolamity'                => $request->osmolamity,
+            'status'                    => 1,
+            'updated_by'                => auth('sanctum')->user()->id
+
         ]);
 
         return response([
-            'data' => MedicalLabResource::collection(MedicalLab::where('id', '=', $id)->get())
+//            'data' => MedicalLabResource::collection(MedicalLab::where('id', '=', $medicalLabId->id)->get())
+        'data' => 'Saved Successfully!'
         ]);
     }
 

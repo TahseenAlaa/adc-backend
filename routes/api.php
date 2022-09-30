@@ -70,7 +70,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index/{patient_id}', [MedicalLabController::class, 'index'])->name('index'); // Show all tests
         Route::get('/{patient_history_id}', [MedicalLabController::class, 'show'])->name('show'); // show the current test related to the current history
         Route::post('/store', [MedicalLabController::class, 'store'])->name('store');
-        Route::post('/update/{id}', [MedicalLabController::class, 'update'])->name('update');
+        Route::post('/update', [MedicalLabController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [MedicalLabController::class, 'destroy'])->name('destroy');
         Route::get('/show-history/{id}', [MedicalLabController::class, 'showHistory'])->name('history.show');
     });

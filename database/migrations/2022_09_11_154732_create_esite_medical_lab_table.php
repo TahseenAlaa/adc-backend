@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('dm_r_blood_glucose', 100)->nullable();
             $table->string('dm_hb_aic_turbo', 100)->nullable();
             $table->string('dm_hb_aic_single_pr', 100)->nullable();
+            $table->string('dm_hb_aic_dual_pr', 100)->nullable();
             $table->string('dm_hb_aic_turbid', 100)->nullable();
             $table->string('dm_hypoglycemia', 100)->nullable();
             $table->string('dm_insulin', 100)->nullable();

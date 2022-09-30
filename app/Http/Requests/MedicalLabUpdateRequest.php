@@ -24,9 +24,11 @@ class MedicalLabUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'test_name'                          => 'bail|string|required',
-            'patient_id'                         => 'bail|integer|required',
-            'patient_history_id'                 => 'bail|integer|required',
+//            'test_name'                          => 'bail|string|required',
+//            'patient_id'                         => 'bail|integer|required',
+//            'patient_history_id'                 => 'bail|integer|required',
+
+            'patient_uuid'                       => 'bail|string|required',
             'dm_f_blood_glucose'                 => 'bail|string|nullable',
             'dm_r_blood_glucose'                 => 'bail|string|nullable',
             'dm_hb_aic_turbo'                    => 'bail|string|nullable',
