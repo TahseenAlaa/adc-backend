@@ -24,11 +24,9 @@ class DiagnosisStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_id'           => 'bail|required|integer',
-            'patient_history_id'   => 'bail|required|integer',
             'symptoms'             => 'bail|required|string',
-            'is_confirmed'         => 'bail|required|boolean',
-            'clinical_notes'       => 'bail|nullable|string',
+            'is_confirmed'         => 'bail|required|string',
+//            'clinical_notes'       => 'bail|nullable|string',
         ];
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\DiagnosisResource;
 use App\Models\Diagnosis;
+use App\Models\Patients;
+use App\Models\PatientsHistory;
 use Illuminate\Http\Request;
 use App\Http\Requests\DiagnosisStoreRequest;
 
@@ -41,17 +43,23 @@ class DiagnosisController extends Controller
      */
     public function store(DiagnosisStoreRequest $request)
     {
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
         $newDiagnosis = new Diagnosis;
-        $newDiagnosis->patient_id         = $request->patient_id;
-        $newDiagnosis->patient_history_id = $request->patient_history_id;
+        $newDiagnosis->patient_id         = $patientId->id;
+        $newDiagnosis->patient_history_id = $patientHistoryId->id;
         $newDiagnosis->symptoms           = $request->symptoms;
         $newDiagnosis->is_confirmed       = $request->is_confirmed;
-        $newDiagnosis->clinical_notes     = $request->clinical_notes;
-        $newDiagnosis->created_by         = 1; // TODO use Auth ID
+//        $newDiagnosis->clinical_notes     = $request->clinical_notes;
+        $newDiagnosis->created_by         = auth('sanctum')->user()->id;
         $newDiagnosis->save();
 
+        $getDoctorName = auth('sanctum')->user()->full_name;
+
         return response([
-            'data' => $newDiagnosis
+            'data'        => $newDiagnosis,
+            'doctor_name' => $getDoctorName
         ]);
     }
 
