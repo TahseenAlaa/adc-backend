@@ -365,4 +365,62 @@ class PatientsController extends Controller
             'date' => 'Save Successfully!'
         ]);
     }
+
+    public function storePatientNewVisit(Request $request) {
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+
+        // Store patient history
+        $newPatientHistory = new PatientsHistory;
+        $newPatientHistory->patient_id      = $patientId->id;
+        $newPatientHistory->uuid            = Str::uuid()->toString();
+        $newPatientHistory->patient_picture_id = 123;
+        $newPatientHistory->occupation      = $request->occupation;
+        $newPatientHistory->address         = $request->address;
+        $newPatientHistory->smoker          = $request->smoker;
+        $newPatientHistory->drinker         = $request->drinker;
+        $newPatientHistory->family_dm       = $request->family_dm;
+        $newPatientHistory->gestational_dm  = $request->gestational_dm;
+        $newPatientHistory->weight_baby     = $request->weight_baby;
+        $newPatientHistory->hypert          = $request->hypert;
+        $newPatientHistory->family_ihd      = $request->family_ihd;
+        $newPatientHistory->parity          = $request->parity;
+        $newPatientHistory->smbg            = $request->smbg;
+        $newPatientHistory->ihd             = $request->ihd;
+        $newPatientHistory->cva             = $request->cva;
+        $newPatientHistory->pvd             = $request->pvd;
+        $newPatientHistory->neuro           = $request->neuro;
+        $newPatientHistory->weight          = $request->weight;
+        $newPatientHistory->height          = $request->height;
+        $newPatientHistory->wc              = $request->wc;
+        $newPatientHistory->bmi             = $request->bmi;
+        $newPatientHistory->hip             = $request->hip;
+        $newPatientHistory->retino          = $request->retino;
+        $newPatientHistory->nonpro          = $request->nonpro;
+        $newPatientHistory->prolif          = $request->prolif;
+        $newPatientHistory->macul           = $request->macul;
+        $newPatientHistory->insul           = $request->insul;
+        $newPatientHistory->amput           = $request->amput;
+        $newPatientHistory->ed              = $request->ed;
+        $newPatientHistory->nafld           = $request->nafld;
+        $newPatientHistory->dermo           = $request->dermo;
+        $newPatientHistory->dfoot           = $request->dfoot;
+        $newPatientHistory->date_insulin    = $request->date_insulin;
+        $newPatientHistory->duration_insulin = $request->duration_insulin;
+        $newPatientHistory->duration_dm     = $request->duration_dm;
+        $newPatientHistory->glycemic        = $request->glycemic;
+        $newPatientHistory->lipid           = $request->lipid;
+        $newPatientHistory->pressure        = $request->pressure;
+        $newPatientHistory->f_height        = $request->f_height;
+        $newPatientHistory->m_height        = $request->m_height;
+        $newPatientHistory->mid_height      = $request->mid_height;
+        $newPatientHistory->fa1c            = $request->fa1c;
+        $newPatientHistory->sa2c            = $request->sa2c;
+        $newPatientHistory->referral        = $request->referral;
+        $newPatientHistory->created_by      = auth('sanctum')->user()->id;
+        $newPatientHistory->save();
+
+        return response([
+            'data' => 'Store Successfully!',
+        ]);
+    }
 }
