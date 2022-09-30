@@ -92,6 +92,7 @@ return new class extends Migration
             $table->string('egfr', 100)->nullable();
             $table->string('hdma_r', 100)->nullable();
             $table->string('osmolamity', 100)->nullable();
+            $table->longText('notes')->nullable();
             $table->integer('status')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();

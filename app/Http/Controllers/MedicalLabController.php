@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MedicalLabResource;
 use App\Models\MedicalLab;
+use App\Models\Patients;
+use App\Models\PatientsHistory;
 use Illuminate\Http\Request;
 use App\Http\Requests\MedicalLabStoreRequest;
 use App\Http\Requests\MedicalLabUpdateRequest;
@@ -38,10 +40,13 @@ class MedicalLabController extends Controller
      */
     public function store(MedicalLabStoreRequest $request)
     {
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
         $newTest = new MedicalLab;
         $newTest->test_name                    = $request->test_name;
-        $newTest->patient_id                   = $request->patient_id;
-        $newTest->patient_history_id           = $request->patient_history_id;
+        $newTest->patient_id                   = $patientId->id;
+        $newTest->patient_history_id           = $patientHistoryId->id;
         $newTest->dm_f_blood_glucose           = $request->dm_f_blood_glucose;
         $newTest->dm_r_blood_glucose           = $request->dm_r_blood_glucose;
         $newTest->dm_hb_aic_turbo              = $request->dm_hb_aic_turbo;
@@ -95,12 +100,16 @@ class MedicalLabController extends Controller
         $newTest->endocrine_gh_basal           = $request->endocrine_gh_basal;
         $newTest->endocrine_gh_1hr             = $request->endocrine_gh_1hr;
         $newTest->endocrine_gh_2hr             = $request->endocrine_gh_2hr;
+        $newTest->notes                        = $request->test_notes;
         $newTest->status                       = 0; // 0 -> Pending, 1 -> Done
-        $newTest->created_by                   = 1; // TODO add AUTH ID
+        $newTest->created_by                   = auth('sanctum')->user()->id;
         $newTest->save();
 
+        $getDoctorName = auth('sanctum')->user()->full_name;
+
         return response([
-            'data' => $newTest
+            'data'          => $newTest,
+            'doctor_name'   => $getDoctorName
         ]);
     }
 

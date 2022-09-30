@@ -25,8 +25,8 @@ class MedicalLabStoreRequest extends FormRequest
     {
         return [
             'test_name'                          => 'bail|string|required',
-            'patient_id'                         => 'bail|integer|required',
-            'patient_history_id'                 => 'bail|integer|required',
+//            'patient_id'                         => 'bail|integer|required',
+//            'patient_history_id'                 => 'bail|integer|required',
             'dm_f_blood_glucose'                 => 'bail|string|nullable',
             'dm_r_blood_glucose'                 => 'bail|string|nullable',
             'dm_hb_aic_turbo'                    => 'bail|string|nullable',
@@ -101,6 +101,8 @@ class MedicalLabStoreRequest extends FormRequest
             'egfr'                               => 'bail|string|nullable',
             'hdma_r'                             => 'bail|string|nullable',
             'osmolamity'                         => 'bail|string|nullable',
+            'notes'                              => 'bail|string|nullable',
+
 
         ];
     }
