@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('phone')->nullable();
             $table->date('birthdate')->nullable();
-            $table->integer('gender')->nullable();
+            $table->string('gender')->nullable();
             $table->timestamp('last_visit');
             $table->string('created_by');
             $table->string('updated_by')->nullable();

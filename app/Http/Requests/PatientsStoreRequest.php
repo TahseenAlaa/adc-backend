@@ -28,7 +28,7 @@ class PatientsStoreRequest extends FormRequest
             'patient_picture' => 'bail|nullable|image|file|max:10240',
             'phone'         => 'bail|nullable|string',
             'occupation'    => 'bail|nullable|string',
-            'gender'        => 'bail|nullable|boolean',
+            'gender'        => 'bail|nullable|string',
             'birthdate'     => 'bail|nullable|date',
             'address'       => 'bail|nullable|string',
             'smoker'        => 'bail|nullable|string',
