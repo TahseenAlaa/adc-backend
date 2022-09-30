@@ -26,7 +26,7 @@ class PharmacyStoreRequest extends FormRequest
         return [
             'name'             => 'bail|required|string',
             'batch_no'         => 'bail|nullable|string',
-            'expire_date'      => 'bail|required|date',
+            'expire_date'      => 'bail|nullable|date',
             'treatment_type'   => 'bail|nullable|string',
             'dosage'           => 'bail|nullable|integer',
             'quantity'         => 'bail|required|integer',

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PharmacyResource;
+use App\Models\MedicalLab;
+use App\Models\Patients;
 use App\Models\Pharmacy;
 use App\Http\Requests\PharmacyStoreRequest;
 use App\Http\Requests\PharmacyUpdateRequest;
@@ -39,15 +41,21 @@ class PharmacyController extends Controller
      */
     public function store(PharmacyStoreRequest $request)
     {
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $patientHistoryId = MedicalLab::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
+
         $newDrug = new Pharmacy;
-        $newDrug->name              = $request->name;
-        $newDrug->batch_no          = $request->batch_no;
-        $newDrug->expire_date       = $request->expire_date;
-        $newDrug->treatment_type    = $request->treatment_type;
-        $newDrug->dosage            = $request->dosage;
-        $newDrug->quantity          = $request->quantity;
-        $newDrug->notes             = $request->notes;
-        $newDrug->created_by        = 1; // TODO add AUTH ID
+        $newDrug->patient_id           = $patientId->id;
+        $newDrug->patient_history_id   = $patientHistoryId->id;
+        $newDrug->name                 = $request->name;
+        $newDrug->batch_no             = $request->batch_no;
+        $newDrug->expire_date          = $request->expire_date;
+        $newDrug->treatment_type       = $request->treatment_type;
+        $newDrug->dosage               = $request->dosage;
+        $newDrug->quantity             = $request->quantity;
+        $newDrug->notes                = $request->notes;
+        $newDrug->created_by           = auth('sanctum')->user()->id;
         $newDrug->save();
 
         return response([

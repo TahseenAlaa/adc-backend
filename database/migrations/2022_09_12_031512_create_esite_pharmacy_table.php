@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('esite_pharmacy', function (Blueprint $table) {
             $table->id();
+            $table->integer('patient_id');
+            $table->integer('patient_history_id');
             $table->string('name');
             $table->string('batch_no')->nullable();
-            $table->date('expire_date');
+            $table->date('expire_date')->nullable();
             $table->string('treatment_type')->nullable();
             $table->string('dosage')->nullable();
             $table->integer('quantity');
