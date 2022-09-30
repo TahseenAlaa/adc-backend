@@ -25,8 +25,8 @@ class TreatmentStoreRequest extends FormRequest
     {
         return [
             'drug_id'             => 'bail|nullable|integer',
-            'patient_id'          => 'bail|required|integer',
-            'patient_history_id'  => 'bail|required|integer',
+//            'patient_id'          => 'bail|required|integer',
+//            'patient_history_id'  => 'bail|required|integer',
             'patient_picture'     => 'bail|nullable|image|file|max:10240',
             'name'                => 'bail|required|string',
             'dose'                => 'bail|nullable|integer',

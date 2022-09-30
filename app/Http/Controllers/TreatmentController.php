@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TreatmentResource;
+use App\Models\Patients;
+use App\Models\PatientsHistory;
 use App\Models\Treatment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,14 +41,17 @@ class TreatmentController extends Controller
      */
     public function store(TreatmentStoreRequest $request)
     {
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
         $newTreatment = new Treatment;
-        $newTreatment->patient_id          = $request->patient_id;
-        $newTreatment->patient_history_id  = $request->patient_history_id;
+        $newTreatment->patient_id          = $patientId->id;
+        $newTreatment->patient_history_id  = $patientHistoryId->id;
         $newTreatment->name                = $request->name;
         $newTreatment->drug_id             = $request->drug_id;
         $newTreatment->dose                = $request->dose;
         $newTreatment->status              = 0; // 0 -> Pending, 1 -> Done
-        $newTreatment->created_by          = 1; // TODO add Auth ID
+        $newTreatment->created_by          = auth('sanctum')->user()->id;
         if ($request->hasFile('patient_picture')) {
             $newTreatment->addMediaFromRequest('patient_picture')
                 ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
@@ -58,14 +63,18 @@ class TreatmentController extends Controller
 
         // TODO update pharmacy inventory
 
+        $getDoctorName = auth('sanctum')->user()->full_name;
+
         if (isset($newTreatment->getMedia('patient_picture')[0])) {
             return response([
                 'data'    => $newTreatment,
-                'picture' => $newTreatment->getMedia('patient_picture')[0]->original_url
+                'picture' => $newTreatment->getMedia('patient_picture')[0]->original_url,
+                'doctor_name' => $getDoctorName
             ], 200);
         } else {
             return response([
                 'data'    => $newTreatment,
+                'doctor_name' => $getDoctorName
             ], 200);
         }
     }
