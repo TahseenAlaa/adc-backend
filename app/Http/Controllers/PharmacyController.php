@@ -42,12 +42,12 @@ class PharmacyController extends Controller
     public function store(PharmacyStoreRequest $request)
     {
         $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
-        $patientHistoryId = MedicalLab::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+        $patientHistoryId = MedicalLab::select('patient_history_id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
 
 
         $newDrug = new Pharmacy;
         $newDrug->patient_id           = $patientId->id;
-        $newDrug->patient_history_id   = $patientHistoryId->id;
+        $newDrug->patient_history_id   = $patientHistoryId->patient_history_id;
         $newDrug->name                 = $request->name;
         $newDrug->batch_no             = $request->batch_no;
         $newDrug->expire_date          = $request->expire_date;
