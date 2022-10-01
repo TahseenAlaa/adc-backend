@@ -150,15 +150,18 @@ class PatientsController extends Controller
     public function show($id)
     {
         // Patient with History
-        $getPatientInfo = PatientsResource::collection(
-            Patients::where('uuid', '=', $id)
-                ->with('patientHistory')
-                ->get());
-
+        $getPatientInfo = Patients::where('uuid', '=', $id)->first();
+        $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
         return response([
-            'data' => $getPatientInfo, // TODO return picture with results
-//            'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
-        ], 200);
+            'patient_info'           => $getPatientInfo,
+            'patient_latest_history' => $getPatientLatestVisitHistory
+        ]);
+
+//
+//        return response([
+//            'data' => $getPatientInfo, // TODO return picture with results
+////            'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
+//        ]);
     }
 
     /**
