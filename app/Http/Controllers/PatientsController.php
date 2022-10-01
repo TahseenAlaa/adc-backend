@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PatientsHistoryResource;
+use App\Models\Diagnosis;
+use App\Models\MedicalLab;
 use App\Models\Patients;
 use App\Models\PatientsHistory;
+use App\Models\Pharmacy;
+use App\Models\Treatment;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -152,9 +157,30 @@ class PatientsController extends Controller
         // Patient with History
         $getPatientInfo = Patients::where('uuid', '=', $id)->first();
         $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
+        $getDoctorName = $this->getDoctorNamebyId($getPatientLatestVisitHistory->created_by_dr);
+        $getDiagnosis = Diagnosis::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+        $getTreatment = Treatment::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+        $getTests     = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+        $getMedicalHistory = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->orderBy('id', 'desc')->latest()->first();
+        $getDrugsList = Pharmacy::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+
+        $getDoctorOfDiagnosis = $this->getDoctorNamebyId(Diagnosis::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
+        $getDoctorOfTreatment = $this->getDoctorNamebyId(Treatment::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
+        $getDoctorOfTests = $this->getDoctorNamebyId(MedicalLab::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
+
         return response([
             'patient_info'           => $getPatientInfo,
-            'patient_latest_history' => $getPatientLatestVisitHistory
+            'patient_latest_history' => $getPatientLatestVisitHistory,
+            'doctorName'             => $getDoctorName,
+            'diagnosis'              => $getDiagnosis,
+            'treatment'              => $getTreatment,
+            'tests'                  => $getTests,
+            'DoctorOfDiagnosis'      => $getDoctorOfDiagnosis,
+            'DoctorOfTreatment'      => $getDoctorOfTreatment,
+            'DoctorOfTests'          => $getDoctorOfTests,
+            'medical_history'        => $getMedicalHistory,
+            'drugs_list'             => $getDrugsList,
+
         ]);
 
 //
@@ -425,5 +451,9 @@ class PatientsController extends Controller
         return response([
             'data' => 'Store Successfully!',
         ]);
+    }
+
+    public function getDoctorNamebyId($doctorId) {
+      return User::select('full_name')->where('id', '=', $doctorId)->first();
     }
 }
