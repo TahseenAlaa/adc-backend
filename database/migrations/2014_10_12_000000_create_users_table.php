@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->string('full_name');
-            $table->string('username');
-            $table->string('email')->unique();
+            $table->string('username')->unique();
+            $table->string('email')->nullable();
             $table->string('profile_pic')->nullable();
             $table->string('job_title')->nullable();
             $table->integer('added_by');
