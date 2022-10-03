@@ -361,7 +361,7 @@ class PatientsController extends Controller
      */
     public function searchByPatientId(Request $request) {
 
-        $PatientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthdate', 'gender', 'updated_at'])
+        $PatientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at'])
             ->where('id', '=', $request->patient)
             ->get();
 
