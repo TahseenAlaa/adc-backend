@@ -26,9 +26,8 @@ class SignupRequest extends FormRequest
         return [
             'full_name'   => 'bail|required|string',
             'username'    => 'bail|required|string',
-            'email'       => 'bail|required|string',
             'profile_pic' => 'bail|nullable|string',
-            'job_title'   => 'bail|required|string',
+            'job_title'   => 'bail|nullable|string',
             'password'    => 'bail|required|string',
         ];
     }

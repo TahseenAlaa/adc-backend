@@ -28,7 +28,6 @@ class AuthController extends Controller
         $newUser->uuid = fake()->uuid();
         $newUser->full_name = $request->full_name;
         $newUser->username = $request->username;
-        $newUser->email = $request->email;
         // TODO add profile_pic
         $newUser->job_title = $request->job_title;
         $newUser->added_by = $added_by;
