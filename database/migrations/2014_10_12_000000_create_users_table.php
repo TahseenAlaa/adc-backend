@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('profile_pic')->nullable();
             $table->string('job_title')->nullable();
-            $table->integer('added_by');
             $table->integer('profile_id')->nullable();
             $table->integer('permission_id')->nullable();
             $table->string('role')->nullable();
@@ -30,6 +29,8 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('enabled')->default(1)->comment('1 Active, 0 Disabled');
             $table->rememberToken();
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

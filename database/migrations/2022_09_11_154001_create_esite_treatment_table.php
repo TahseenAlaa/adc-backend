@@ -18,10 +18,10 @@ return new class extends Migration
             $table->integer('patient_id');
             $table->integer('patient_history_id');
             $table->string('name');
-            $table->integer('drug_id')->nullable(); // from Pharmacy
-            $table->string('patient_picture')->nullable();
+            $table->integer('drug_id')->nullable();
+            $table->string('patient_picture_id')->nullable();
             $table->string('dose')->nullable();
-            $table->string('status')->nullable();
+            $table->boolean('status')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
