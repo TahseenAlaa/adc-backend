@@ -53,7 +53,7 @@ class PatientsController extends Controller
      */
     public function store(Request $request)
     {
-        // Store new patient data
+        // START Store new patient data
         $newPatient = new Patients;
         $newPatient->uuid                        = Str::uuid()->toString();
         $newPatient->full_name                   = $request->full_name;
@@ -107,6 +107,20 @@ class PatientsController extends Controller
         $newPatient->last_visit                  = Carbon::now();
         $newPatient->created_by                  = auth('sanctum')->user()->id;
         $newPatient->save();
+        // END Store new patient data
+
+        // START Create Patient history
+        $newPatientHistory = new PatientsHistory;
+        $newPatientHistory->uuid                        = Str::uuid()->toString();
+        $newPatientHistory->patient_id                  = $newPatient->id;
+        $newPatientHistory->date_of_visit               = Carbon::now();
+        $newPatientHistory->weight                      = $newPatient->weight;
+        $newPatientHistory->height                      = $newPatient->height;
+        $newPatientHistory->bmi                         = $newPatient->bmi;
+        $newPatientHistory->age_at_visit                = Carbon::parse($newPatient->birthday)->age;
+        $newPatientHistory->created_by                  = auth('sanctum')->user()->id;
+        $newPatientHistory->save();
+        // END Create Patient history
 
         return response([
             'data' => $newPatient

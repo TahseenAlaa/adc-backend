@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->string('occupation')->nullable();
             $table->boolean('education_qualification')->nullable();
-            $table->boolean('marital_status')->nullable();
+            $table->string('marital_status')->nullable();
             $table->string('address')->nullable();
             $table->boolean('smoker')->nullable();
             $table->boolean('drinker')->nullable();
