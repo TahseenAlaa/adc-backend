@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->date('birthday')->nullable();
             $table->string('phone')->nullable();
-            $table->integer('gender')->comment('1: Male, 2: Female')->nullable();
+            $table->string('gender')->nullable();
             $table->string('occupation')->nullable();
             $table->boolean('education_qualification')->nullable();
             $table->boolean('marital_status')->nullable();
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('gestational_dm')->nullable();
             $table->integer('weight_baby')->nullable();
             $table->boolean('hypertension')->nullable();
-            $table->boolean('family_ihd')->nullable();
+            $table->string('family_ihd')->nullable();
             $table->string('parity')->nullable();
             $table->boolean('smbg')->nullable();
             $table->boolean('ihd')->nullable();
@@ -47,7 +47,7 @@ return new class extends Migration
             $table->integer('bmi')->nullable();
             $table->string('hip')->nullable();
             $table->boolean('retinopathy')->nullable();
-            $table->boolean('nonProliferative')->nullable();
+            $table->boolean('non_proliferative')->nullable();
             $table->boolean('proliferative_dr')->nullable();
             $table->boolean('maculopathy')->nullable();
             $table->boolean('insulin')->nullable();

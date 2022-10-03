@@ -51,99 +51,98 @@ class PatientsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PatientsStoreRequest $request)
+    public function store(Request $request)
     {
         // Store new patient data
         $newPatient = new Patients;
-        $newPatient->uuid            = Str::uuid()->toString();
-        $newPatient->full_name       = $request->full_name;
-        $newPatient->phone           = $request->phone;
-        $newPatient->birthdate       = $request->birthday;
-        $newPatient->gender          = $request->gender;
-        $newPatient->last_visit      = Carbon::now();
-        $newPatient->created_by      = auth('sanctum')->user()->id;
+        $newPatient->uuid                        = Str::uuid()->toString();
+        $newPatient->full_name                   = $request->full_name;
+        $newPatient->birthday                    = $request->birthday;
+        $newPatient->phone                       = $request->phone;
+        $newPatient->gender                      = $request->gender;
+        $newPatient->occupation                  = $request->occupation;
+        $newPatient->education_qualification     = $request->education_qualification;
+        $newPatient->marital_status              = $request->marital_status;
+        $newPatient->address                     = $request->address;
+        $newPatient->smoker                      = $request->smoker;
+        $newPatient->drinker                     = $request->drinker;
+        $newPatient->family_dm                   = $request->family_dm;
+        $newPatient->gestational_dm              = $request->gestational_dm;
+        $newPatient->weight_baby                 = $request->weight_baby;
+        $newPatient->hypertension                = $request->hypertension;
+        $newPatient->family_ihd                  = $request->family_ihd;
+        $newPatient->parity                      = $request->parity;
+        $newPatient->smbg                        = $request->smbg;
+        $newPatient->ihd                         = $request->ihd;
+        $newPatient->cva                         = $request->cva;
+        $newPatient->pvd                         = $request->pvd;
+        $newPatient->neuropathy                  = $request->neuropathy;
+        $newPatient->weight                      = $request->weight;
+        $newPatient->height                      = $request->height;
+        $newPatient->waist_circumference         = $request->waist_circumference;
+        $newPatient->bmi                         = $request->bmi;
+        $newPatient->hip                         = $request->hip;
+        $newPatient->retinopathy                 = $request->retinopathy;
+        $newPatient->non_proliferative           = $request->non_proliferative;
+        $newPatient->proliferative_dr            = $request->proliferative_dr;
+        $newPatient->maculopathy                 = $request->maculopathy;
+        $newPatient->insulin                     = $request->insulin;
+        $newPatient->amputation                  = $request->amputation;
+        $newPatient->ed                          = $request->ed;
+        $newPatient->nafld                       = $request->nafld;
+        $newPatient->dermopathy                  = $request->dermopathy;
+        $newPatient->diabetic_food               = $request->diabetic_food;
+        $newPatient->date_insulin                = $request->date_insulin;
+        $newPatient->duration_insulin            = $request->duration_insulin;
+        $newPatient->duration_dm                 = $request->duration_dm;
+        $newPatient->glycemic_control            = $request->glycemic_control;
+        $newPatient->lipid_control               = $request->lipid_control;
+        $newPatient->pressure_control            = $request->pressure_control;
+        $newPatient->father_height               = $request->father_height;
+        $newPatient->mother_height               = $request->mother_height;
+        $newPatient->mid_height                  = $request->mid_height;
+        $newPatient->first_a1c                   = $request->first_a1c;
+        $newPatient->second_a1c                  = $request->second_a1c;
+        $newPatient->referral                    = $request->referral;
+        $newPatient->last_visit                  = Carbon::now();
+        $newPatient->created_by                  = auth('sanctum')->user()->id;
         $newPatient->save();
 
-        if ($newPatient->exists) {
-            // Store patient history
-            $newPatientHistory = new PatientsHistory;
-            $newPatientHistory->patient_id      = $newPatient->id;
-            $newPatientHistory->uuid            = Str::uuid()->toString();
-            $newPatientHistory->patient_picture_id = 123;
-            $newPatientHistory->occupation      = $request->occupation;
-            $newPatientHistory->address         = $request->address;
-            $newPatientHistory->smoker          = $request->smoker;
-            $newPatientHistory->drinker         = $request->drinker;
-            $newPatientHistory->family_dm       = $request->family_dm;
-            $newPatientHistory->gestational_dm  = $request->gestational_dm;
-            $newPatientHistory->weight_baby     = $request->weight_baby;
-            $newPatientHistory->hypert          = $request->hypert;
-            $newPatientHistory->family_ihd      = $request->family_ihd;
-            $newPatientHistory->parity          = $request->parity;
-            $newPatientHistory->smbg            = $request->smbg;
-            $newPatientHistory->ihd             = $request->ihd;
-            $newPatientHistory->cva             = $request->cva;
-            $newPatientHistory->pvd             = $request->pvd;
-            $newPatientHistory->neuro           = $request->neuro;
-            $newPatientHistory->weight          = $request->weight;
-            $newPatientHistory->height          = $request->height;
-            $newPatientHistory->wc              = $request->wc;
-            $newPatientHistory->bmi             = $request->bmi;
-            $newPatientHistory->hip             = $request->hip;
-            $newPatientHistory->retino          = $request->retino;
-            $newPatientHistory->nonpro          = $request->nonpro;
-            $newPatientHistory->prolif          = $request->prolif;
-            $newPatientHistory->macul           = $request->macul;
-            $newPatientHistory->insul           = $request->insul;
-            $newPatientHistory->amput           = $request->amput;
-            $newPatientHistory->ed              = $request->ed;
-            $newPatientHistory->nafld           = $request->nafld;
-            $newPatientHistory->dermo           = $request->dermo;
-            $newPatientHistory->dfoot           = $request->dfoot;
-            $newPatientHistory->date_insulin    = $request->date_insulin;
-            $newPatientHistory->duration_insulin = $request->duration_insulin;
-            $newPatientHistory->duration_dm     = $request->duration_dm;
-            $newPatientHistory->glycemic        = $request->glycemic;
-            $newPatientHistory->lipid           = $request->lipid;
-            $newPatientHistory->pressure        = $request->pressure;
-            $newPatientHistory->f_height        = $request->f_height;
-            $newPatientHistory->m_height        = $request->m_height;
-            $newPatientHistory->mid_height      = $request->mid_height;
-            $newPatientHistory->fa1c            = $request->fa1c;
-            $newPatientHistory->sa2c            = $request->sa2c;
-            $newPatientHistory->referral        = $request->referral;
-            $newPatientHistory->created_by      = auth('sanctum')->user()->id;
-            if ($request->hasFile('patient_picture'))  {
-                $newPatientHistory->addMediaFromRequest('patient_picture')
-                    ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
-                    ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '.jpg')
-                    ->withResponsiveImages()
-                    ->toMediaCollection('patient_picture');
-            }
-            $newPatientHistory->save();
-
-            if (isset($newPatientHistory->getMedia('patient_picture')[0])) {
-                // Patient with History
-                $getPatientInfo = PatientsResource::collection(
-                    Patients::where('id', '=', $newPatient->id)
-                        ->with('patientHistory')
-                        ->get());
-
-                return response([
-                    'data' => $getPatientInfo,
-                    'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
-                ], 200);
-            }
-
-            // Only pationt
-            return response([
-                'data' => PatientsResource::collection(PatientsHistory::where('id', '=', $newPatient->id)->get())
-            ], 200);
-        }
-
         return response([
-            'data' => 'Error!'
-        ], 500);
+            'data' => $newPatient
+        ]);
+//
+//            if ($request->hasFile('patient_picture'))  {
+//                $newPatientHistory->addMediaFromRequest('patient_picture')
+//                    ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
+//                    ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '.jpg')
+//                    ->withResponsiveImages()
+//                    ->toMediaCollection('patient_picture');
+//            }
+//            $newPatientHistory->save();
+//
+//            if (isset($newPatientHistory->getMedia('patient_picture')[0])) {
+//                // Patient with History
+//                $getPatientInfo = PatientsResource::collection(
+//                    Patients::where('id', '=', $newPatient->id)
+//                        ->with('patientHistory')
+//                        ->get());
+//
+//                return response([
+//                    'data' => $getPatientInfo,
+//                    'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
+//                ], 200);
+//            }
+//
+//            // Only pationt
+//            return response([
+//                'data' => PatientsResource::collection(PatientsHistory::where('id', '=', $newPatient->id)->get())
+//            ], 200);
+//        }
+//
+//        return response([
+//            'data' => 'Error!'
+//        ], 500);
     }
 
     /**
