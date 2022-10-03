@@ -409,56 +409,22 @@ class PatientsController extends Controller
     }
 
     public function storePatientNewVisit(Request $request) {
-        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $patientId = Patients::select('id', 'birthday')->where('uuid', '=', $request->patient_uuid)->first();
 
         // Store patient history
         $newPatientHistory = new PatientsHistory;
-        $newPatientHistory->patient_id      = $patientId->id;
-        $newPatientHistory->uuid            = Str::uuid()->toString();
-        $newPatientHistory->patient_picture_id = 123;
-        $newPatientHistory->occupation      = $request->occupation;
-        $newPatientHistory->address         = $request->address;
-        $newPatientHistory->smoker          = $request->smoker;
-        $newPatientHistory->drinker         = $request->drinker;
-        $newPatientHistory->family_dm       = $request->family_dm;
-        $newPatientHistory->gestational_dm  = $request->gestational_dm;
-        $newPatientHistory->weight_baby     = $request->weight_baby;
-        $newPatientHistory->hypert          = $request->hypert;
-        $newPatientHistory->family_ihd      = $request->family_ihd;
-        $newPatientHistory->parity          = $request->parity;
-        $newPatientHistory->smbg            = $request->smbg;
-        $newPatientHistory->ihd             = $request->ihd;
-        $newPatientHistory->cva             = $request->cva;
-        $newPatientHistory->pvd             = $request->pvd;
-        $newPatientHistory->neuro           = $request->neuro;
-        $newPatientHistory->weight          = $request->weight;
-        $newPatientHistory->height          = $request->height;
-        $newPatientHistory->wc              = $request->wc;
-        $newPatientHistory->bmi             = $request->bmi;
-        $newPatientHistory->hip             = $request->hip;
-        $newPatientHistory->retino          = $request->retino;
-        $newPatientHistory->nonpro          = $request->nonpro;
-        $newPatientHistory->prolif          = $request->prolif;
-        $newPatientHistory->macul           = $request->macul;
-        $newPatientHistory->insul           = $request->insul;
-        $newPatientHistory->amput           = $request->amput;
-        $newPatientHistory->ed              = $request->ed;
-        $newPatientHistory->nafld           = $request->nafld;
-        $newPatientHistory->dermo           = $request->dermo;
-        $newPatientHistory->dfoot           = $request->dfoot;
-        $newPatientHistory->date_insulin    = $request->date_insulin;
-        $newPatientHistory->duration_insulin = $request->duration_insulin;
-        $newPatientHistory->duration_dm     = $request->duration_dm;
-        $newPatientHistory->glycemic        = $request->glycemic;
-        $newPatientHistory->lipid           = $request->lipid;
-        $newPatientHistory->pressure        = $request->pressure;
-        $newPatientHistory->f_height        = $request->f_height;
-        $newPatientHistory->m_height        = $request->m_height;
-        $newPatientHistory->mid_height      = $request->mid_height;
-        $newPatientHistory->fa1c            = $request->fa1c;
-        $newPatientHistory->sa2c            = $request->sa2c;
-        $newPatientHistory->referral        = $request->referral;
-        $newPatientHistory->created_by      = auth('sanctum')->user()->id;
+        $newPatientHistory->patient_id                 = $patientId->id;
+        $newPatientHistory->uuid                       = Str::uuid()->toString();
+        $newPatientHistory->patient_id                 = $patientId->id;
+        $newPatientHistory->patient_number             = $request->patient_number;
+        $newPatientHistory->date_of_visit              = Carbon::now();
+        $newPatientHistory->age_at_visit               = Carbon::parse($patientId->birthday)->age;
+        $newPatientHistory->blood_pressure_systolic    = $request->blood_pressure_systolic;
+        $newPatientHistory->blood_pressure_diastolic   = $request->blood_pressure_diastolic;
+        $newPatientHistory->weight                     = $request->weight;
+        $newPatientHistory->height                     = $request->height;
+        $newPatientHistory->bmi                        = $request->bmi;
+        $newPatientHistory->created_by                 = auth('sanctum')->user()->id;
         $newPatientHistory->save();
 
         return response([
@@ -468,5 +434,11 @@ class PatientsController extends Controller
 
     public function getDoctorNamebyId($doctorId) {
       return User::select('full_name')->where('id', '=', $doctorId)->first();
+    }
+
+    public function getPatientAgeFromBirthday(Request $request) {
+        return response([
+            'data' => Carbon::parse(Patients::select('birthday')->where('uuid', '=', $request->patient_uuid)->first()->birthday)->age
+        ]);
     }
 }
