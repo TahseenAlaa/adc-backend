@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('added_by');
             $table->integer('profile_id')->nullable();
             $table->integer('permission_id')->nullable();
-            $table->integer('role')->nullable();
+            $table->string('role')->nullable();
             $table->timestamp('last_login_at');
             $table->string('last_login_ip');
             $table->string('password');

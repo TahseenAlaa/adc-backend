@@ -164,9 +164,9 @@ class PatientsController extends Controller
         $getMedicalHistory = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->orderBy('id', 'desc')->latest()->first();
         $getDrugsList = Pharmacy::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
 
-        $getDoctorOfDiagnosis = $this->getDoctorNamebyId(Diagnosis::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
-        $getDoctorOfTreatment = $this->getDoctorNamebyId(Treatment::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
-        $getDoctorOfTests = $this->getDoctorNamebyId(MedicalLab::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
+//        $getDoctorOfDiagnosis = $this->getDoctorNamebyId(Diagnosis::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
+//        $getDoctorOfTreatment = $this->getDoctorNamebyId(Treatment::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
+//        $getDoctorOfTests = $this->getDoctorNamebyId(MedicalLab::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
 
         return response([
             'patient_info'           => $getPatientInfo,
@@ -175,9 +175,9 @@ class PatientsController extends Controller
             'diagnosis'              => $getDiagnosis,
             'treatment'              => $getTreatment,
             'tests'                  => $getTests,
-            'DoctorOfDiagnosis'      => $getDoctorOfDiagnosis,
-            'DoctorOfTreatment'      => $getDoctorOfTreatment,
-            'DoctorOfTests'          => $getDoctorOfTests,
+//            'DoctorOfDiagnosis'      => $getDoctorOfDiagnosis,
+//            'DoctorOfTreatment'      => $getDoctorOfTreatment,
+//            'DoctorOfTests'          => $getDoctorOfTests,
             'medical_history'        => $getMedicalHistory,
             'drugs_list'             => $getDrugsList,
 
