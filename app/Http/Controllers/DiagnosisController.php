@@ -41,7 +41,7 @@ class DiagnosisController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DiagnosisStoreRequest $request)
+    public function store(Request $request)
     {
         $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
         $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
