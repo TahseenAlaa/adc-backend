@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('blood_pressure_diastolic')->nullable();
             $table->integer('weight')->nullable();
             $table->integer('height')->nullable();
+            $table->integer('waist_circumference')->nullable();
             $table->integer('bmi')->nullable();
             $table->integer('age_at_visit')->nullable();
             $table->longText('clinical_notes')->nullable();

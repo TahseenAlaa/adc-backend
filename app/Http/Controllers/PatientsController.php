@@ -116,6 +116,7 @@ class PatientsController extends Controller
         $newPatientHistory->date_of_visit               = Carbon::now();
         $newPatientHistory->weight                      = $newPatient->weight;
         $newPatientHistory->height                      = $newPatient->height;
+        $newPatientHistory->waist_circumference         = $newPatient->waist_circumference;
         $newPatientHistory->bmi                         = $newPatient->bmi;
         $newPatientHistory->age_at_visit                = Carbon::parse($newPatient->birthday)->age;
         $newPatientHistory->created_by                  = auth('sanctum')->user()->id;
@@ -439,6 +440,39 @@ class PatientsController extends Controller
     public function getPatientAgeFromBirthday(Request $request) {
         return response([
             'data' => Carbon::parse(Patients::select('birthday')->where('uuid', '=', $request->patient_uuid)->first()->birthday)->age
+        ]);
+    }
+
+    public function showPatientHistory(Request $request) {
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+
+        return response([
+            'data' => PatientsHistory::where('patient_id', '=', $patientId->id)->orderBy('created_at', 'desc')->latest()->first()
+        ]);
+    }
+
+    public function showPatientInfo(Request $request) {
+        return response([
+            'data' => Patients::where('uuid', '=', $request->patient_uuid)->first()
+        ]);
+    }
+    public function updatePatientHistory(Request $request, $uuid) {
+        PatientsHistory::where('uuid', '=', $uuid)->update([
+            'patient_number'               => $request->patient_number,
+            'blood_pressure_systolic'      => $request->blood_pressure_systolic,
+            'blood_pressure_diastolic'     => $request->blood_pressure_diastolic,
+            'weight'                       => $request->weight,
+            'height'                       => $request->height,
+            'waist_circumference'          => $request->waist_circumference,
+            'bmi'                          => $request->bmi,
+            'age_at_visit'                 => $request->age_at_visit,
+            'clinical_notes'               => $request->clinical_notes,
+            'next_visit'                   => $request->next_visit,
+            'created_by'                   => auth('sanctum')->user()->id
+        ]);
+
+        return response([
+            'data' => 'Store Successfully!'
         ]);
     }
 }

@@ -54,6 +54,9 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store-by-dr', [PatientsController::class, 'storePatientInfoByDr'])->name('storeByDoctor');
         Route::post('/store/newvisit', [PatientsController::class, 'storePatientNewVisit'])->name('storePatientNewVisit');
         Route::get('/patient-age/{patient_uuid}', [PatientsController::class, 'getPatientAgeFromBirthday'])->name('getPatientAgeFromBirthday');
+        Route::get('/show-patient-history/{patient_uuid}', [PatientsController::class, 'showPatientHistory'])->name('showPatientHistory');
+        Route::get('/show-patient-info/{patient_uuid}', [PatientsController::class, 'showPatientInfo'])->name('showPatientInfo');
+        Route::post('/updatePatientHistory/{uuid}', [PatientsController::class, 'updatePatientHistory'])->name('updatePatientHistory');
     });
     // END Patients
 
