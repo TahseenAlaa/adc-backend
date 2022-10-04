@@ -171,7 +171,7 @@ class PatientsController extends Controller
         // Patient with History
         $getPatientInfo = Patients::where('uuid', '=', $id)->first();
         $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
-        $getDoctorName = $this->getDoctorNamebyId($getPatientLatestVisitHistory->created_by_dr);
+        $getDoctorName = $this->getDoctorNamebyId($getPatientLatestVisitHistory->created_by);
         $getDiagnosis = Diagnosis::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
         $getTreatment = Treatment::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
         $getTests     = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
