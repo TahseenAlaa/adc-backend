@@ -29,7 +29,7 @@ return new class extends Migration
             $table->boolean('drinker')->nullable();
             $table->boolean('family_dm')->nullable();
             $table->string('gestational_dm')->nullable();
-            $table->integer('weight_baby')->nullable();
+            $table->boolean('weight_baby')->comment('Weight at birth > 4.5kg')->nullable();
             $table->boolean('hypertension')->nullable();
             $table->string('family_ihd')->nullable();
             $table->string('parity')->nullable();
