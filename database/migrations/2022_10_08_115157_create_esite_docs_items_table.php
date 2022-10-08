@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('esite_pharmacy', function (Blueprint $table) {
+        Schema::create('esite_docs_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('patient_id');
-            $table->integer('patient_history_id');
             $table->integer('drug_id');
-            $table->integer('batch_id')->nullable();
             $table->integer('quantity');
             $table->longText('notes')->nullable();
+            $table->integer('parent_doc')->nullable();
+            $table->string('batch_no')->nullable();
+            $table->date('expire_date')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('esite_pharmacy');
+        Schema::dropIfExists('esite_docs_items');
     }
 };
