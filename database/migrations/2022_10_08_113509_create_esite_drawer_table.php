@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('esite_pharmacy', function (Blueprint $table) {
+        Schema::create('esite_drawer', function (Blueprint $table) {
             $table->id();
-            $table->integer('patient_id');
-            $table->integer('patient_history_id');
-            $table->integer('drug_id');
-            $table->integer('batch_id')->nullable();
-            $table->integer('quantity');
-            $table->longText('notes')->nullable();
+            $table->string('endpoint');
+            $table->tinyInteger('type')->comment('0: Not shown in drawer, 1: Drawer Main Item, 2: Drawer Sub item')->nullable();
+            $table->string('title_ar')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('parent')->nullable();
+            $table->string('v_order')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('esite_pharmacy');
+        Schema::dropIfExists('esite_drawer');
     }
 };

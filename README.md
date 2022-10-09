@@ -11,6 +11,7 @@
 - Run `php artisan generate` to generate encryption key
 - Create database then add it's name in the `.env` file in [DB_DATABASE]
 - Run `php artisan migrate`
+- Run ` php artisan db:seed --class=PermissionsSeeder` to publish permissions.
 - Run `php artisan serve`
 
 ## Testing

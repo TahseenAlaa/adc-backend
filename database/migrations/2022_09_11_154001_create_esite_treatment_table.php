@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->integer('patient_id');
             $table->integer('patient_history_id');
-            $table->string('name');
-            $table->integer('drug_id')->nullable();
-            $table->string('patient_picture_id')->nullable();
-            $table->string('dose')->nullable();
-            $table->boolean('status')->nullable();
+            $table->integer('drug_id');
+            $table->integer('frequency')->comment('Scale from 1-10');
+            $table->integer('day_we_mo')->comment('1: Day, 2: Week , 3: Month');
+            $table->integer('meal')->comment('1: Before Meal, 2: With meal, 3: After meal, 4: On-demand, 5: Anytime');
+            $table->string('notes')->comment('Instructions, Dosage, Notes, etc')->nullable();
+            $table->boolean('status')->comment('0: Pending, 1: Dispensed from Pharmacy')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
