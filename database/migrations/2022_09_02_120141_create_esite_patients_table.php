@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             // START Personal Information
             $table->string('full_name');
+            $table->string('patient_number')->comment('Old patient File Number')->nullable(); // Old patient File Number
             $table->date('birthday')->nullable();
             $table->string('phone')->nullable();
             $table->string('gender')->nullable();
