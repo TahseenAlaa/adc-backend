@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('/invoice/patient-info/{uuid}', [InvoiceController::class, 'patientInfoInvoice']);
+Route::get('/invoice/reception-info/{uuid}', [InvoiceController::class, 'ReceptionInfoInvoice']);
