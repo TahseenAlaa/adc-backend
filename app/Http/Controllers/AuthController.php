@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\SignupRequest;
 use App\Http\Requests\LoginRequest;
 use Laravel\Sanctum\Sanctum;
+use App\Models\LoginHistory;
 
 class AuthController extends Controller
 {
@@ -57,6 +58,10 @@ class AuthController extends Controller
             ], 401);
         } else {
             $token = $user->createToken($user->full_name)->plainTextToken;
+            // Store Login History
+            $loginHistory = new LoginHistoryController();
+            $loginHistory->store($user->id, $user->full_name, $request->ip());
+
             return response([
                 'user' => $user,
                 'token' => $token
