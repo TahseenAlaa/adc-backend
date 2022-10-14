@@ -12,7 +12,18 @@
 - Create database then add it's name in the `.env` file in [DB_DATABASE]
 - Run `php artisan migrate`
 - Run ` php artisan db:seed --class=PermissionsSeeder` to publish permissions.
-- Run `php artisan serve`
+- Add the URL + Port of the frontend in the .env file `(SANCTUM_STATEFUL_DOMAINS)`
+- Run
+```composer install --optimize-autoloader --no-dev;
+  php artisan optimize:clear;
+  php artisan optimize;
+  php artisan config:clear;
+  php artisan view:clear;
+  php artisan config:cache;
+  php artisan route:cache;
+  php artisan view:cache;
+  php artisan up;
+  ```
 
 ## Testing
 ### Generate  data
