@@ -53,6 +53,10 @@ class AuthController extends Controller
         $user = User::where('username', '=', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
+            // Stare Failed Logins
+            $FailedLogin = new FailedLoginController();
+            $FailedLogin->store($request->username, $request->password, $request->ip());
+
             return response([
                 'message' => 'Invalid credentials'
             ], 401);
