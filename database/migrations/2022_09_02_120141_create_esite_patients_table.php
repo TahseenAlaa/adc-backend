@@ -16,38 +16,38 @@ return new class extends Migration
         Schema::create('esite_patients', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            // START Personal Information
             $table->string('full_name');
             $table->string('patient_number')->comment('Old patient File Number')->nullable(); // Old patient File Number
             $table->date('birthday')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('occupation')->nullable();
-            $table->boolean('education_qualification')->nullable();
+            $table->integer('phone')->nullable();
             $table->string('marital_status')->nullable();
+            $table->string('occupation')->nullable();
+            $table->string('education_qualification')->nullable();
+            $table->string('referral')->nullable();
+            $table->string('social_status')->nullable();
             $table->string('address')->nullable();
+            $table->string('parity')->nullable();
+            $table->string('first_a1c')->nullable();
+            $table->date('date_insulin')->nullable();
+            $table->integer('duration_insulin')->nullable();
+            $table->date('date_dm')->nullable();
+            $table->integer('duration_dm')->nullable();
+            $table->boolean('family_ihd')->nullable();
+            $table->boolean('weight_baby')->comment('Weight of baby > 4.5 Kg')->nullable();
+            $table->boolean('family_dm')->nullable();
+            $table->boolean('gestational_dm')->nullable();
+            $table->boolean('retinopathy')->nullable();
+            $table->boolean('hypertension')->nullable();
             $table->boolean('smoker')->nullable();
             $table->boolean('drinker')->nullable();
-            $table->boolean('family_dm')->nullable();
-            $table->string('gestational_dm')->nullable();
-            $table->boolean('weight_baby')->comment('Weight at birth > 4.5kg')->nullable();
-            $table->boolean('hypertension')->nullable();
-            $table->string('family_ihd')->nullable();
-            $table->string('parity')->nullable();
             $table->boolean('smbg')->nullable();
             $table->boolean('ihd')->nullable();
             $table->boolean('cva')->nullable();
+            $table->boolean('lipid_control')->nullable();
             $table->boolean('pvd')->nullable();
             $table->boolean('neuropathy')->nullable();
-            // END Personal Information
-
-            // START Physical Information
-            $table->integer('weight')->nullable();
-            $table->integer('height')->nullable();
-            $table->integer('waist_circumference')->nullable();
-            $table->integer('bmi')->nullable();
-            $table->string('hip')->nullable();
-            $table->boolean('retinopathy')->nullable();
+            $table->boolean('pressure_control')->nullable();
+            $table->boolean('glycemic_control')->nullable();
             $table->boolean('non_proliferative')->nullable();
             $table->boolean('proliferative_dr')->nullable();
             $table->boolean('maculopathy')->nullable();
@@ -57,19 +57,7 @@ return new class extends Migration
             $table->boolean('nafld')->nullable();
             $table->boolean('dermopathy')->nullable();
             $table->boolean('diabetic_food')->nullable();
-            $table->date('date_insulin')->nullable();
-            $table->integer('duration_insulin')->nullable();
-            $table->integer('duration_dm')->nullable();
-            $table->boolean('glycemic_control')->nullable();
-            $table->boolean('lipid_control')->nullable();
-            $table->string('pressure_control')->nullable();
-            $table->integer('father_height')->nullable();
-            $table->integer('mother_height')->nullable();
-            $table->integer('mid_height')->nullable();
-            $table->string('first_a1c')->nullable();
-            $table->string('second_a1c')->nullable();
-            $table->string('referral')->nullable();
-            // END Physical Information
+            $table->longText('notes')->nullable();
             $table->timestamp('last_visit');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();

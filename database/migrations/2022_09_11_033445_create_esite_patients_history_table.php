@@ -32,6 +32,18 @@ return new class extends Migration
             $table->integer('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+
+//            $table->string('gender')->nullable();
+//            $table->integer('weight')->nullable();
+//            $table->integer('height')->nullable();
+//            $table->integer('waist_circumference')->nullable();
+//            $table->integer('bmi')->nullable();
+//            $table->string('hip')->nullable();
+//            $table->integer('father_height')->nullable();
+//            $table->integer('mother_height')->nullable();
+//            $table->integer('mid_height')->nullable();
+
         });
     }
 
