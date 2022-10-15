@@ -341,106 +341,115 @@ class PatientsController extends Controller
      * @param Request $request
      * @return Application|ResponseFactory|Response
      */
-    public function searchByFullName(Request $request) {
-
-        $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at'])
-            ->where('full_name', 'LIKE', '%' . $request->name . '%')
-            ->get();
-
-        return response([
-            'data' => $patientInfo
-        ]);
-    }
+//    public function searchByFullName(Request $request) {
+//
+//        $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at'])
+//            ->where('full_name', 'LIKE', '%' . $request->name . '%')
+//            ->get();
+//
+//        return response([
+//            'data' => $patientInfo
+//        ]);
+//    }
 
     /** Search patients by phone
      *
      * @param Request $request
      * @return Application|ResponseFactory|Response
      */
-    public function searchByPhone(Request $request) {
-
-        $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at'])
-            ->where('phone', '=', $request->phone)
-            ->get();
-
-        return response([
-            'data' => $patientInfo
-        ]);
-    }
+//    public function searchByPhone(Request $request) {
+//
+//        $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at'])
+//            ->where('phone', '=', $request->phone)
+//            ->get();
+//
+//        return response([
+//            'data' => $patientInfo
+//        ]);
+//    }
 
     /** Search patients by Patient ID
      *
      * @param Request $request
      * @return Application|ResponseFactory|Response
      */
-    public function searchByPatientId(Request $request) {
+//    public function searchByPatientId(Request $request) {
+//
+//        $PatientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at'])
+//            ->where('id', '=', $request->patient)
+//            ->get();
+//
+//        return response([
+//            'data' => $PatientInfo
+//        ]);
+//    }
 
-        $PatientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at'])
-            ->where('id', '=', $request->patient)
-            ->get();
-
-        return response([
-            'data' => $PatientInfo
-        ]);
-    }
-
-    public function searchForPatientOfToday(Request $request) {
-        if (!is_null($request->patient)) {
+    public function searchForPatient(Request $request) {
+        if ($request->department === 'reception') {
             $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
-                ->whereDate('last_visit', Carbon::today())
                 ->where('id', '=', $request->patient)
                 ->get();
             return response([
                 'data' => $patientInfo
             ]);
+        } else {
+            if (!is_null($request->patient)) {
+                $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
+                    ->whereDate('last_visit', Carbon::today('+3:00'))
+                    ->where('id', '=', $request->patient)
+                    ->get();
+                return response([
+                    'data' => $patientInfo
+                ]);
 
-        } else if (!is_null($request->phone)) {
-            $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
-                ->whereDate('last_visit', Carbon::today())
-                ->where('phone', '=', $request->phone)
-                ->get();
-            return response([
-                'data' => $patientInfo
-            ]);
+            } else if (!is_null($request->phone)) {
+                $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
+                    ->whereDate('last_visit', Carbon::today('+3:00'))
+                    ->where('phone', '=', $request->phone)
+                    ->get();
+                return response([
+                    'data' => $patientInfo
+                ]);
 
-        } else if (!is_null($request->full_name)) {
-            $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
-                ->whereDate('last_visit', Carbon::today())
-                ->where('full_name', 'LIKE', '%' . $request->name . '%')
-                ->get();
-            return response([
-                'data' => $patientInfo
-            ]);
+            } else if (!is_null($request->full_name)) {
+                $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
+                    ->whereDate('last_visit', Carbon::today('+3:00'))
+                    ->where('full_name', 'LIKE', '%' . $request->full_name . '%')
+                    ->get();
+                return response([
+                    'data' => $patientInfo
+                ]);
+            }
         }
         return response([
             'data' => ''
         ]);
     }
 
-    public function storePatientInfoByDr(Request $r) {
-        $patientId = Patients::select('id')->where('uuid', '=', $r->patient_uuid)->first();
-
-        PatientsHistory::where('patient_id', '=', $patientId->id)
-            ->orderBy('id','desc')
-            ->take(1)
-            ->update([
-            'patient_number'            => $r->patient_number,
-            'age_at_visit'              => $r->age_at_visit,
-            'blood_pressure_systolic'   => $r->blood_pressure_systolic,
-            'blood_pressure_diastolic'  => $r->blood_pressure_diastolic,
-            'weight_by_dr'              => $r->weight_by_dr,
-            'height_by_dr'              => $r->height_by_dr,
-            'waist_circumference_by_dr' => $r->waist_circumference_by_dr,
-            'bmi_by_dr'                 => $r->bmi_by_dr,
-            'clinical_notes'            => $r->clinical_notes,
-            'next_visit'                => $r->next_visit,
-            'created_by_dr'             => auth('sanctum')->user()->id
-        ]);
-
-        return response([
-            'date' => 'Save Successfully!'
-        ]);
-    }
+//    public function storePatientInfoByDr(Request $r) {
+//        $patientId = Patients::select('id')->where('uuid', '=', $r->patient_uuid)->first();
+//
+//        PatientsHistory::where('patient_id', '=', $patientId->id)
+//            ->orderBy('id','desc')
+//            ->take(1)
+//            ->update([
+//            'patient_number'            => $r->patient_number,
+//            'age_at_visit'              => $r->age_at_visit,
+//            'blood_pressure_systolic'   => $r->blood_pressure_systolic,
+//            'blood_pressure_diastolic'  => $r->blood_pressure_diastolic,
+//            'weight_by_dr'              => $r->weight_by_dr,
+//            'height_by_dr'              => $r->height_by_dr,
+//            'waist_circumference_by_dr' => $r->waist_circumference_by_dr,
+//            'bmi_by_dr'                 => $r->bmi_by_dr,
+//            'clinical_notes'            => $r->clinical_notes,
+//            'next_visit'                => $r->next_visit,
+//            'created_by_dr'             => auth('sanctum')->user()->id
+//        ]);
+//
+//        return response([
+//            'date' => 'Save Successfully!'
+//        ]);
+//    }
 
     public function storePatientNewVisit(Request $request) {
         $patientId = Patients::select('id', 'birthday')->where('uuid', '=', $request->patient_uuid)->first();

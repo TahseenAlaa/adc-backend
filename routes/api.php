@@ -48,11 +48,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store', [PatientsController::class, 'store'])->name('store');
         Route::post('/update/{id}', [PatientsController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [PatientsController::class, 'destroy'])->name('destroy');
-        Route::post('/search-by-full-name/{name}', [PatientsController::class, 'searchByFullName'])->name('searchByFullName');
-        Route::post('/search-by-phone/{phone}', [PatientsController::class, 'searchByPhone'])->name('searchByPhone');
-        Route::post('/search-by-patient-id/{patient}', [PatientsController::class, 'searchByPatientID'])->name('searchByPatientID');
-        Route::post('/search-for-patients-of-today', [PatientsController::class, 'searchForPatientOfToday'])->name('searchForPatientOfToday');
-        Route::post('/store-by-dr', [PatientsController::class, 'storePatientInfoByDr'])->name('storeByDoctor');
+//        Route::post('/search-by-full-name/{name}', [PatientsController::class, 'searchByFullName'])->name('searchByFullName');
+//        Route::post('/search-by-phone/{phone}', [PatientsController::class, 'searchByPhone'])->name('searchByPhone');
+//        Route::post('/search-by-patient-id/{patient}', [PatientsController::class, 'searchByPatientID'])->name('searchByPatientID');
+        Route::post('/search-for-patients', [PatientsController::class, 'searchForPatient'])->name('searchForPatient');
+//        Route::post('/store-by-dr', [PatientsController::class, 'storePatientInfoByDr'])->name('storeByDoctor');
         Route::post('/store/newvisit', [PatientsController::class, 'storePatientNewVisit'])->name('storePatientNewVisit');
         Route::get('/patient-age/{patient_uuid}', [PatientsController::class, 'getPatientAgeFromBirthday'])->name('getPatientAgeFromBirthday');
         Route::get('/show-patient-history/{patient_uuid}', [PatientsController::class, 'showPatientHistory'])->name('showPatientHistory');
