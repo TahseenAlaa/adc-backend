@@ -384,6 +384,39 @@ class PatientsController extends Controller
         ]);
     }
 
+    public function searchForPatientOfToday(Request $request) {
+        if (!is_null($request->patient)) {
+            $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
+                ->whereDate('last_visit', Carbon::today())
+                ->where('id', '=', $request->patient)
+                ->get();
+            return response([
+                'data' => $patientInfo
+            ]);
+
+        } else if (!is_null($request->phone)) {
+            $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
+                ->whereDate('last_visit', Carbon::today())
+                ->where('phone', '=', $request->phone)
+                ->get();
+            return response([
+                'data' => $patientInfo
+            ]);
+
+        } else if (!is_null($request->full_name)) {
+            $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
+                ->whereDate('last_visit', Carbon::today())
+                ->where('full_name', 'LIKE', '%' . $request->name . '%')
+                ->get();
+            return response([
+                'data' => $patientInfo
+            ]);
+        }
+        return response([
+            'data' => ''
+        ]);
+    }
+
     public function storePatientInfoByDr(Request $r) {
         $patientId = Patients::select('id')->where('uuid', '=', $r->patient_uuid)->first();
 
