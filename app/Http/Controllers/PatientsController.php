@@ -59,29 +59,25 @@ class PatientsController extends Controller
         $newPatient->full_name                   = $request->full_name;
         $newPatient->birthday                    = $request->birthday;
         $newPatient->phone                       = $request->phone;
-        $newPatient->gender                      = $request->gender;
         $newPatient->occupation                  = $request->occupation;
+        $newPatient->patient_number              = $request->patient_number;
         $newPatient->education_qualification     = $request->education_qualification;
         $newPatient->marital_status              = $request->marital_status;
+        $newPatient->social_status               = $request->social_status;
         $newPatient->address                     = $request->address;
         $newPatient->smoker                      = $request->smoker;
         $newPatient->drinker                     = $request->drinker;
         $newPatient->family_dm                   = $request->family_dm;
         $newPatient->gestational_dm              = $request->gestational_dm;
-        $newPatient->weight_baby                 = $request->weight_baby;
+        $newPatient->weight_baby                 = $request->weight_of_baby_at_birthday;
         $newPatient->hypertension                = $request->hypertension;
-        $newPatient->family_ihd                  = $request->family_ihd;
+        $newPatient->family_ihd                  = $request->family_history_of_ihd;
         $newPatient->parity                      = $request->parity;
         $newPatient->smbg                        = $request->smbg;
         $newPatient->ihd                         = $request->ihd;
         $newPatient->cva                         = $request->cva;
         $newPatient->pvd                         = $request->pvd;
         $newPatient->neuropathy                  = $request->neuropathy;
-        $newPatient->weight                      = $request->weight;
-        $newPatient->height                      = $request->height;
-        $newPatient->waist_circumference         = $request->waist_circumference;
-        $newPatient->bmi                         = $request->bmi;
-        $newPatient->hip                         = $request->hip;
         $newPatient->retinopathy                 = $request->retinopathy;
         $newPatient->non_proliferative           = $request->non_proliferative;
         $newPatient->proliferative_dr            = $request->proliferative_dr;
@@ -93,17 +89,15 @@ class PatientsController extends Controller
         $newPatient->dermopathy                  = $request->dermopathy;
         $newPatient->diabetic_food               = $request->diabetic_food;
         $newPatient->date_insulin                = $request->date_insulin;
-        $newPatient->duration_insulin            = $request->duration_insulin;
-        $newPatient->duration_dm                 = $request->duration_dm;
+        $newPatient->duration_insulin            = Carbon::parse($request->date_insulin)->age;
+        $newPatient->date_dm                     = $request->date_of_dm;
+        $newPatient->duration_dm                 = Carbon::parse($request->date_of_dm)->age;
         $newPatient->glycemic_control            = $request->glycemic_control;
         $newPatient->lipid_control               = $request->lipid_control;
         $newPatient->pressure_control            = $request->pressure_control;
-        $newPatient->father_height               = $request->father_height;
-        $newPatient->mother_height               = $request->mother_height;
-        $newPatient->mid_height                  = $request->mid_height;
         $newPatient->first_a1c                   = $request->first_a1c;
-        $newPatient->second_a1c                  = $request->second_a1c;
         $newPatient->referral                    = $request->referral;
+        $newPatient->notes                       = $request->notes;
         $newPatient->last_visit                  = Carbon::now();
         $newPatient->created_by                  = auth('sanctum')->user()->id;
         $newPatient->save();
@@ -113,11 +107,8 @@ class PatientsController extends Controller
         $newPatientHistory = new PatientsHistory;
         $newPatientHistory->uuid                        = Str::uuid()->toString();
         $newPatientHistory->patient_id                  = $newPatient->id;
-        $newPatientHistory->date_of_visit               = Carbon::now();
-        $newPatientHistory->weight                      = $newPatient->weight;
-        $newPatientHistory->height                      = $newPatient->height;
-        $newPatientHistory->waist_circumference         = $newPatient->waist_circumference;
-        $newPatientHistory->bmi                         = $newPatient->bmi;
+        $newPatientHistory->blood_pressure_systolic     = $request->blood_pressure_systolic;
+        $newPatientHistory->blood_pressure_diastolic    = $request->blood_pressure_diastolic;
         $newPatientHistory->age_at_visit                = Carbon::parse($newPatient->birthday)->age;
         $newPatientHistory->created_by                  = auth('sanctum')->user()->id;
         $newPatientHistory->save();
@@ -386,7 +377,7 @@ class PatientsController extends Controller
 
     public function searchForPatient(Request $request) {
         if ($request->department === 'reception') {
-            $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'gender', 'updated_at','last_visit'])
+            $patientInfo = Patients::select(['uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                 ->where('id', '=', $request->patient)
                 ->get();
             return response([
