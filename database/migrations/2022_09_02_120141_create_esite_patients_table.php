@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('patient_number')->comment('Old patient File Number')->nullable(); // Old patient File Number
             $table->date('birthday')->nullable();
-            $table->integer('phone')->nullable();
+            $table->string('phone')->nullable();
             $table->string('marital_status')->nullable();
             $table->string('occupation')->nullable();
             $table->string('education_qualification')->nullable();
