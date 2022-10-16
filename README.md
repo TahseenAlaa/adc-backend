@@ -27,6 +27,7 @@ SANCTUM_STATEFUL_DOMAINS= (URL + Port of the frontend)
 - Create database then add it's name in the `.env` file in [DB_DATABASE]
 - Run `php artisan migrate`
 - Run ` php artisan db:seed --class=PermissionsSeeder` to publish permissions.
+- Run ` php artisan db:seed --class=InistialUsersSeeder` to publish `areeb/password` User.
 - Run
 ```apacheconf
   composer install --optimize-autoloader --no-dev;
