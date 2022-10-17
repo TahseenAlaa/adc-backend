@@ -58,6 +58,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/show-patient-history/{patient_uuid}', [PatientsController::class, 'showPatientHistory'])->name('showPatientHistory');
         Route::get('/show-patient-info/{patient_uuid}', [PatientsController::class, 'showPatientInfo'])->name('showPatientInfo');
         Route::post('/updatePatientHistory/{uuid}', [PatientsController::class, 'updatePatientHistory'])->name('updatePatientHistory');
+        Route::post('/update-patient-history-by-antho/{uuid}', [PatientsController::class, 'updatePatientHistoryByAntho'])->name('updatePatientHistoryByAntho');
     });
     // END Patients
 

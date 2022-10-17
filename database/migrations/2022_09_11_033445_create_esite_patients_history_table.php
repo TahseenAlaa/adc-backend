@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('height')->nullable();
             $table->integer('waist_circumference')->nullable();
             $table->integer('hip')->nullable();
-            $table->integer('bmi')->nullable();
+            $table->string('bmi')->nullable();
             $table->integer('father_height')->nullable();
             $table->integer('mother_height')->nullable();
             $table->integer('mid_height')->nullable();
