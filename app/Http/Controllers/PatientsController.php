@@ -467,16 +467,17 @@ class PatientsController extends Controller
         $newPatientHistory->patient_id                 = $patientId->id;
         $newPatientHistory->uuid                       = Str::uuid()->toString();
         $newPatientHistory->patient_id                 = $patientId->id;
-        $newPatientHistory->patient_number             = $request->patient_number;
-        $newPatientHistory->date_of_visit              = Carbon::now();
         $newPatientHistory->age_at_visit               = Carbon::parse($patientId->birthday)->age;
         $newPatientHistory->blood_pressure_systolic    = $request->blood_pressure_systolic;
         $newPatientHistory->blood_pressure_diastolic   = $request->blood_pressure_diastolic;
-        $newPatientHistory->weight                     = $request->weight;
-        $newPatientHistory->height                     = $request->height;
-        $newPatientHistory->bmi                        = $request->bmi;
         $newPatientHistory->created_by                 = auth('sanctum')->user()->id;
         $newPatientHistory->save();
+
+        // Update patient last visit date
+        Patients::where('uuid', '=', $request->patient_uuid)
+            ->update([
+                'last_visit' => Carbon::now()
+            ]);
 
         return response([
             'data' => 'Store Successfully!',
