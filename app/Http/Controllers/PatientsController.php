@@ -487,9 +487,11 @@ class PatientsController extends Controller
       return User::select('full_name')->where('id', '=', $doctorId)->first();
     }
 
-    public function getPatientAgeFromBirthday(Request $request) {
+    public function getPatientInfoForNewVisit(Request $request) {
+        $patientInfo = Patients::select('patient_number', 'birthday')->where('uuid', '=', $request->patient_uuid)->first();
         return response([
-            'data' => Carbon::parse(Patients::select('birthday')->where('uuid', '=', $request->patient_uuid)->first()->birthday)->age
+            'age'             => Carbon::parse($patientInfo->birthday)->age,
+            'patient_number'  => $patientInfo->patient_number
         ]);
     }
 
