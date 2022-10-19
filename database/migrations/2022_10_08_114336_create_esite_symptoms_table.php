@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('esite_symptoms', function (Blueprint $table) {
             $table->id();
+            $table->integer('patient_id');
+            $table->integer('patient_history_id');
             $table->integer('symptoms_id');
             $table->string('clinical_notes')->nullable();
             $table->integer('created_by');
