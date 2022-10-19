@@ -66,7 +66,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Patients
 
     // START Diagnosis
-    Route::prefix('/diagnosis')->name('diagnosis.')->group(function () {
+    Route::prefix('/diagnosis')->name('diagnosis.')->middleware('auth:sanctum')->group(function () {
 //        Route::get('/index/{id}', [DiagnosisController::class, 'index'])->name('index'); // Show all diagnoses
 //        Route::get('/{id}', [DiagnosisController::class, 'show'])->name('show'); // Show one diagnosis related to the current history
 //        Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
@@ -77,7 +77,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Diagnosis
 
     // START Symptoms Types
-    Route::prefix('/symptoms-types')->name('symptoms-types.')->group(function () {
+    Route::prefix('/symptoms-types')->name('symptoms-types.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [SymptomsTypesController::class, 'index'])->name('index');
     });
     // END Symptoms Types
