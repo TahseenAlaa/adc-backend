@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('min_range')->nullable();
             $table->string('max_range')->nullable();
             $table->string('measurement_unit')->nullable();
+            $table->string('gender');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
