@@ -9,6 +9,7 @@ use App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\MedicalLabController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,5 +103,12 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::delete('/destroy/{id}', [PharmacyController::class, 'destroy'])->name('destroy');
     });
     // END Pharmacy Inventory
+
+    // START User Permissions
+    Route::prefix('/permissions')->name('permissions.')->middleware('auth:sanctum')->group(function () {
+        Route::get('/index', [PermissionsController::class, 'index'])->name('permissions.index'); // List all
+
+    });
+    // END User Permissions
 });
 // END API v1
