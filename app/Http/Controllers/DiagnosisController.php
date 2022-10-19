@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\DiagnosisResource;
 use App\Models\Diagnosis;
+use App\Models\DiagnosisTypesModel;
 use App\Models\Patients;
 use App\Models\PatientsHistory;
 use Illuminate\Http\Request;
@@ -22,6 +23,14 @@ class DiagnosisController extends Controller
 
         return response([
             'data' => $diagnosis
+        ]);
+    }
+
+    public function types() {
+        $diagnosisList = DiagnosisTypesModel::select('id', 'title')->get();
+
+        return response([
+            'data' => $diagnosisList
         ]);
     }
 
