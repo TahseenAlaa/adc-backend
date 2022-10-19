@@ -25,9 +25,10 @@ SANCTUM_STATEFUL_DOMAINS= (URL + Port of the frontend)
 ```
 - Run `php artisan generate` to generate encryption key
 - Create database then add it's name in the `.env` file in [DB_DATABASE]
-- Run `php artisan migrate`
-- Run ` php artisan db:seed --class=PermissionsSeeder` to publish permissions.
-- Run ` php artisan db:seed --class=InistialUsersSeeder` to publish `areeb/password` User.
+- To generate [`areeb/password`, permissions, Diagnosis types], Run
+```apacheconf
+php artisan migrate:fresh && php artisan db:seed --class=DatabaseSeeder
+```
 - Run
 ```apacheconf
   composer install --optimize-autoloader --no-dev;
