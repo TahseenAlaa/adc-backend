@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             InitialUsersSeeder::class,
+            PermissionsSeeder::class,
             DiagnosisTypesSeeder::class,
-            PermissionsSeeder::class
+            SymptomsTypesSeeder::class,
         ]);
     }
 }
