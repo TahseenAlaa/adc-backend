@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             PermissionsSeeder::class,
             DiagnosisTypesSeeder::class,
             SymptomsTypesSeeder::class,
+            TestGroupsSeeder::class
         ]);
     }
 }
