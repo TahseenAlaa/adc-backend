@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('patient_id');
             $table->integer('patient_history_id')->nullable();
-            $table->string('test_group_id');
-            $table->string('test_name_id');
+            $table->integer('test_group_id');
+            $table->integer('test_name_id');
             $table->longText('doctor_notes')->nullable();
             $table->boolean('sampling_status')->nullable();
             $table->integer('sampling_by')->nullable();
