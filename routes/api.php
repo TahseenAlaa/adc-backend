@@ -82,6 +82,12 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     });
     // END Symptoms Types
 
+    // START Symptoms
+    Route::prefix('/symptoms')->name('symptoms.')->middleware('auth:sanctum')->group(function () {
+        Route::post('/store', [SymptomsController::class, 'store'])->name('store');
+    });
+    // END Symptoms
+
     // START Medical Lab
     Route::prefix('/lab')->name('lab.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index/{patient_id}', [MedicalLabController::class, 'index'])->name('index'); // Show all tests

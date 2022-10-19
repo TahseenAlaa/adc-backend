@@ -12,4 +12,12 @@ class Symptoms extends Model
     use HasApiTokens, HasFactory, SoftDeletes;
 
     protected $table = "esite_symptoms";
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function symptom() {
+        return $this->hasOne(SymptomsTypes::class, 'id', 'symptoms_id');
+    }
 }
