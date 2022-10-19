@@ -10,6 +10,8 @@ use App\Http\Controllers\MedicalLabController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\SymptomsTypesController;
+use App\Http\Controllers\SymptomsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,12 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/types', [DiagnosisController::class, 'types'])->name('types');
     });
     // END Diagnosis
+
+    // START Symptoms Types
+    Route::prefix('/symptoms-types')->name('symptoms-types.')->group(function () {
+        Route::get('/index', [SymptomsTypesController::class, 'index'])->name('index');
+    });
+    // END Symptoms Types
 
     // START Medical Lab
     Route::prefix('/lab')->name('lab.')->middleware('auth:sanctum')->group(function () {
