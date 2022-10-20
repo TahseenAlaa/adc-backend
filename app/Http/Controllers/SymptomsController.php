@@ -103,8 +103,20 @@ class SymptomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $patient_uuid)
     {
-        //
+        // TODO validate $id
+        Symptoms::where('id', '=', $id)->delete();
+        $patientHistoryId = Symptoms::select('patient_history_id')->where('id', '=', $id)->withTrashed()->first();
+        $SymptomsListWithUser = Symptoms::where('patient_history_id', '=', $patientHistoryId->patient_history_id)
+            ->with([
+                'user:id,full_name',
+                'symptom:id,title'
+            ])->get();
+
+
+        return response([
+            'data' => $SymptomsListWithUser,
+        ]);
     }
 }
