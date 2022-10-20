@@ -105,6 +105,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     Route::prefix('/lab-test-groups')->name('test-groups.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [LabTestGroupsController::class, 'index'])->name('index');
         Route::delete('/delete/{id}', [LabTestGroupsController::class, 'destroy'])->name('delete');
+        Route::post('/store', [LabTestGroupsController::class, 'store'])->name('store');
     });
     // END Lab Test Groups
 

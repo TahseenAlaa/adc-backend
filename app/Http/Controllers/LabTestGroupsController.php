@@ -39,7 +39,17 @@ class LabTestGroupsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newTest = new TestGroups;
+        $newTest->test_group          = $request->test_group;
+        $newTest->test_name           = $request->test_name;
+        $newTest->min_range           = $request->min_range;
+        $newTest->max_range           = $request->max_range;
+        $newTest->measurement_unit    = $request->unit;
+        $newTest->gender              = $request->gender;
+        $newTest->created_by          = auth('sanctum')->user()->id;
+        $newTest->save();
+
+        return $this->index();
     }
 
     /**
