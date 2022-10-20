@@ -84,6 +84,12 @@ class LabTestGroupsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TestGroups::where('id', '=', $id)->delete();
+
+        return $this->index();
+
+//        return response([
+//            'data' => 'Done!'
+//        ]);
     }
 }
