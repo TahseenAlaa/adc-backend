@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\SymptomsTypesController;
 use App\Http\Controllers\SymptomsController;
+use App\Http\Controllers\LabTestGroupsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +100,12 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/show-history/{id}', [MedicalLabController::class, 'showHistory'])->name('history.show');
     });
     // END Medical Lab
+
+    // START Lab Test Groups
+    Route::prefix('/lab-test-groups')->name('test-groups.')->middleware('auth:sanctum')->group(function () {
+        Route::get('/index', [LabTestGroupsController::class, 'index'])->name('index');
+    });
+    // END Lab Test Groups
 
     // START Treatment
     Route::prefix('/treatment')->name('treatment.')->middleware('auth:sanctum')->group(function () {

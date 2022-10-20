@@ -12,4 +12,8 @@ class TestGroups extends Model
     use HasApiTokens, HasFactory, SoftDeletes;
 
     protected $table = "esite_test_groups";
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }
