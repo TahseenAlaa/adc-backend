@@ -26,21 +26,42 @@
 <div class="A7">
     {{-- START Header--}}
     <div>
-        <div class="text-sm font-bold text-center">AlHassan Diabetes Center</div>
-        <header class="print:flex print:flex-row print:justify-between">
-            <div>#523654</div>
+        <div class="text-sm font-bold text-center" style="font-size: 20px">AlHassan Diabetes Center</div>
+        <div>
+            <div class="print:flex print:flex-row print:justify-center print:px-4 my-2">
+                <p>Patient Record Form</p>
+            </div>
+            <hr>
+        </div>
+        <header class="print:flex print:flex-row print:justify-between my-4">
+            <p class="print:flex print:flex-row">19/10/2022</p>
             <div></div>
             <div class="print:text-sm print:flex-col">
-                <p class="print:flex print:flex-row">19/10/2022</p>
+                <div>#523654</div>
             </div>
         </header>
     </div>
-    <div>
-        <div class="print:flex print:flex-row print:justify-center print:px-2">
-            <p>Patient Record Form</p>
+    {{-- END Header --}}
+
+{{--    START Body--}}
+    <div class="print:mt-4">
+        <div class="print:flex print:flex-row print:justify-between">
+            <span></span>
+            <p><span>الاسم: </span><span>اسم المريض الثلاثي</span></p>
+        </div>
+        <div class="print:flex print:flex-row print:justify-between pt-2">
+            <span></span>
+            <p><span>الهاتف: </span><span>07817654345</span></p>
         </div>
     </div>
-    {{-- END Header --}}
+    <div>
+        <link rel="stylesheet" href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=Tahseen&choe=UTF-8">
+    </div>
+
+    <div class="print:flex print:flex-row print:justify-center pt-12 mt-24">
+        <p>شكرا لتعاونكم معنا</p>
+    </div>
+{{--    END Body--}}
 
     {{-- START Body --}}
 {{--    <div class="print:border-1 print:border-black print:font-bold mt-6">--}}
