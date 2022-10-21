@@ -12,4 +12,12 @@ class MedicalLab extends Model
     use HasApiTokens, HasFactory, SoftDeletes;
 
     protected $table = "esite_medical_lab";
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function testGroups() {
+        return $this->hasOne(TestGroups::class, 'id', 'test_id');
+    }
 }
