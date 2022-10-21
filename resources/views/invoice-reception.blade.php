@@ -37,7 +37,7 @@
             <p class="print:flex print:flex-row">19/10/2022</p>
             <div></div>
             <div class="print:text-sm print:flex-col">
-                <div>#523654</div>
+                <div>{{ $patientInfo->id . '#' }}</div>
             </div>
         </header>
     </div>
@@ -47,11 +47,11 @@
     <div class="print:mt-4">
         <div class="print:flex print:flex-row print:justify-between">
             <span></span>
-            <p><span>الاسم: </span><span>اسم المريض الثلاثي</span></p>
+            <p><span>الاسم: </span><span>{{ $patientInfo->full_name }}</span></p>
         </div>
         <div class="print:flex print:flex-row print:justify-between pt-2">
             <span></span>
-            <p><span>الهاتف: </span><span>07817654345</span></p>
+            <p><span>الهاتف: </span><span>{{ $patientInfo->phone }}</span></p>
         </div>
     </div>
     <div>

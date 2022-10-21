@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Patients;
 
 class InvoiceController extends Controller
 {
@@ -9,6 +10,15 @@ class InvoiceController extends Controller
     }
 
     public function ReceptionInfoInvoice ($uuid) {
-        return view('invoice-reception');
+        if (!is_null($uuid)) {
+            $patientInfo = Patients::select('id', 'full_name', 'phone')
+                ->where('uuid', '=', $uuid)
+                ->first();
+            return view('invoice-reception', [
+                'patientInfo' => $patientInfo
+            ]);
+        } else {
+            return null;
+        }
     }
 }
