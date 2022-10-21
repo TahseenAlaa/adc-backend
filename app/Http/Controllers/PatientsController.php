@@ -162,29 +162,23 @@ class PatientsController extends Controller
         // Patient with History
         $getPatientInfo = Patients::where('uuid', '=', $id)->first();
         $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
-        $getDoctorName = $this->getDoctorNamebyId($getPatientLatestVisitHistory->created_by);
-        $getDiagnosis = Diagnosis::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
-        $getTreatment = Treatment::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
-        $getTests     = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
-        $getMedicalHistory = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->orderBy('id', 'desc')->latest()->first();
-        $getDrugsList = Pharmacy::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+//        $getDoctorName = $this->getDoctorNamebyId($getPatientLatestVisitHistory->created_by);
+//        $getDiagnosis = Diagnosis::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+//        $getTreatment = Treatment::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+//        $getTests     = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+//        $getMedicalHistory = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->orderBy('id', 'desc')->latest()->first();
+//        $getDrugsList = Pharmacy::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
 
-//        $getDoctorOfDiagnosis = $this->getDoctorNamebyId(Diagnosis::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
-//        $getDoctorOfTreatment = $this->getDoctorNamebyId(Treatment::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
-//        $getDoctorOfTests = $this->getDoctorNamebyId(MedicalLab::select('created_by')->where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->first()->created_by);
 
         return response([
             'patient_info'           => $getPatientInfo,
             'patient_latest_history' => $getPatientLatestVisitHistory,
-            'doctorName'             => $getDoctorName,
-            'diagnosis'              => $getDiagnosis,
-            'treatment'              => $getTreatment,
-            'tests'                  => $getTests,
-//            'DoctorOfDiagnosis'      => $getDoctorOfDiagnosis,
-//            'DoctorOfTreatment'      => $getDoctorOfTreatment,
-//            'DoctorOfTests'          => $getDoctorOfTests,
-            'medical_history'        => $getMedicalHistory,
-            'drugs_list'             => $getDrugsList,
+//            'doctorName'             => $getDoctorName,
+//            'diagnosis'              => $getDiagnosis,
+//            'treatment'              => $getTreatment,
+//            'tests'                  => $getTests,
+//            'medical_history'        => $getMedicalHistory,
+//            'drugs_list'             => $getDrugsList,
 
         ]);
 
