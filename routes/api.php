@@ -106,6 +106,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index', [LabTestGroupsController::class, 'index'])->name('index');
         Route::delete('/delete/{id}', [LabTestGroupsController::class, 'destroy'])->name('delete');
         Route::post('/store', [LabTestGroupsController::class, 'store'])->name('store');
+        Route::get('/index-group-names', [LabTestGroupsController::class, 'indexGroupNames'])->name('group.names');
     });
     // END Lab Test Groups
 

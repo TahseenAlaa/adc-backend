@@ -21,6 +21,14 @@ class LabTestGroupsController extends Controller
         ]);
     }
 
+    public function indexGroupNames() {
+        $groupNames = TestGroups::select('id', 'test_group')->get();
+
+        return response([
+            'data' => $groupNames
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
