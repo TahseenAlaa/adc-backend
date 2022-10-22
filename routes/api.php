@@ -13,6 +13,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\SymptomsTypesController;
 use App\Http\Controllers\SymptomsController;
 use App\Http\Controllers\LabTestGroupsController;
+use App\Http\Controllers\AnthoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,5 +137,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
 
     });
     // END User Permissions
+
+    // START Antho
+    Route::prefix('/antho')->name('antho.')->middleware('auth:sanctum')->group(function () {
+        Route::post('/show', [AnthoController::class, 'show'])->name('show');
+    });
+    // END Antho
 });
 // END API v1
