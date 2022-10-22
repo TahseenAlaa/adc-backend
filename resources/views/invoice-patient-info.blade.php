@@ -418,11 +418,13 @@
         <table class="print:table-fixed print:text-xs print:mt-2 print:min-w-full print:mt-2 print:border print:border-black"  style="font-size: 10px">
             <tbody>
             <tr>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Medical Notes - </span><span>الملاحظات الطبية</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Medical Notes: </span></th>
             </tr>
             <tr>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-right print:bg-white">
+                    <textarea name="" id="" cols="30" rows="10" style="text-align: right;" dir="RTL">
+                        {{ $patientHistory->clinical_notes }}
+                    </textarea>
                 </td>
             </tr>
             </tbody>
