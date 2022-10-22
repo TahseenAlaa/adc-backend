@@ -22,8 +22,11 @@ DB_USERNAME=
 DB_PASSWORD=
 
 SANCTUM_STATEFUL_DOMAINS= (URL + Port of the frontend)
+
+SANCTUM_STATEFUL_DOMAINS=https://prs.esite-lab.com/portal
+SESSION_DOMAIN=http://prs.esite-lab.com/portal
 ```
-- Run `php artisan generate` to generate encryption key
+- Run `php artisan key:generate` to generate encryption key
 - Create database then add it's name in the `.env` file in [DB_DATABASE]
 - To generate [`areeb/password`, permissions, Diagnosis types], Run
 ```apacheconf
