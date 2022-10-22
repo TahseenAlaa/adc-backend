@@ -141,12 +141,21 @@ class MedicalLabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uuid)
     {
-        $showTest = MedicalLabResource::collection(MedicalLab::where('id', '=', $id)->get());
+        $patientId = Patients::select('id')->where('uuid', '=', $uuid)->first();
+        $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
+
+        $patientTestsList = MedicalLab::where('patient_history_id', '=', $patientHistoryId->id)
+            ->with([
+                'user:id,full_name',
+                'testGroups:id,test_group,test_name,created_by'
+            ])
+            ->get();
 
         return response([
-            'data' => $showTest
+            'data' => $patientTestsList
         ]);
     }
 
