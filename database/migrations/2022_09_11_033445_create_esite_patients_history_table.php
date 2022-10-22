@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->integer('blood_pressure_systolic')->nullable();
             $table->integer('blood_pressure_diastolic')->nullable();
+            $table->longText('clinical_notes')->nullable();
             $table->integer('age_at_visit')->nullable();
             $table->date('next_visit')->nullable();
             $table->integer('created_by');
