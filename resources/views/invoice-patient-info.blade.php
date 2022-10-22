@@ -32,7 +32,7 @@
         <div class="text-xl font-bold text-center">AlHassan Diabetes Center</div>
         <header class="print:flex print:flex-row print:justify-between">
             <div class="print:text-sm print:flex-col">
-                <p class="print:flex print:flex-row">Visit Date: 19/10/2022</p>
+                <p class="print:flex print:flex-row">Visit Date: {{ $patientInfo->created_at }}</p>
             </div>
             <div></div>
             <div></div>
@@ -50,31 +50,31 @@
         <table class="print:table-fixed print:text-xs print:mt-2 print:min-w-full print:mt-2 print:border print:border-black"  style="font-size: 10px">
             <tbody>
             <tr class="print:border print:border-black ">
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="3"><span>Full Name - </span><span>الاسم الكامل باللغة العربية</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="3"><span>Full Name: </span><span>{{ $patientInfo->full_name }}</span></th>
             </tr>
             <tr class="print:border print:border-black ">
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5" colspan="3"></td>
             </tr>
             <tr class="print:border print:border-black " >
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Date of Birth - </span><span>تاريخ الميلاد</span></th>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="2"><span>Phone - </span><span>رقم الهاتف</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Date of Birth: </span><span>{{ $patientInfo->birthday }}</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="2"><span>Phone: </span><span>{{ $patientInfo->phone }}</span></th>
             </tr>
             <tr class="print:border print:border-black ">
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5"></td>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5" colspan="2"></td>
             </tr>
             <tr class="print:border print:border-black " >
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Gender - </span><span>الجنس</span></th>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="2"><span>Occupation - </span><span>الوظيفة</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Gender: </span><span>{{ $patientHistory->gender }}</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="2"><span>Occupation: </span><span>{{ $patientInfo->occupation }}</span></th>
             </tr>
             <tr class="print:border print:border-black ">
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5"></td>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5" colspan="2"></td>
             </tr>
             <tr class="print:border print:border-black " >
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Educational Qualification  - </span><span>التحصيل الدراسي</span></th>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Marital Status - </span><span>الحالة الزوجية</span></th>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Social Status - </span><span>الحالة الاجتماعية</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Educational Qualification: </span><span>{{ $patientInfo->education_qualification }}</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Marital Status: </span><span>{{ $patientInfo->marital_status }}</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Social Status: </span><span>{{ $patientInfo->social_status }}</span></th>
             </tr>
             <tr class="print:border print:border-black ">
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5"></td>
@@ -82,7 +82,7 @@
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5"></td>
             </tr>
             <tr class="print:border print:border-black ">
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="3"><span>Address - </span><span>العنوان</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200" colspan="3"><span>Address: </span><span>{{ $patientInfo->address }}</span></th>
             </tr>
             <tr class="print:border print:border-black ">
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white h-5" colspan="3"></td>
@@ -97,69 +97,129 @@
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Smoker</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->smoker)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Drinker</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->drinker)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Family History of DM</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->family_dm)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Gestational DM</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->gestational_dm)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Weight at birth 4.5Kg</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->weight_baby)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Hypertension</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->hypertension)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Family History of IHD</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->family_ihd)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">SMBG</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->smbg)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">IHD</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->ihd)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">CVA</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->cva)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">PVD</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->pvd)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Neuropathy</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->neuropathy)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -174,84 +234,129 @@
         <table class="print:table-fixed print:text-xs print:mt-2 print:min-w-full print:mt-2 print:border print:border-black"  style="font-size: 10px">
             <tbody>
             <tr>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Weight</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Weight (Kg)</th>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->weight }}</td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Insulin</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->insulin)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Date of Insulin</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Date of Insulin (Years)</th>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientInfo->duration_insulin }}</td>
             </tr>
             <tr>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Height</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Height (cm)</th>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->height }}</td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Amputation</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->amputation)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Duration of DM</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Duration of DM (Years)</th>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientInfo->duration_dm }}</td>
             </tr>
             <tr>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">WC</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">WC (cm)</th>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->waist_circumference }}</td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">ED</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->ed)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Father’s Height</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->father_height }}</td>
             </tr>
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">BMI</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->bmi }}</td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">NAFLD</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->nafld)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Mother’s Height</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->mother_height }}</td>
             </tr>
             <tr>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">HIP</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">HIP (cm)</th>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->hip }}</td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Dermopathy</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->dermopathy)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Mid-parental Height</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientHistory->mid_height }}</td>
             </tr>
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Retinopathy</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->retinopathy)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Diabetic Foot</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->diabetic_food)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">First A1c</th>
-                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
+                <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">{{ $patientInfo->first_a1c }}</td>
             </tr>
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">No Proliferative DR</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->non_proliferative)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Lipid Control</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->lipid_control)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"></th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
@@ -259,13 +364,23 @@
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Proliferative DR</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->proliferative_dr)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Pressure Control</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->pressure_control)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"></th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
@@ -273,13 +388,23 @@
             <tr>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Maculopathy</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->maculopathy)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200">Glycemic Control</th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white">
-                    <span class="px-1"><input type="checkbox" /><label>Y</label></span>
-                    <span class="px-1"><input type="checkbox" /><label>N</label></span>
+                    @if ($patientInfo->glycemic_control)
+                        <span class="px-1"><input type="checkbox" checked/><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox"/><label>N</label></span>
+                    @else
+                        <span class="px-1"><input type="checkbox" /><label>Y</label></span>
+                        <span class="px-1"><input type="checkbox" checked/><label>N</label></span>
+                    @endif
                 </td>
                 <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"></th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white"></td>
@@ -307,9 +432,9 @@
         <table class="print:table-fixed print:text-xs print:mt-2 print:min-w-full print:mt-2 print:border print:border-black"  style="font-size: 10px">
             <tbody>
             <tr>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Doctor - </span><span>الطبيب</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Doctor: </span><span>{{ $patientHistory->clinical_notes }}</span></th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white w-1/4"></td>
-                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Reception - </span><span>الموظف الإداري</span></th>
+                <th class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-gray-200"><span>Reception: </span><span></span></th>
                 <td class="print:border print:border-black print:py-1 print:pr-2 print:text-left print:bg-white w-1/4"></td>
             </tr>
             <tr>
