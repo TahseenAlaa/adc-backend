@@ -123,6 +123,18 @@ class DiagnosisController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO validate $id
+        Diagnosis::where('id', '=', $id)->delete();
+        $patientHistoryId = Diagnosis::select('patient_history_id')->where('id', '=', $id)->withTrashed()->first();
+        $diagnosisListWithUser = Diagnosis::where('patient_history_id', '=', $patientHistoryId->patient_history_id)
+            ->with([
+                'user:id,full_name',
+                'diagnosis:id,title'
+            ])->get();
+
+
+        return response([
+            'data' => $diagnosisListWithUser,
+        ]);
     }
 }
