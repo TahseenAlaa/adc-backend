@@ -31,6 +31,7 @@ return new class extends Migration
             $table->longText('clinical_notes')->nullable();
             $table->integer('age_at_visit')->nullable();
             $table->date('next_visit')->nullable();
+            $table->longText('clinical_notes')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
