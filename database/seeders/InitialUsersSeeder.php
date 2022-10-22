@@ -18,7 +18,7 @@ class InitialUsersSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'uuid'            => fake()->uuid(),
+            'uuid'            => 'df95d9d9-ae88-3718-8bb5-141cd00fa7eb',
             'full_name'       => 'Areeb Mohammed',
             'username'        => 'areeb',
             'job_title'       => 'Web Developer',
