@@ -14,7 +14,7 @@ class Diagnosis extends Model
     protected $table = "esite_diagnosis";
 
     public function diagnosis() {
-        return $this->hasOne(SymptomsTypes::class, 'id', 'symptoms_id');
+        return $this->hasOne(DiagnosisTypesModel::class, 'id', 'diagnosis_id');
     }
 
     public function user() {
