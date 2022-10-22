@@ -276,13 +276,11 @@ class MedicalLabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $uuid)
     {
         MedicalLab::where('id', '=', $id)->delete();
 
-        return response([
-            'data' => 'Items deleted successfully!'
-        ]);
+        return $this->show($uuid);
     }
 
     public function showHistory($id) {
