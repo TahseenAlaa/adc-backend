@@ -503,20 +503,12 @@ class PatientsController extends Controller
             'data' => Patients::where('uuid', '=', $request->patient_uuid)->first()
         ]);
     }
-    public function updatePatientHistory(Request $request, $uuid) {
-        PatientsHistory::where('uuid', '=', $uuid)->update([
-            'weight'                       => $request->weight,
-            'height'                       => $request->height,
-            'waist_circumference'          => $request->waist_circumference,
-            'bmi'                          => $request->bmi,
-            'hip'                          => $request->hip,
-            'father_height'                => $request->father_height,
-            'mother_height'                => $request->mother_height,
-            'mid_height'                   => $request->mid_height,
-            'gender'                       => $request->gender,
-            'blood_pressure_systolic'      => $request->blood_pressure_systolic,
-            'blood_pressure_diastolic'     => $request->blood_pressure_diastolic,
-            'age_at_visit'                 => $request->age_at_visit,
+
+    public function updatePatientHistory(Request $request) {
+        $getPatientInfo = Patients::where('uuid', '=', $request->patient_uuid)->first();
+        $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
+
+        PatientsHistory::where('id', '=', $getPatientLatestVisitHistory->id)->update([
             'clinical_notes'               => $request->clinical_notes,
             'next_visit'                   => $request->next_visit,
             'updated_by'                   => auth('sanctum')->user()->id
