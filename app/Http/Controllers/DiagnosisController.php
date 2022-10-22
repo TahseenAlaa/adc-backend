@@ -55,20 +55,19 @@ class DiagnosisController extends Controller
         $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
         $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
 
-        $newDiagnosis = new Diagnosis;
-        $newDiagnosis->patient_id         = $patientId->id;
-        $newDiagnosis->patient_history_id = $patientHistoryId->id;
-        $newDiagnosis->symptoms           = $request->symptoms;
-        $newDiagnosis->is_confirmed       = $request->is_confirmed;
-//        $newDiagnosis->clinical_notes     = $request->clinical_notes;
-        $newDiagnosis->created_by         = auth('sanctum')->user()->id;
-        $newDiagnosis->save();
+        foreach ($request->diagnosis_id as $item) {
+            $newDiagnosis = new Diagnosis;
+            $newDiagnosis->patient_id         = $patientId->id;
+            $newDiagnosis->patient_history_id = $patientHistoryId->id;
+            $newDiagnosis->diagnosis_id       = $item;
+            $newDiagnosis->diagnosis_notes    = $request->diagnosis_notes;
+            $newDiagnosis->created_by         = auth('sanctum')->user()->id;
+            $newDiagnosis->save();
+        }
 
-        $getDoctorName = auth('sanctum')->user()->full_name;
 
         return response([
             'data'        => $newDiagnosis,
-            'doctor_name' => $getDoctorName
         ]);
     }
 

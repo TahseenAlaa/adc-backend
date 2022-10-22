@@ -70,7 +70,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     Route::prefix('/diagnosis')->name('diagnosis.')->middleware('auth:sanctum')->group(function () {
 //        Route::get('/index/{id}', [DiagnosisController::class, 'index'])->name('index'); // Show all diagnoses
 //        Route::get('/{id}', [DiagnosisController::class, 'show'])->name('show'); // Show one diagnosis related to the current history
-//        Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
+        Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
 //        Route::patch('/update/{id}', [DiagnosisController::class, 'update'])->name('update');
 //        Route::delete('/destroy/{id}', [DiagnosisController::class, 'destroy'])->name('destroy');
         Route::get('/types', [DiagnosisController::class, 'types'])->name('types');
