@@ -33,13 +33,14 @@
         <header class="print:flex print:flex-row print:justify-between">
             <div class="print:text-sm print:flex-col">
                 <p class="print:flex print:flex-row">Visit Date: {{ $patientInfo->created_at }}</p>
+                <p>{{ '#' . $patientInfo->id }}</p>
             </div>
             <div></div>
             <div></div>
         </header>
     </div>
     <div>
-        <div class="print:flex print:flex-row print:justify-center print:px-2">
+        <div class="print:flex print:flex-row print:justify-center print:px-1">
             <p>Patient Record Form</p>
         </div>
     </div>
