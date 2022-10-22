@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('patient_id');
             $table->integer('patient_history_id');
             $table->integer('diagnosis_id');
-            $table->string('clinical_notes')->nullable();
+            $table->string('diagnosis_notes')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
