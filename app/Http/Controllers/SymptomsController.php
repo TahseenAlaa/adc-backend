@@ -42,13 +42,15 @@ class SymptomsController extends Controller
         $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->latest()->first();
         $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
 
-        $newSymptoms = new Symptoms;
-        $newSymptoms->patient_id           = $patientId->id;
-        $newSymptoms->patient_history_id   = $patientHistoryId->id;
-        $newSymptoms->symptoms_id          = $request->symptoms_type_id;
-        $newSymptoms->clinical_notes       = $request->symptoms_notes;
-        $newSymptoms->created_by           = auth('sanctum')->user()->id;
-        $newSymptoms->save();
+        foreach($request->symptoms_type_id as $item) {
+            $newSymptoms = new Symptoms;
+            $newSymptoms->patient_id           = $patientId->id;
+            $newSymptoms->patient_history_id   = $patientHistoryId->id;
+            $newSymptoms->symptoms_id          = $item;
+            $newSymptoms->clinical_notes       = $request->symptoms_notes;
+            $newSymptoms->created_by           = auth('sanctum')->user()->id;
+            $newSymptoms->save();
+        }
 
         $symptomWithUser = Symptoms::with([
             'user:id,full_name',
