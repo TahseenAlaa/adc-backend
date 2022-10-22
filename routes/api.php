@@ -86,6 +86,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Symptoms
     Route::prefix('/symptoms')->name('symptoms.')->middleware('auth:sanctum')->group(function () {
         Route::post('/store', [SymptomsController::class, 'store'])->name('store');
+        Route::get('/show/{uuid}', [SymptomsController::class, 'show'])->name('show');
         Route::delete('/delete/{id}/{patient_uuid}', [SymptomsController::class, 'destroy'])->name('delete');
     });
     // END Symptoms
