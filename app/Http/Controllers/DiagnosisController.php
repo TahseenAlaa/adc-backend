@@ -66,9 +66,7 @@ class DiagnosisController extends Controller
         }
 
 
-        return response([
-            'data'        => $newDiagnosis,
-        ]);
+        return $this->show($request->patient_uuid);
     }
 
     /**
@@ -77,12 +75,20 @@ class DiagnosisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uuid)
     {
-        $diagnosis = DiagnosisResource::collection(Diagnosis::where('patient_history_id', '=', $id)->get());
+        $patientId = Patients::select('id')->where('uuid', '=', $uuid)->latest()->first();
+        $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
+        $diagnosisWithUser = Diagnosis::where('patient_history_id', '=', $patientHistoryId->id)
+            ->with([
+                'user:id,full_name',
+                'diagnosis:id,title'
+            ])
+            ->get();
 
         return response([
-            'data' => $diagnosis
+            'data' => $diagnosisWithUser,
         ]);
     }
 
