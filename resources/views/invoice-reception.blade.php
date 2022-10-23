@@ -34,7 +34,7 @@
             <hr>
         </div>
         <header class="print:flex print:flex-row print:justify-between my-4">
-            <p class="print:flex print:flex-row">{{ $patientInfo->created_at }}</p>
+            <p class="print:flex print:flex-row">{{ $patientInfo->last_visit }}</p>
             <div></div>
             <div class="print:text-sm print:flex-col">
                 <div>{{ $patientInfo->id . '#' }}</div>

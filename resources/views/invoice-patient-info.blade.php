@@ -32,7 +32,7 @@
         <div class="text-xl font-bold text-center">AlHassan Diabetes Center</div>
         <header class="print:flex print:flex-row print:justify-between">
             <div class="print:text-sm print:flex-col">
-                <p class="print:flex print:flex-row">Visit Date: {{ $patientInfo->created_at }}</p>
+                <p class="print:flex print:flex-row">Visit Date: {{ $patientInfo->last_visit }}</p>
                 <p>{{ '#' . $patientInfo->id }}</p>
             </div>
             <div></div>
