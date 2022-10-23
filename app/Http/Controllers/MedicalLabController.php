@@ -44,14 +44,16 @@ class MedicalLabController extends Controller
         $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
         $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
 
-        $newTest = new MedicalLab;
-        $newTest->patient_id                   = $patientId->id;
-        $newTest->patient_history_id           = $patientHistoryId->id;
-        $newTest->test_id                      = $request->test_id;
-        $newTest->doctor_notes                 = $request->notes;
-        $newTest->created_by                   = auth('sanctum')->user()->id;
-        $newTest->created_at                   = Carbon::now();
-        $newTest->save();
+        foreach ($request->test_id as $item) {
+            $newTest = new MedicalLab;
+            $newTest->patient_id                   = $patientId->id;
+            $newTest->patient_history_id           = $patientHistoryId->id;
+            $newTest->test_id                      = $item;
+            $newTest->doctor_notes                 = $request->notes;
+            $newTest->created_by                   = auth('sanctum')->user()->id;
+            $newTest->created_at                   = Carbon::now();
+            $newTest->save();
+        }
 
         $patientTestsList = MedicalLab::where('patient_history_id', '=', $patientHistoryId->id)
             ->with([
