@@ -58,7 +58,7 @@ class MedicalLabController extends Controller
         $patientTestsList = MedicalLab::where('patient_history_id', '=', $patientHistoryId->id)
             ->with([
                 'user:id,full_name',
-                'testGroups:id,test_group,test_name,created_by'
+                'testGroups:id,test_group,test_name,created_by,min_range,max_range'
             ])
             ->get();
 
@@ -152,7 +152,7 @@ class MedicalLabController extends Controller
         $patientTestsList = MedicalLab::where('patient_history_id', '=', $patientHistoryId->id)
             ->with([
                 'user:id,full_name',
-                'testGroups:id,test_group,test_name,created_by'
+                'testGroups'
             ])
             ->get();
 
