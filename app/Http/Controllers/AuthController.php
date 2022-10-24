@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Faker\Generator;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\SignupRequest;
 use App\Http\Requests\LoginRequest;
-use Laravel\Sanctum\Sanctum;
-use App\Models\LoginHistory;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -26,7 +22,7 @@ class AuthController extends Controller
         }
 
         $newUser = new User;
-        $newUser->uuid = fake()->uuid();
+        $newUser->uuid = Str::uuid();
         $newUser->full_name = $request->full_name;
         $newUser->username = $request->username;
         // TODO add profile_pic
