@@ -29,8 +29,13 @@ SESSION_DOMAIN=http://prs.esite-lab.com/portal
 - Run `php artisan key:generate` to generate encryption key
 - Create database then add it's name in the `.env` file in [DB_DATABASE]
 - To generate [`areeb/password`, permissions, Diagnosis types], Run
+- !Important `php artisan migrate:fresh` will delete OLD DATABASE and create new one with Initial Information.
 ```apacheconf
 php artisan migrate:fresh && php artisan db:seed --class=DatabaseSeeder
+```
+To batch only new changes to the database WITHOUT effect on the existing data, use this command:
+```apacheconf
+php artisan migrate
 ```
 - Run
 ```apacheconf
