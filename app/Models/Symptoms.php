@@ -17,6 +17,10 @@ class Symptoms extends Model
         return $this->hasOne(User::class, 'id', 'created_by');
     }
 
+    public function updatedUser() {
+        return $this->hasOne(User::class, 'id', 'updated_by');
+    }
+
     public function symptom() {
         return $this->hasOne(SymptomsTypes::class, 'id', 'symptoms_id');
     }

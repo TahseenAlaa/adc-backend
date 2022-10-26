@@ -79,6 +79,7 @@ class SymptomsController extends Controller
         $symptomWithUser = Symptoms::where('patient_history_id', '=', $patientHistoryId->id)
             ->with([
             'user:id,full_name',
+            'updatedUser:id,full_name',
             'symptom:id,title'
         ])
             ->get();
@@ -94,9 +95,16 @@ class SymptomsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        Symptoms::where('id', '=', $request->id)
+            ->update([
+                'symptoms_id'     => $request->symptoms_id,
+                'clinical_notes'  => $request->clinical_notes,
+                'updated_by'      => auth('sanctum')->user()->id
+            ]);
+
+        return $this->show($request->patient_uuid);
     }
 
     /**

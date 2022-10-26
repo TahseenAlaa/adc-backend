@@ -88,6 +88,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store', [SymptomsController::class, 'store'])->name('store');
         Route::get('/show/{uuid}', [SymptomsController::class, 'show'])->name('show');
         Route::delete('/delete/{id}/{patient_uuid}', [SymptomsController::class, 'destroy'])->name('delete');
+        Route::post('/edit', [SymptomsController::class, 'edit'])->name('edit');
     });
     // END Symptoms
 
