@@ -100,6 +100,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/update', [MedicalLabController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}/{uuid}', [MedicalLabController::class, 'destroy'])->name('destroy');
         Route::get('/show-history/{id}', [MedicalLabController::class, 'showHistory'])->name('history.show');
+        Route::post('/edit', [MedicalLabController::class, 'edit'])->name('edit.test');
     });
     // END Medical Lab
 

@@ -17,6 +17,10 @@ class MedicalLab extends Model
         return $this->hasOne(User::class, 'id', 'created_by');
     }
 
+    public function updatedUser() {
+        return $this->hasOne(User::class, 'id', 'updated_by');
+    }
+
     public function testGroups() {
         return $this->hasOne(TestGroups::class, 'id', 'test_id');
     }

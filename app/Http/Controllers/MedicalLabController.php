@@ -152,6 +152,7 @@ class MedicalLabController extends Controller
         $patientTestsList = MedicalLab::where('patient_history_id', '=', $patientHistoryId->id)
             ->with([
                 'user:id,full_name',
+                'updatedUser:id,full_name',
                 'testGroups'
             ])
             ->get();
@@ -167,9 +168,21 @@ class MedicalLabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $medicalLabId = MedicalLab::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
+        MedicalLab::where('id', '=', $medicalLabId->id)
+            ->whereNUll(['sampling_status', 'result'])
+            ->update([
+                'test_id'       => $request->test_id,
+                'doctor_notes'  => $request->doctor_notes,
+                'updated_by'    => auth('sanctum')->user()->id,
+                'updated_at'    => Carbon::now()
+            ]);
+
+        return $this->show($request->patient_uuid);
     }
 
     /**
