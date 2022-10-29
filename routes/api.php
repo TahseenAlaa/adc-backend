@@ -15,6 +15,7 @@ use App\Http\Controllers\SymptomsController;
 use App\Http\Controllers\LabTestGroupsController;
 use App\Http\Controllers\AnthoController;
 use App\Http\Controllers\LabSamplingController;
+use App\Http\Controllers\LabResultsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +111,12 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store', [LabSamplingController::class, 'store'])->name('store');
     });
     // END Lab Sampling
+
+    // START Lab Results
+    Route::prefix('/lab-results')->name('lab_results.')->middleware('auth:sanctum')->group(function () {
+        Route::post('/store', [LabResultsController::class, 'store'])->name('store');
+    });
+    // END Lab Results
 
     // START Lab Test Groups
     Route::prefix('/lab-test-groups')->name('test-groups.')->middleware('auth:sanctum')->group(function () {
