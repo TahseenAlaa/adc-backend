@@ -153,6 +153,8 @@ class MedicalLabController extends Controller
             ->with([
                 'user:id,full_name',
                 'updatedUser:id,full_name',
+                'samplingUser:id,full_name',
+                'resultUser:id,full_name',
                 'testGroups'
             ])
             ->get();
