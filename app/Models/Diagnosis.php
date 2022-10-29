@@ -20,4 +20,8 @@ class Diagnosis extends Model
     public function user() {
         return $this->hasOne(User::class, 'id', 'created_by');
     }
+
+    public function updatedUser() {
+        return $this->hasOne(User::class, 'id', 'updated_by');
+    }
 }
