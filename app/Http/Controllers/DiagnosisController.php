@@ -83,6 +83,7 @@ class DiagnosisController extends Controller
         $diagnosisWithUser = Diagnosis::where('patient_history_id', '=', $patientHistoryId->id)
             ->with([
                 'user:id,full_name',
+                'updatedUser:id,full_name',
                 'diagnosis:id,title'
             ])
             ->get();
@@ -98,9 +99,16 @@ class DiagnosisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        Diagnosis::where('id', '=', $request->id)
+            ->update([
+                'diagnosis_id'     => $request->diagnosis_id,
+                'diagnosis_notes'  => $request->diagnosis_notes,
+                'updated_by'       => auth('sanctum')->user()->id
+            ]);
+
+        return $this->show($request->patient_uuid);
     }
 
     /**

@@ -74,6 +74,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::delete('/destroy/{id}/{uuid}', [DiagnosisController::class, 'destroy'])->name('destroy');
         Route::get('/types', [DiagnosisController::class, 'types'])->name('types');
         Route::get('/show/{uuid}', [DiagnosisController::class, 'show'])->name('show');
+        Route::post('/edit', [DiagnosisController::class, 'edit'])->name('edit');
     });
     // END Diagnosis
 
