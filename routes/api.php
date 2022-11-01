@@ -17,6 +17,7 @@ use App\Http\Controllers\AnthoController;
 use App\Http\Controllers\LabSamplingController;
 use App\Http\Controllers\LabResultsController;
 use App\Http\Controllers\ProvidersController;
+use App\Http\Controllers\DrugsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,5 +168,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index', [ProvidersController::class, 'index'])->name('index');
     });
     // END Providers
+
+    // START Drugs
+    Route::prefix('/drugs')->name('drugs.')->middleware('auth:sanctum')->group(function () {
+        Route::get('/index', [DrugsController::class, 'index'])->name('index');
+    });
+    // END Drugs
 });
 // END API v1
