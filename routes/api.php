@@ -16,6 +16,7 @@ use App\Http\Controllers\LabTestGroupsController;
 use App\Http\Controllers\AnthoController;
 use App\Http\Controllers\LabSamplingController;
 use App\Http\Controllers\LabResultsController;
+use App\Http\Controllers\ProvidersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -160,5 +161,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/show', [AnthoController::class, 'show'])->name('show');
     });
     // END Antho
+
+    // START Providers
+    Route::prefix('/providers')->name('providers.')->middleware('auth:sanctum')->group(function () {
+        Route::get('/index', [ProvidersController::class, 'index'])->name('index');
+    });
+    // END Providers
 });
 // END API v1
