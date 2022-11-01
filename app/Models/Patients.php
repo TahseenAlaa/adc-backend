@@ -16,4 +16,8 @@ class Patients extends Model
     public function patientHistory() {
         return $this->hasMany(PatientsHistory::class, 'patient_id', 'id');
     }
+
+    public function latestPatientHistory() {
+        return $this->hasOne(PatientsHistory::class, 'patient_id', 'id')->latestOfMany();
+    }
 }
