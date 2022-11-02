@@ -179,6 +179,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Documents
     Route::prefix('/documents')->name('documents.')->middleware('auth:sanctum')->group(function () {
         Route::post('/store', [DocumentsController::class, 'store'])->name('store');
+        Route::get('/index-inventory', [DocumentsController::class, 'indexInventory'])->name('index-inventory');
     });
     // END Documents
 });

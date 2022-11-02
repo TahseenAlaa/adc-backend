@@ -14,9 +14,16 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexInventory()
     {
-        //
+        return response([
+            'data' => Documents::where('doc_type', '=', 1)
+                ->with([
+                    'user:id,full_name',
+                    'updatedUser:id,full_name'
+                ])
+                ->get() // 1: mean Inside the inventory
+        ]);
     }
 
     /**
@@ -43,7 +50,7 @@ class DocumentsController extends Controller
         $newDocument->source_name = $request->source_name;
         $newDocument->source_job_title = $request->source_job_title;
         $newDocument->destination_ref = $request->destination_reference;
-        $newDocument->destination_name = $request->destination_name;
+        $newDocument->destination_name = 'Inventory';
         $newDocument->destination_job_title = $request->destination_job_title;
         $newDocument->doc_type = $request->doc_type; // 1: Input Doc, 2: Output Doc.
         $newDocument->final_approval = $request->final_approval;
