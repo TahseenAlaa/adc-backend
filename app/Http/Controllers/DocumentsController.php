@@ -22,6 +22,7 @@ class DocumentsController extends Controller
                     'user:id,full_name',
                     'updatedUser:id,full_name'
                 ])
+                ->orderBy('id', 'desc')
                 ->get() // 1: mean Inside the inventory
         ]);
     }
