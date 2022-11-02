@@ -18,6 +18,7 @@ use App\Http\Controllers\LabSamplingController;
 use App\Http\Controllers\LabResultsController;
 use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\DrugsController;
+use App\Http\Controllers\DocumentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -174,5 +175,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index', [DrugsController::class, 'index'])->name('index');
     });
     // END Drugs
+
+    // START Documents
+    Route::prefix('/documents')->name('documents.')->middleware('auth:sanctum')->group(function () {
+        Route::post('/store', [DocumentsController::class, 'store'])->name('store');
+    });
+    // END Documents
 });
 // END API v1

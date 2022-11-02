@@ -25,8 +25,7 @@ return new class extends Migration
             $table->integer('doc_type')->comment('1: Input Doc, 2: Output Doc.')->nullable();
             $table->boolean('to_pharmacy')->comment('1: True, 0: False')->nullable();
             $table->boolean('final_approval')->comment('1: Yes, 0: No')->nullable(); // 1: Yes, 0: No
-            $table->string('manager_name')->nullable();
-            $table->integer('approved_by')->nullable();
+            $table->string('approved_by')->nullable();
             $table->dateTime('approved_at')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();

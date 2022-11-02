@@ -35,20 +35,18 @@ class DocumentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // TODO validation request
     {
         $newDocument = new Documents;
         $newDocument->provider_id = $request->provider_id;
-        $newDocument->doc_number = $request->doc_numbe;
-        $newDocument->doc_date = $request->doc_date;
+        $newDocument->source_ref = $request->source_reference;
+        $newDocument->source_name = $request->source_name;
+        $newDocument->source_job_title = $request->source_job_title;
+        $newDocument->destination_ref = $request->destination_reference;
+        $newDocument->destination_name = $request->destination_name;
+        $newDocument->destination_job_title = $request->destination_job_title;
         $newDocument->doc_type = $request->doc_type; // 1: Input Doc, 2: Output Doc.
-        $newDocument->to_pharmacy = $request->to_pharmacy;
-        $newDocument->to_name = $request->to_name;
-        $newDocument->sender_name = $request->sender_name;
-        $newDocument->sender_job_title = $request->sender_job_title;
-        $newDocument->receiver_name = $request->receiver_name;
-        $newDocument->receiver_job_title = $request->receiver_job_title;
-        $newDocument->manager_name = $request->manager_name;
+        $newDocument->final_approval = $request->final_approval;
         $newDocument->approved_by = $request->approved_by;
         $newDocument->approved_at = $request->approved_at;
         $newDocument->created_by = auth('sanctum')->user()->id;
@@ -56,9 +54,22 @@ class DocumentsController extends Controller
         $newDocument->save();
 
         // Store documents items
-//        foreach ($item in $newItem) {
-//
-//    }
+        foreach ($request->newItems as $item) {
+            $newDocumentItem = new DocumentsItems;
+            $newDocumentItem->drug_id = $item['name'];
+            $newDocumentItem->quantity = $item['quantity'];
+            $newDocumentItem->notes = $item['notes'];
+            $newDocumentItem->parent_doc = $newDocument->id;
+            $newDocumentItem->batch_no = $item['batch'];
+            $newDocumentItem->expire_date = $item['expire_date'];
+            $newDocumentItem->created_by = auth('sanctum')->user()->id;
+            $newDocumentItem->created_at = Carbon::now();
+            $newDocumentItem->save();
+        }
+
+        return response([
+            'data' => 'Stores successfully'
+        ]);
     }
 
     /**
