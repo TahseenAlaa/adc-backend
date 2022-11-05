@@ -21,6 +21,9 @@ return new class extends Migration
             $table->integer('parent_doc')->nullable();
             $table->string('batch_no')->nullable();
             $table->date('expire_date')->nullable();
+            $table->integer('doc_type')->comment('1: Input Doc, 2: Output Doc.')->nullable();
+            $table->boolean('to_pharmacy')->comment('1: True, 0: False')->nullable();
+            $table->integer('calc_quantity')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
