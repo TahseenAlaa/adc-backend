@@ -54,6 +54,7 @@ class DocumentsController extends Controller
         $newDocument->destination_name = 'Inventory';
         $newDocument->destination_job_title = $request->destination_job_title;
         $newDocument->doc_type = $request->doc_type; // 1: Input Doc, 2: Output Doc.
+        $newDocument->to_pharmacy = $request->to_pharmacy;
         $newDocument->final_approval = $request->final_approval;
         $newDocument->approved_by = $request->approved_by;
         $newDocument->approved_at = $request->approved_at;
@@ -70,6 +71,11 @@ class DocumentsController extends Controller
             $newDocumentItem->parent_doc = $newDocument->id;
             $newDocumentItem->batch_no = $item['batch'];
             $newDocumentItem->expire_date = $item['expire_date'];
+            $newDocumentItem->doc_type = $request->doc_type;
+            $newDocumentItem->to_pharmacy = $request->to_pharmacy;
+            if ($request->doc_type === 2) { /* Output Document */ // TODO Validation Calc_quantity >= 1
+                $newDocumentItem->calc_quantity = $request->calc_quantity;
+            }
             $newDocumentItem->created_by = auth('sanctum')->user()->id;
             $newDocumentItem->created_at = Carbon::now();
             $newDocumentItem->save();
