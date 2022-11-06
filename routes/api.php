@@ -181,6 +181,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store', [DocumentsController::class, 'store'])->name('store');
         Route::get('/index-inventory', [DocumentsController::class, 'indexInventory'])->name('index-inventory');
         Route::get('/available-drugs', [DocumentsController::class, 'indexAvailableDrugs'])->name('available-drugs');
+        Route::get('/output-document', [DocumentsController::class, 'indexOutputDocuments'])->name('output-documents');
     });
     // END Documents
 });

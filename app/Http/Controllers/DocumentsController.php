@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Documents;
 use App\Models\DocumentsItems;
+use App\Models\Providers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,9 @@ class DocumentsController extends Controller
             'data' => Documents::where('doc_type', '=', 1)
                 ->with([
                     'user:id,full_name',
-                    'updatedUser:id,full_name'
+                    'updatedUser:id,full_name',
+                    'source:id,title',
+                    'destination:id,title'
                 ])
                 ->orderBy('id', 'desc')
                 ->get() // 1: mean Inside the inventory
@@ -37,6 +40,20 @@ class DocumentsController extends Controller
 
         return response([
             'data' => $availableDrugs
+        ]);
+    }
+
+    public function indexOutputDocuments() {
+        return response([
+            'data' => Documents::where('doc_type', '=', 2)
+                ->with([
+                    'user:id,full_name',
+                    'updatedUser:id,full_name',
+                    'source:id,title',
+                    'destination:id,title'
+                ])
+                ->orderBy('id', 'desc')
+                ->get() // 2: mean Output Document
         ]);
     }
 
@@ -59,12 +76,18 @@ class DocumentsController extends Controller
     public function store(Request $request) // TODO validation request
     {
         $newDocument = new Documents;
-        $newDocument->provider_id = $request->provider_id;
-        $newDocument->source_ref = $request->source_reference;
         $newDocument->source_name = $request->source_name;
+        $newDocument->source_ref = $request->source_reference;
         $newDocument->source_job_title = $request->source_job_title;
+        if ($request->doc_type === 1) { // Input Document
+            $newDocument->destination_id = Providers::select('id')->where('title', '=', 'Alhasan Diabetes Center')->first()->id;
+            $newDocument->provider_id = $request->provider_id;
+        } else if ($request->doc_type === 2) { // Output Document
+            $newDocument->destination_id = $request->destination_id;
+            $newDocument->provider_id = Providers::select('id')->where('title', '=', 'Alhasan Diabetes Center')->first()->id;
+        }
+        $newDocument->destination_name = $request->destination_name;
         $newDocument->destination_ref = $request->destination_reference;
-        $newDocument->destination_name = 'Inventory';
         $newDocument->destination_job_title = $request->destination_job_title;
         $newDocument->doc_type = $request->doc_type; // 1: Input Doc, 2: Output Doc.
         $newDocument->to_pharmacy = $request->to_pharmacy;

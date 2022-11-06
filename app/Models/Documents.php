@@ -20,4 +20,12 @@ class Documents extends Model
     public function updatedUser() {
         return $this->hasOne(User::class, 'id', 'updated_by');
     }
+
+    public function source() {
+        return $this->hasOne(Providers::class, 'id', 'provider_id');
+    }
+
+    public function destination() {
+        return $this->hasOne(Providers::class, 'id', 'destination_id');
+    }
 }
