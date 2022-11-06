@@ -27,6 +27,19 @@ class DocumentsController extends Controller
         ]);
     }
 
+    public function indexAvailableDrugs() {
+        $availableDrugs = DocumentsItems::where('doc_type', '=', 1)
+            ->where('calc_quantity', '>=', 1)
+            ->with([
+                'drugs:id,title'
+            ])
+            ->get();
+
+        return response([
+            'data' => $availableDrugs
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -75,6 +88,8 @@ class DocumentsController extends Controller
             $newDocumentItem->to_pharmacy = $request->to_pharmacy;
             if ($request->doc_type === 2) { /* Output Document */ // TODO Validation Calc_quantity >= 1
                 $newDocumentItem->calc_quantity = $request->calc_quantity;
+            } else if ($request->doc_type === 1) {
+                $newDocumentItem->calc_quantity = $item['quantity'];
             }
             $newDocumentItem->created_by = auth('sanctum')->user()->id;
             $newDocumentItem->created_at = Carbon::now();

@@ -12,4 +12,8 @@ class DocumentsItems extends Model
     use HasApiTokens, HasFactory, SoftDeletes;
 
     protected $table = "esite_docs_items";
+
+    public function drugs() {
+        return $this->hasOne(Drugs::class, 'id', 'drug_id');
+    }
 }
