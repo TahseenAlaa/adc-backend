@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('esite_docs', function (Blueprint $table) {
             $table->id();
-            $table->integer('provider_id');
+            $table->integer('provider_id')->nullable();
             $table->string('source_ref')->nullable();
             $table->string('source_name')->nullable();
             $table->string('source_job_title')->nullable();
+            $table->integer('destination_id')->nullable();
             $table->string('destination_ref')->nullable();
             $table->string('destination_name')->nullable();
             $table->string('destination_job_title')->nullable();
