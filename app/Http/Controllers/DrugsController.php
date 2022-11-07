@@ -15,7 +15,11 @@ class DrugsController extends Controller
     public function index()
     {
         return response([
-            'data' => Drugs::all()
+            'data' => Drugs::with([
+                'user:id,full_name',
+                'updatedUser:id,full_name'
+            ])
+                ->get()
         ]);
     }
 
