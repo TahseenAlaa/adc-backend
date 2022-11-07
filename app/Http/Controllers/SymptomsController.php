@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patients;
 use App\Models\PatientsHistory;
 use App\Models\Symptoms;
+use App\Models\SymptomsTypes;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +19,13 @@ class SymptomsController extends Controller
      */
     public function index()
     {
-        //
+        return response([
+            'data' => SymptomsTypes::with([
+                'user:id,full_name',
+                'updatedUser:id,full_name'
+            ])
+                ->get()
+        ]);
     }
 
     /**
