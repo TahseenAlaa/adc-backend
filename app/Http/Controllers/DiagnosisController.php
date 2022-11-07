@@ -12,6 +12,16 @@ use App\Http\Requests\DiagnosisStoreRequest;
 
 class DiagnosisController extends Controller
 {
+
+    public function indexAll() {
+        return response([
+            'data' => DiagnosisTypesModel::with([
+                'user:id,full_name',
+                'updatedUser:id,full_name'
+            ])
+                ->get()
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *

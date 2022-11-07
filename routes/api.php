@@ -74,6 +74,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
 
     // START Diagnosis
     Route::prefix('/diagnosis')->name('diagnosis.')->middleware('auth:sanctum')->group(function () {
+        Route::get('/index', [DiagnosisController::class, 'indexAll'])->name('index');
         Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
         Route::delete('/destroy/{id}/{uuid}', [DiagnosisController::class, 'destroy'])->name('destroy');
         Route::get('/types', [DiagnosisController::class, 'types'])->name('types');
