@@ -15,7 +15,11 @@ class ProvidersController extends Controller
     public function index()
     {
         return response([
-            'data' => Providers::all()
+            'data' => Providers::with([
+                'user:id,full_name',
+                'updatedUser:id,full_name'
+            ])
+            ->get()
         ]);
     }
 
