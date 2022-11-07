@@ -104,16 +104,15 @@ class DocumentsController extends Controller
             $newDocumentItem = new DocumentsItems;
             $newDocumentItem->drug_id = $item['name'];
             $newDocumentItem->quantity = $item['quantity'];
+            $newDocumentItem->calc_quantity = $item['quantity'];
             $newDocumentItem->notes = $item['notes'];
             $newDocumentItem->parent_doc = $newDocument->id;
             $newDocumentItem->batch_no = $item['batch'];
             $newDocumentItem->expire_date = $item['expire_date'];
             $newDocumentItem->doc_type = $request->doc_type;
             if ($request->doc_type === 2) { /* Output Document */ // TODO Validation Calc_quantity >= 1
-                $newDocumentItem->calc_quantity = $request->calc_quantity;
                 $newDocumentItem->to_pharmacy = $request->to_pharmacy;
             } else if ($request->doc_type === 1) { // Input Document
-                $newDocumentItem->calc_quantity = $item['quantity'];
                 $newDocumentItem->to_pharmacy = false;
             }
             $newDocumentItem->created_by = auth('sanctum')->user()->id;

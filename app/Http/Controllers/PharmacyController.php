@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PharmacyResource;
+use App\Models\DocumentsItems;
 use App\Models\MedicalLab;
 use App\Models\Patients;
 use App\Models\Pharmacy;
@@ -19,7 +20,12 @@ class PharmacyController extends Controller
     public function index()
     {
         return response([
-            'date' => PharmacyResource::collection(Pharmacy::all())
+            'data' => DocumentsItems::where('to_pharmacy', '=', true)
+                                ->where('calc_quantity', '>=', 1)
+                                ->with([
+                                    'drugs:id,title,drug_type,item_type'
+                                ])
+                                ->get()
         ]);
     }
 
