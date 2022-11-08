@@ -83,12 +83,13 @@ class DocumentsController extends Controller
             $newDocument->destination_id = Providers::select('id')->where('title', '=', 'Alhasan Diabetes Center')->first()->id;
             $newDocument->provider_id = $request->provider_id;
             $newDocument->to_pharmacy = false;
+            $newDocument->destination_name = 'Inventory';
         } else if ($request->doc_type === 2) { // Output Document
             $newDocument->destination_id = $request->destination_id;
             $newDocument->provider_id = Providers::select('id')->where('title', '=', 'Alhasan Diabetes Center')->first()->id;
             $newDocument->to_pharmacy = $request->to_pharmacy;
+            $newDocument->destination_name = $request->destination_name;
         }
-        $newDocument->destination_name = $request->destination_name;
         $newDocument->destination_ref = $request->destination_reference;
         $newDocument->destination_job_title = $request->destination_job_title;
         $newDocument->doc_type = $request->doc_type; // 1: Input Doc, 2: Output Doc.
