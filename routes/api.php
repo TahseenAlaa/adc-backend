@@ -169,6 +169,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Providers
     Route::prefix('/providers')->name('providers.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [ProvidersController::class, 'index'])->name('index');
+        Route::post('/store', [ProvidersController::class, 'store'])->name('store');
     });
     // END Providers
 

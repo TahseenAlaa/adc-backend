@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Providers;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProvidersController extends Controller
@@ -39,9 +40,15 @@ class ProvidersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // TODO validate request
     {
-        //
+        $newProvider = new Providers;
+        $newProvider->title = $request->name;
+        $newProvider->created_by = auth('sanctum')->user()->id;
+        $newProvider->created_at = Carbon::now();
+        $newProvider->save();
+
+        return $this->index();
     }
 
     /**
