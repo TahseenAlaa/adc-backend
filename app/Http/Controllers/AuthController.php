@@ -12,6 +12,24 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+
+    public function index() {
+        return response([
+            'data' => User::select([
+                'id',
+                'full_name',
+                'username',
+                'job_title',
+                'role',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at',
+                'last_login_at'
+            ])->get()
+        ]);
+    }
+
     public function signup(SignupRequest $request) {
 
         if (is_null(auth('sanctum')->id()))

@@ -36,6 +36,7 @@ use App\Http\Controllers\DocumentsController;
 Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Auth
     Route::prefix('/auth')->name('auth.')->group(function () {
+        Route::get('/index', [AuthController::class, 'index'])->middleware('auth:sanctum')->name('index');
         Route::post('/signup', [AuthController::class, 'signup'])->name('signup'); // TODO protect this route ->middleware('auth:sanctum')
         Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
