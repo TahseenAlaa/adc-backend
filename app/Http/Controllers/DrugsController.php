@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Drugs;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DrugsController extends Controller
@@ -39,9 +40,17 @@ class DrugsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // TODO validate request
     {
-        //
+        $newDrug = new Drugs;
+        $newDrug->title = $request->name;
+        $newDrug->drug_type = $request->drug_type;
+        $newDrug->item_type = $request->item_type;
+        $newDrug->created_by = auth('sanctum')->user()->id;
+        $newDrug->created_at = Carbon::now();
+        $newDrug->save();
+
+        return $this->index();
     }
 
     /**

@@ -175,6 +175,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Drugs
     Route::prefix('/drugs')->name('drugs.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [DrugsController::class, 'index'])->name('index');
+        Route::post('/store', [DrugsController::class, 'store'])->name('store');
     });
     // END Drugs
 
