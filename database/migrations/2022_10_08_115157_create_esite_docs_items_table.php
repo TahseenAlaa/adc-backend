@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('expire_date')->nullable();
             $table->integer('doc_type')->comment('1: Input Doc, 2: Output Doc.')->nullable();
             $table->boolean('to_pharmacy')->comment('1: True, 0: False')->nullable();
-            $table->integer('calc_quantity')->nullable();
+            $table->integer('to_patient')->comment('Patient Id')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();

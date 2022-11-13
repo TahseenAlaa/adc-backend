@@ -7,6 +7,7 @@ use App\Models\DocumentsItems;
 use App\Models\Providers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DocumentsController extends Controller
 {
@@ -31,19 +32,103 @@ class DocumentsController extends Controller
     }
 
     public function indexAvailableDrugs() {
-        $availableDrugs = DocumentsItems::where('doc_type', '=', 1)
-            ->where('calc_quantity', '>=', 1)
-            ->with([
-                'drugs:id,title'
-            ])
-            ->get();
+
+        $inputDrugsOnly = DocumentsItems::where('doc_type', '=', 1)->with('drugs:id,title')->get();
+        $outputDrugs = DocumentsItems::where('doc_type', '=', 2)->with('drugs:id,title')->get();
+
+        foreach ($inputDrugsOnly as $in) {
+            $in['diff'] = $in->quantity;
+            foreach ($outputDrugs as $out) {
+                if ($in->drug_id === $out->drug_id && $in->batch_no === $out->batch_no && $in->expire_date === $out->expire_date) {
+
+                    if (
+                        $out->to_pharmacy <> 0 &&
+                        $out->to_patient === null
+                    ) {
+                        $in['diff'] -= $out->quantity;
+
+                        // Check to patient ?
+                    } else if (
+                        $out->to_pharmacy <> 0 &&
+                        $out->to_patient <> null
+                    ) {
+                        $in['diff'] -= $out->quantity;
+
+                        // Check output to others ?
+                    } else if (
+                        $out->to_pharmacy === 0 &&
+                        $out->to_patient === null
+                    ) {
+                        $in['diff'] -= $out->quantity;
+                    }
+                }
+            }
+        }
 
         return response([
-            'data' => $availableDrugs
+            'data' => $inputDrugsOnly
         ]);
+
+
+//        $documentsList = Documents::with('items')->get();
+//        $newDocumentsList = [];
+//        $inputInInventory = [];
+//        $inPharmacy = [];
+//        $outputToPatient = [];
+//        $outputToOthers = [];
+//
+//        foreach ($documentsList as $item) {
+//
+//            $inputInInventory = DocumentsItems::select('id', 'quantity', 'drug_id')
+//                ->where('drug_id', '=', $item->drug_id)
+//                ->where('doc_type', '=', 1)
+//                ->where('to_pharmacy', '=', null)
+//                ->where('to_patient', '=', null)
+//                ->with([
+//                    'drugs:id,title'
+//                ])->get();
+//
+//            $inPharmacy = DocumentsItems::select('id', 'quantity', 'drug_id')
+//                ->where('drug_id', '=', $item->drug_id)
+//                ->where('doc_type', '=', 2)
+//                ->where('to_pharmacy', '=', 1)
+//                ->where('to_patient', '=', null)
+//                ->with([
+//                    'drugs:id,title'
+//                ])->get();
+//
+//            $outputToPatient = DocumentsItems::select('id', 'quantity', 'drug_id')
+//                ->where('drug_id', '=', $item->drug_id)
+//                ->where('doc_type', '=', 2)
+//                ->where('to_pharmacy', '=', 1)
+//                ->where('to_patient', '<>', null)
+//                ->with([
+//                    'drugs:id,title'
+//                ])->get();
+//
+//            $outputToOthers = DocumentsItems::select('id', 'quantity', 'drug_id')
+//                ->where('drug_id', '=', $item->drug_id)
+//                ->where('doc_type', '=', 2)
+//                ->where('to_pharmacy', '=', 0)
+//                ->where('to_patient', '=', null)
+//                ->with([
+//                    'drugs:id,title'
+//                ])->get();
+//        }
+//
+//
+//
+//        return response([
+//            'inputInInventory' => $inputInInventory,
+//            'inPharmacy'       => $inPharmacy,
+//            'outputToPatient'  => $outputToPatient,
+//            'outputToOthers'   => $outputToOthers
+//        ]);
+
     }
 
     public function indexOutputDocuments() {
+
         return response([
             'data' => Documents::where('doc_type', '=', 2)
                 ->with([
@@ -103,18 +188,21 @@ class DocumentsController extends Controller
         // Store documents items
         foreach ($request->newItems as $item) {
             $newDocumentItem = new DocumentsItems;
-            $newDocumentItem->drug_id = $item['name'];
-            $newDocumentItem->quantity = $item['quantity'];
-            $newDocumentItem->calc_quantity = $item['quantity'];
+            $newDocumentItem->drug_id = $item['drug_id'];
             $newDocumentItem->notes = $item['notes'];
             $newDocumentItem->parent_doc = $newDocument->id;
             $newDocumentItem->batch_no = $item['batch'];
             $newDocumentItem->expire_date = $item['expire_date'];
             $newDocumentItem->doc_type = $request->doc_type;
-            if ($request->doc_type === 2) { /* Output Document */ // TODO Validation Calc_quantity >= 1
+            if ($request->doc_type === 2) { /* Output Document */
                 $newDocumentItem->to_pharmacy = $request->to_pharmacy;
+                $newDocumentItem->to_patient = $request->to_patient;
+                $newDocumentItem->quantity = $item['diff'];
+
             } else if ($request->doc_type === 1) { // Input Document
                 $newDocumentItem->to_pharmacy = false;
+                $newDocumentItem->to_patient = null;
+                $newDocumentItem->quantity = $item['quantity'];
             }
             $newDocumentItem->created_by = auth('sanctum')->user()->id;
             $newDocumentItem->created_at = Carbon::now();

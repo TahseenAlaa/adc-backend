@@ -28,4 +28,8 @@ class Documents extends Model
     public function destination() {
         return $this->hasOne(Providers::class, 'id', 'destination_id');
     }
+
+    public function items() {
+        return $this->hasMany(DocumentsItems::class, 'parent_doc', 'id');
+    }
 }
