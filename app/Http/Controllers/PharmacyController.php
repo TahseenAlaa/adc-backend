@@ -19,13 +19,40 @@ class PharmacyController extends Controller
      */
     public function index()
     {
+        $inputDrugsOnly = DocumentsItems::where('doc_type', '=', 1)->with('drugs:id,title,drug_type')->get();
+        $outputDrugs = DocumentsItems::where('doc_type', '=', 2)->with('drugs:id,title')->get();
+
+        foreach ($inputDrugsOnly as $in) {
+            $in['diff'] = 0;
+            foreach ($outputDrugs as $out) {
+                if ($in->drug_id === $out->drug_id && $in->batch_no === $out->batch_no && $in->expire_date === $out->expire_date) {
+
+                    if (
+                        $out->to_pharmacy <> 0 &&
+                        $out->to_patient === null
+                    ) {
+                        $in['diff'] += $out->quantity;
+
+                        // Check to patient ?
+                    } else if (
+                        $out->to_pharmacy <> 0 &&
+                        $out->to_patient <> null
+                    ) {
+                        $in['diff'] -= $out->quantity;
+
+                        // Check output to others ?
+                    } else if (
+                        $out->to_pharmacy === 0 &&
+                        $out->to_patient === null
+                    ) {
+                        $in['diff'] -= $out->quantity;
+                    }
+                }
+            }
+        }
+
         return response([
-            'data' => DocumentsItems::where('to_pharmacy', '=', true)
-                                ->where('calc_quantity', '>=', 1)
-                                ->with([
-                                    'drugs:id,title,drug_type,item_type'
-                                ])
-                                ->get()
+            'data' => $inputDrugsOnly
         ]);
     }
 
