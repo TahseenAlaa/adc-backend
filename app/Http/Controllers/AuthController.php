@@ -64,7 +64,9 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request) {
 
-        $user = User::where('username', '=', $request->username)->first();
+        $user = User::where('username', '=', $request->username)
+            ->with('permissions:id,name')
+            ->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             // Stare Failed Logins
@@ -92,6 +94,14 @@ class AuthController extends Controller
 
         return response([
             'message' => 'Logged out successfully!'
+        ]);
+    }
+
+    public function getUser() {
+        return response([
+            'user' => User::where('id', '=', auth('sanctum')->user()->id)
+                ->with('permissions:id,name')
+                ->first()
         ]);
     }
 }
