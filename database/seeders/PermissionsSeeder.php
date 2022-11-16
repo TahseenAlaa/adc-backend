@@ -41,20 +41,35 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'can_edit_diagnosis']);
         Permission::create(['name' => 'can_delete_diagnosis']);
 
-        Permission::create(['name' => 'can_list_treatment']);
-        Permission::create(['name' => 'can_create_treatment']);
-        Permission::create(['name' => 'can_edit_treatment']);
-        Permission::create(['name' => 'can_delete_treatment']);
+        Permission::create(['name' => 'can_list_symptoms']);
+        Permission::create(['name' => 'can_create_symptoms']);
+        Permission::create(['name' => 'can_edit_symptoms']);
+        Permission::create(['name' => 'can_delete_symptoms']);
+
+        Permission::create(['name' => 'can_list_drugs']);
+        Permission::create(['name' => 'can_create_drugs']);
+        Permission::create(['name' => 'can_edit_drugs']);
+        Permission::create(['name' => 'can_delete_drugs']);
 
         Permission::create(['name' => 'can_list_medical_lab_tests']);
         Permission::create(['name' => 'can_create_medical_lab_test']);
         Permission::create(['name' => 'can_edit_medical_lab_test']);
         Permission::create(['name' => 'can_delete_medical_lab_test']);
 
-        Permission::create(['name' => 'can_list_pharmacy_drugs']);
-        Permission::create(['name' => 'can_create_pharmacy_drug']);
-        Permission::create(['name' => 'can_edit_pharmacy_drug']);
-        Permission::create(['name' => 'can_delete_pharmacy_drug']);
+        Permission::create(['name' => 'can_list_pharmacy']);
+        Permission::create(['name' => 'can_create_pharmacy']);
+        Permission::create(['name' => 'can_edit_pharmacy']);
+        Permission::create(['name' => 'can_delete_pharmacy']);
+
+        Permission::create(['name' => 'can_list_inventory']);
+        Permission::create(['name' => 'can_create_inventory']);
+        Permission::create(['name' => 'can_edit_inventory']);
+        Permission::create(['name' => 'can_delete_inventory']);
+
+        Permission::create(['name' => 'can_list_providers']);
+        Permission::create(['name' => 'can_create_providers']);
+        Permission::create(['name' => 'can_edit_providers']);
+        Permission::create(['name' => 'can_delete_providers']);
 
         Permission::create(['name' => 'can_access_reception_department']);
         Permission::create(['name' => 'can_access_antho_department']);
@@ -63,7 +78,6 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'can_access_pharmacy_department']);
         Permission::create(['name' => 'can_access_dashboard']);
         Permission::create(['name' => 'can_access_log']);
-        Permission::create(['name' => 'can_access_search']);
         // END Create Basic Permissions
     }
 }
