@@ -25,59 +25,60 @@ class PermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         App()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // START Create Basic Permissions
-        Permission::create(['name' => 'can_list_users']);
-        Permission::create(['name' => 'can_create_user']);
-        Permission::create(['name' => 'can_edit_user']);
-        Permission::create(['name' => 'can_delete_user']);
+        // START Permissions
+        Permission::create(['name' => 'list users']);
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'delete user']);
 
-        Permission::create(['name' => 'can_list_patients']);
-        Permission::create(['name' => 'can_create_patient']);
-        Permission::create(['name' => 'can_edit_patient']);
-        Permission::create(['name' => 'can_delete_patient']);
+        Permission::create(['name' => 'list patients']);
+        Permission::create(['name' => 'create patient']);
+        Permission::create(['name' => 'edit patient']);
+        Permission::create(['name' => 'delete patient']);
 
-        Permission::create(['name' => 'can_list_diagnosis']);
-        Permission::create(['name' => 'can_create_diagnosis']);
-        Permission::create(['name' => 'can_edit_diagnosis']);
-        Permission::create(['name' => 'can_delete_diagnosis']);
+        Permission::create(['name' => 'list diagnosis']);
+        Permission::create(['name' => 'create diagnosis']);
+        Permission::create(['name' => 'edit diagnosis']);
+        Permission::create(['name' => 'delete diagnosis']);
 
-        Permission::create(['name' => 'can_list_symptoms']);
-        Permission::create(['name' => 'can_create_symptoms']);
-        Permission::create(['name' => 'can_edit_symptoms']);
-        Permission::create(['name' => 'can_delete_symptoms']);
+        Permission::create(['name' => 'list symptoms']);
+        Permission::create(['name' => 'create symptoms']);
+        Permission::create(['name' => 'edit symptoms']);
+        Permission::create(['name' => 'delete symptoms']);
 
-        Permission::create(['name' => 'can_list_drugs']);
-        Permission::create(['name' => 'can_create_drugs']);
-        Permission::create(['name' => 'can_edit_drugs']);
-        Permission::create(['name' => 'can_delete_drugs']);
+        Permission::create(['name' => 'list drugs']);
+        Permission::create(['name' => 'create drugs']);
+        Permission::create(['name' => 'edit drugs']);
+        Permission::create(['name' => 'delete drugs']);
 
-        Permission::create(['name' => 'can_list_medical_lab_tests']);
-        Permission::create(['name' => 'can_create_medical_lab_test']);
-        Permission::create(['name' => 'can_edit_medical_lab_test']);
-        Permission::create(['name' => 'can_delete_medical_lab_test']);
+        Permission::create(['name' => 'list medical lab tests']);
+        Permission::create(['name' => 'create medical lab test']);
+        Permission::create(['name' => 'edit medical lab test']);
+        Permission::create(['name' => 'delete medical lab test']);
 
-        Permission::create(['name' => 'can_list_pharmacy']);
-        Permission::create(['name' => 'can_create_pharmacy']);
-        Permission::create(['name' => 'can_edit_pharmacy']);
-        Permission::create(['name' => 'can_delete_pharmacy']);
+        Permission::create(['name' => 'list pharmacy']);
+        Permission::create(['name' => 'create pharmacy']);
+        Permission::create(['name' => 'edit pharmacy']);
+        Permission::create(['name' => 'delete pharmacy']);
 
-        Permission::create(['name' => 'can_list_inventory']);
-        Permission::create(['name' => 'can_create_inventory']);
-        Permission::create(['name' => 'can_edit_inventory']);
-        Permission::create(['name' => 'can_delete_inventory']);
+        Permission::create(['name' => 'list inventory']);
+        Permission::create(['name' => 'create inventory']);
+        Permission::create(['name' => 'edit inventory']);
+        Permission::create(['name' => 'delete inventory']);
 
-        Permission::create(['name' => 'can_list_providers']);
-        Permission::create(['name' => 'can_create_providers']);
-        Permission::create(['name' => 'can_edit_providers']);
-        Permission::create(['name' => 'can_delete_providers']);
+        Permission::create(['name' => 'list providers']);
+        Permission::create(['name' => 'create providers']);
+        Permission::create(['name' => 'edit providers']);
+        Permission::create(['name' => 'delete providers']);
 
-        Permission::create(['name' => 'can_access_reception_department']);
-        Permission::create(['name' => 'can_access_antho_department']);
-        Permission::create(['name' => 'can_access_doctor_department']);
-        Permission::create(['name' => 'can_access_medical_lab_department']);
-        Permission::create(['name' => 'can_access_pharmacy_department']);
-        Permission::create(['name' => 'can_access_dashboard']);
-        Permission::create(['name' => 'can_access_log']);
-        // END Create Basic Permissions
+        Permission::create(['name' => 'access reception department']);
+        Permission::create(['name' => 'access antho department']);
+        Permission::create(['name' => 'access doctor department']);
+        Permission::create(['name' => 'access medical lab department']);
+        Permission::create(['name' => 'access pharmacy department']);
+        Permission::create(['name' => 'access committee approval']);
+        Permission::create(['name' => 'access dashboard']);
+        Permission::create(['name' => 'access log']);
+        // END Permissions
     }
 }
