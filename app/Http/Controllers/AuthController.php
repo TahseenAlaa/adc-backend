@@ -66,7 +66,7 @@ class AuthController extends Controller
         App()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Attach the permissions
-        User::where('username', '=', $request->username)->first()
+        User::where('username', '=', $request->permissions)->first()
             ->givePermissionTo($request->permissions);
 
         return $this->index();
@@ -132,11 +132,11 @@ class AuthController extends Controller
         App()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Delete old permissions
-        User::where('username', 'areeb')->first()
+        User::where('id', '=', $request->id)->first()
             ->syncPermissions([]);
 
         // Attach new the permissions
-        User::where('username', '=', $request->username)->first()
+        User::where('id', '=', $request->id)->first()
             ->givePermissionTo($request->permissions);
     }
 
