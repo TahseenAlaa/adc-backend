@@ -139,4 +139,11 @@ class AuthController extends Controller
         User::where('username', '=', $request->username)->first()
             ->givePermissionTo($request->permissions);
     }
+
+    public function destroy(Request $request)
+    {
+        User::where('id', '=', $request->id)->delete();
+
+        return $this->index();
+    }
 }

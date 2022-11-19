@@ -45,6 +45,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         });
         Route::get('/user-info', [AuthController::class, 'getUser'])->middleware('auth:sanctum')->name('user-info');
         Route::post('/update', [AuthController::class, 'update'])->middleware('auth:sanctum')->name('update');
+        Route::post('/delete', [AuthController::class, 'destroy'])->middleware('auth:sanctum')->name('delete');
     });
     // END Auth
 
