@@ -138,6 +138,8 @@ class AuthController extends Controller
         // Attach new the permissions
         User::where('id', '=', $request->id)->first()
             ->givePermissionTo($request->permissions);
+
+        return $this->index();
     }
 
     public function destroy(Request $request)
