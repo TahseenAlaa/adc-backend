@@ -88,6 +88,8 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Symptoms Types
     Route::prefix('/symptoms-types')->name('symptoms-types.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [SymptomsTypesController::class, 'index'])->name('index');
+        Route::post('/store', [SymptomsTypesController::class, 'store'])->name('store');
+        Route::post('/update', [SymptomsTypesController::class, 'update'])->name('update');
     });
     // END Symptoms Types
 

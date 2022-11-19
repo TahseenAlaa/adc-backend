@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SymptomsTypes;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SymptomsTypesController extends Controller
@@ -14,7 +15,10 @@ class SymptomsTypesController extends Controller
      */
     public function index()
     {
-        $symptomsTypes = SymptomsTypes::all();
+        $symptomsTypes = SymptomsTypes::with([
+            'user:id,full_name',
+            'updatedUser:id,full_name',
+        ])->get();
 
         return response([
             'data' => $symptomsTypes
@@ -39,7 +43,14 @@ class SymptomsTypesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newSymptom = new SymptomsTypes;
+        $newSymptom->title = $request->title;
+        $newSymptom->created_by = auth('sanctum')->user()->id;
+        $newSymptom->created_at = Carbon::now();
+        $newSymptom->updated_at = Carbon::now();
+        $newSymptom->save();
+
+        return $this->index();
     }
 
     /**
@@ -71,9 +82,15 @@ class SymptomsTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        SymptomsTypes::where('id', '=', $request->id)->update([
+            'title' => $request->title,
+            'updated_by' => auth('sanctum')->user()->id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $this->index();
     }
 
     /**
