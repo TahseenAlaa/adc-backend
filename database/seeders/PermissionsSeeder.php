@@ -41,10 +41,10 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'edit diagnosis']);
         Permission::create(['name' => 'delete diagnosis']);
 
-        Permission::create(['name' => 'list symptoms']);
-        Permission::create(['name' => 'create symptoms']);
-        Permission::create(['name' => 'edit symptoms']);
-        Permission::create(['name' => 'delete symptoms']);
+        Permission::create(['name' => 'list symptoms type']);
+        Permission::create(['name' => 'create symptoms type']);
+        Permission::create(['name' => 'edit symptoms type']);
+        Permission::create(['name' => 'delete symptoms type']);
 
         Permission::create(['name' => 'list drugs']);
         Permission::create(['name' => 'create drugs']);
