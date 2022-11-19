@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TestGroups;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LabTestGroupsController extends Controller
@@ -14,30 +15,36 @@ class LabTestGroupsController extends Controller
      */
     public function index()
     {
-        $testGroupsList = TestGroups::with('user:id,full_name')->get();
+        $testGroupsList = TestGroups::with([
+            'user:id,full_name',
+            'updatedUser:id,full_name',
+        ])->get();
 
         return response([
             'data' => $testGroupsList
         ]);
     }
 
-    public function indexGroupNames() {
-        $groupNames = TestGroups::select('id', 'test_group')->get();
+//    public function indexGroupNames() {
+//        $groupNames = TestGroups::with([
+//            'user:id,full_name',
+//            'updatedUser:id,full_name',
+//        ])->get();
+//
+//        return response([
+//            'data' => $groupNames
+//        ]);
+//    }
 
-        return response([
-            'data' => $groupNames
-        ]);
-    }
-
-    public function indexTestNames(Request $request) {
-        $testNames = TestGroups::select('id', 'test_name')
-            ->where('test_group', '=', $request->test_group)
-            ->get();
-
-        return response([
-            'data' => $testNames
-        ]);
-    }
+//    public function indexTestNames(Request $request) {
+//        $testNames = TestGroups::select('id', 'test_name')
+//            ->where('test_group', '=', $request->test_group)
+//            ->get();
+//
+//        return response([
+//            'data' => $testNames
+//        ]);
+//    }
 
     /**
      * Show the form for creating a new resource.
@@ -65,6 +72,7 @@ class LabTestGroupsController extends Controller
         $newTest->measurement_unit    = $request->unit;
         $newTest->gender              = $request->gender;
         $newTest->created_by          = auth('sanctum')->user()->id;
+        $newTest->created_at          = Carbon::now();
         $newTest->save();
 
         return $this->index();
@@ -99,9 +107,20 @@ class LabTestGroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        TestGroups::where('id', '=', $request->id)->update([
+            'test_group'          => $request->test_group,
+            'test_name'           => $request->test_name,
+            'min_range'           => $request->min_range,
+            'max_range'           => $request->max_range,
+            'measurement_unit'    => $request->unit,
+            'gender'              => $request->gender,
+            'updated_by'          => auth('sanctum')->user()->id,
+            'updated_at'          => Carbon::now(),
+        ]);
+
+        return $this->index();
     }
 
     /**
@@ -110,9 +129,9 @@ class LabTestGroupsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        TestGroups::where('id', '=', $id)->delete();
+        TestGroups::where('id', '=', $request->id)->delete();
 
         return $this->index();
 

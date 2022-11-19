@@ -121,7 +121,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/{uuid}', [MedicalLabController::class, 'show'])->name('show'); // show the current test related to the current history
         Route::post('/store', [MedicalLabController::class, 'store'])->name('store');
         Route::post('/update', [MedicalLabController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}/{uuid}', [MedicalLabController::class, 'destroy'])->name('destroy');
+        Route::delete('/destroy', [MedicalLabController::class, 'destroy'])->name('destroy');
         Route::get('/show-history/{id}', [MedicalLabController::class, 'showHistory'])->name('history.show');
         Route::post('/edit', [MedicalLabController::class, 'edit'])->name('edit.test');
     });
@@ -142,10 +142,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Lab Test Groups
     Route::prefix('/lab-test-groups')->name('test-groups.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [LabTestGroupsController::class, 'index'])->name('index');
-        Route::delete('/delete/{id}', [LabTestGroupsController::class, 'destroy'])->name('delete');
         Route::post('/store', [LabTestGroupsController::class, 'store'])->name('store');
-        Route::get('/index-group-names', [LabTestGroupsController::class, 'indexGroupNames'])->name('group.names');
-        Route::post('/index-test-names', [LabTestGroupsController::class, 'indexTestNames'])->name('test.names');
+        Route::post('/update', [LabTestGroupsController::class, 'update'])->name('update');
+        Route::post('/delete', [LabTestGroupsController::class, 'destroy'])->name('delete');
+//        Route::get('/index-group-names', [LabTestGroupsController::class, 'indexGroupNames'])->name('group.names');
+//        Route::post('/index-test-names', [LabTestGroupsController::class, 'indexTestNames'])->name('test.names');
     });
     // END Lab Test Groups
 
