@@ -90,6 +90,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index', [SymptomsTypesController::class, 'index'])->name('index');
         Route::post('/store', [SymptomsTypesController::class, 'store'])->name('store');
         Route::post('/update', [SymptomsTypesController::class, 'update'])->name('update');
+        Route::post('/delete', [SymptomsTypesController::class, 'destroy'])->name('delete');
     });
     // END Symptoms Types
 
