@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DiagnosisTypesModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DiagnosisTypesController extends Controller
@@ -42,7 +43,14 @@ class DiagnosisTypesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newDiagnosis = new DiagnosisTypesModel;
+        $newDiagnosis->title = $request->title;
+        $newDiagnosis->created_by = auth('sanctum')->user()->id;
+        $newDiagnosis->created_at = Carbon::now();
+        $newDiagnosis->updated_at = Carbon::now();
+        $newDiagnosis->save();
+
+        return $this->index();
     }
 
     /**
@@ -74,9 +82,15 @@ class DiagnosisTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        DiagnosisTypesModel::where('id', '=', $request->id)->update([
+            'title' => $request->title,
+            'updated_by' => auth('sanctum')->user()->id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $this->index();
     }
 
     /**
@@ -85,8 +99,10 @@ class DiagnosisTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        DiagnosisTypesModel::where('id', '=', $request->id)->delete();
+
+        return $this->index();
     }
 }

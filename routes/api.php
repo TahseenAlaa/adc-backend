@@ -90,6 +90,9 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Diagnosis Types
     Route::prefix('/diagnosis-types')->name('diagnosis-types.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [DiagnosisTypesController::class, 'index'])->name('index');
+        Route::post('/store', [DiagnosisTypesController::class, 'store'])->name('store');
+        Route::post('/update', [DiagnosisTypesController::class, 'update'])->name('update');
+        Route::post('/delete', [DiagnosisTypesController::class, 'destroy'])->name('delete');
     });
     // END Diagnosis Types
 
