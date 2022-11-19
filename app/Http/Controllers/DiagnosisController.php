@@ -36,14 +36,6 @@ class DiagnosisController extends Controller
         ]);
     }
 
-    public function types() {
-        $diagnosisList = DiagnosisTypesModel::select('id', 'title')->get();
-
-        return response([
-            'data' => $diagnosisList
-        ]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *

@@ -19,6 +19,7 @@ use App\Http\Controllers\LabResultsController;
 use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\DrugsController;
 use App\Http\Controllers\DocumentsController;
+use App\Http\Controllers\DiagnosisTypesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,14 +79,19 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
 
     // START Diagnosis
     Route::prefix('/diagnosis')->name('diagnosis.')->middleware('auth:sanctum')->group(function () {
-        Route::get('/index', [DiagnosisController::class, 'indexAll'])->name('index');
+        Route::get('/index', [DiagnosisController::class, 'indexAll'])->middleware('can:list diagnosis')->name('index');
         Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
         Route::delete('/destroy/{id}/{uuid}', [DiagnosisController::class, 'destroy'])->name('destroy');
-        Route::get('/types', [DiagnosisController::class, 'types'])->name('types');
         Route::get('/show/{uuid}', [DiagnosisController::class, 'show'])->name('show');
         Route::post('/edit', [DiagnosisController::class, 'edit'])->name('edit');
     });
     // END Diagnosis
+
+    // START Diagnosis Types
+    Route::prefix('/diagnosis-types')->name('diagnosis-types.')->middleware('auth:sanctum')->group(function () {
+        Route::get('/index', [DiagnosisTypesController::class, 'index'])->name('index');
+    });
+    // END Diagnosis Types
 
     // START Symptoms Types
     Route::prefix('/symptoms-types')->name('symptoms-types.')->middleware('auth:sanctum')->group(function () {
