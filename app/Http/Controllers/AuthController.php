@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\SignupRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 
 class AuthController extends Controller
 {
@@ -26,7 +27,11 @@ class AuthController extends Controller
                 'created_at',
                 'updated_at',
                 'last_login_at'
-            ])->get()
+            ])
+                ->with('permissions:id,name')
+                ->get(),
+
+            'permissions' => Permission::select(['id', 'name'])->orderBy('id')->get()
         ]);
     }
 
