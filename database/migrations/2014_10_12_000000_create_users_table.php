@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('profile_pic')->nullable();
             $table->string('job_title')->nullable();
             $table->integer('profile_id')->nullable();
-            $table->integer('permission_id')->nullable();
             $table->string('role')->nullable();
             $table->timestamp('last_login_at');
             $table->string('last_login_ip');

@@ -49,9 +49,7 @@ class AuthController extends Controller
         $newUser->uuid = Str::uuid();
         $newUser->full_name = $request->full_name;
         $newUser->username = $request->username;
-        // TODO add profile_pic
         $newUser->job_title = $request->job_title;
-        $newUser->permission_id = $request->permission_id;
         $newUser->role = $request->role;
         $newUser->last_login_ip = $request->ip();
         $newUser->last_login_at = Carbon::now();
@@ -66,8 +64,10 @@ class AuthController extends Controller
         App()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Attach the permissions
-        User::where('username', '=', $request->permissions)->first()
-            ->givePermissionTo($request->permissions);
+        if (!is_null($request->permissions)) {
+            User::where('id', '=', $request->id)->first()
+                ->givePermissionTo($request->permissions);
+        }
 
         return $this->index();
     }
@@ -118,26 +118,38 @@ class AuthController extends Controller
     public function update(Request $request) {
 
         // Update User Information
-        User::where('id', '=', $request->id)->update([
-            'full_name' => $request->full_name,
-            'username'  => $request->username,
-            'job_title' => $request->job_title,
-            'role'      => $request->role,
-            'password'  => Hash::make($request->password),
-            'updated_by' => auth('sanctum')->user()->id
-        ]);
+        if (!is_null($request->password)) {
+            User::where('id', '=', $request->id)->update([
+                'full_name' => $request->full_name,
+                'username'  => $request->username,
+                'job_title' => $request->job_title,
+                'role'      => $request->role,
+                'password'  => Hash::make($request->password),
+                'updated_by' => auth('sanctum')->user()->id
+            ]);
+        } else {
+            User::where('id', '=', $request->id)->update([
+                'full_name' => $request->full_name,
+                'username'  => $request->username,
+                'job_title' => $request->job_title,
+                'role'      => $request->role,
+                'updated_by' => auth('sanctum')->user()->id
+            ]);
+        }
 
         // Update Permissions
-        // Reset cached roles and permissions
-        App()[PermissionRegistrar::class]->forgetCachedPermissions();
+        if (!is_null($request->permissions)) {
+            // Delete old permissions
+            User::where('id', '=', $request->id)->first()
+                ->syncPermissions();
 
-        // Delete old permissions
-        User::where('id', '=', $request->id)->first()
-            ->syncPermissions([]);
+            // Attach the permissions
+            User::where('id', '=', $request->id)->first()
+                ->givePermissionTo($request->permissions);
 
-        // Attach new the permissions
-        User::where('id', '=', $request->id)->first()
-            ->givePermissionTo($request->permissions);
+            // Reset cached roles and permissions
+            App()[PermissionRegistrar::class]->forgetCachedPermissions();
+        }
 
         return $this->index();
     }
