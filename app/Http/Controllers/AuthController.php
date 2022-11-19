@@ -10,6 +10,7 @@ use App\Http\Requests\SignupRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class AuthController extends Controller
 {
@@ -60,11 +61,15 @@ class AuthController extends Controller
 
         $token = $newUser->createToken($request->full_name)->plainTextToken;
 
+        // Create Permissions
+        // Reset cached roles and permissions
+        App()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        return response([
-                'user' => $newUser,
-                'token' => $token
-        ], 201);
+        // Attach the permissions
+        User::where('username', '=', $request->username)->first()
+            ->givePermissionTo($request->permissions);
+
+        return $this->index();
     }
 
     public function login(LoginRequest $request) {
@@ -108,5 +113,30 @@ class AuthController extends Controller
                 ->with('permissions:id,name')
                 ->first()
         ]);
+    }
+
+    public function update(Request $request) {
+
+        // Update User Information
+        User::where('id', '=', $request->id)->update([
+            'full_name' => $request->full_name,
+            'username'  => $request->username,
+            'job_title' => $request->job_title,
+            'role'      => $request->role,
+            'password'  => Hash::make($request->password),
+            'updated_by' => auth('sanctum')->user()->id
+        ]);
+
+        // Update Permissions
+        // Reset cached roles and permissions
+        App()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // Delete old permissions
+        User::where('username', 'areeb')->first()
+            ->syncPermissions([]);
+
+        // Attach new the permissions
+        User::where('username', '=', $request->username)->first()
+            ->givePermissionTo($request->permissions);
     }
 }
