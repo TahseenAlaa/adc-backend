@@ -65,8 +65,7 @@ class AuthController extends Controller
 
         // Attach the permissions
         if (!is_null($request->permissions)) {
-            User::where('id', '=', $request->id)->first()
-                ->givePermissionTo($request->permissions);
+            $newUser->givePermissionTo($request->permissions);
         }
 
         return $this->index();
