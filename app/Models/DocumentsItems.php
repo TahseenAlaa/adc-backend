@@ -14,6 +14,6 @@ class DocumentsItems extends Model
     protected $table = "esite_docs_items";
 
     public function drugs() {
-        return $this->hasOne(Drugs::class, 'id', 'drug_id');
+        return $this->hasOne(Drugs::class, 'id', 'drug_id')->withTrashed();
     }
 }
