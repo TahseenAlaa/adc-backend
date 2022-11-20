@@ -40,14 +40,14 @@ class DrugsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // TODO validate request
+    public function store(Request $request)
     {
         $newDrug = new Drugs;
-        $newDrug->title = $request->name;
-        $newDrug->drug_type = $request->drug_type;
-        $newDrug->item_type = $request->item_type;
-        $newDrug->created_by = auth('sanctum')->user()->id;
-        $newDrug->created_at = Carbon::now();
+        $newDrug->title       = $request->title;
+        $newDrug->drug_type   = $request->drug_type;
+        $newDrug->item_type   = $request->item_type;
+        $newDrug->created_by  = auth('sanctum')->user()->id;
+        $newDrug->created_at  = Carbon::now();
         $newDrug->save();
 
         return $this->index();
@@ -82,9 +82,17 @@ class DrugsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Drugs::where('id', '=', $request->id)->update([
+            'title'      => $request->title,
+            'drug_type'  => $request->drug_type,
+            'item_type'  => $request->item_type,
+            'updated_by' => auth('sanctum')->user()->id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $this->index();
     }
 
     /**
@@ -93,8 +101,10 @@ class DrugsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Drugs::where('id', '=', $request->id)->delete();
+
+        return $this->index();
     }
 }

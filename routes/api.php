@@ -194,6 +194,8 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     Route::prefix('/drugs')->name('drugs.')->middleware('auth:sanctum')->group(function () {
         Route::get('/index', [DrugsController::class, 'index'])->name('index');
         Route::post('/store', [DrugsController::class, 'store'])->name('store');
+        Route::post('/update', [DrugsController::class, 'update'])->name('update');
+        Route::post('/delete', [DrugsController::class, 'destroy'])->name('delete');
     });
     // END Drugs
 
