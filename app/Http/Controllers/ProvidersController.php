@@ -43,7 +43,7 @@ class ProvidersController extends Controller
     public function store(Request $request) // TODO validate request
     {
         $newProvider = new Providers;
-        $newProvider->title = $request->name;
+        $newProvider->title = $request->title;
         $newProvider->created_by = auth('sanctum')->user()->id;
         $newProvider->created_at = Carbon::now();
         $newProvider->save();
@@ -80,9 +80,15 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Providers::where('id', '=', $request->id)->update([
+            'title'      => $request->title,
+            'updated_by' => auth('sanctum')->user()->id,
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $this->index();
     }
 
     /**
@@ -91,8 +97,10 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Providers::where('id', '=', $request->id)->delete();
+
+        return $this->index();
     }
 }
