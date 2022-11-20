@@ -38,26 +38,26 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Auth
     Route::prefix('/auth')->name('auth.')->group(function () {
         Route::get('/index', [AuthController::class, 'index'])->middleware('auth:sanctum')->name('index');
-        Route::post('/signup', [AuthController::class, 'signup'])->name('signup'); // TODO protect this route ->middleware('auth:sanctum')
+        Route::post('/signup', [AuthController::class, 'signup'])->middleware(['auth:sanctum', 'can:create user'])->name('signup');
         Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
         Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
             return $request->user();
         });
         Route::get('/user-info', [AuthController::class, 'getUser'])->middleware('auth:sanctum')->name('user-info');
-        Route::post('/update', [AuthController::class, 'update'])->middleware('auth:sanctum')->name('update');
-        Route::post('/delete', [AuthController::class, 'destroy'])->middleware('auth:sanctum')->name('delete');
+        Route::post('/update', [AuthController::class, 'update'])->middleware(['auth:sanctum', 'can:edit user'])->name('update');
+        Route::post('/delete', [AuthController::class, 'destroy'])->middleware(['auth:sanctum', 'can:delete user'])->name('delete');
     });
     // END Auth
 
     // START Dashboard
-    Route::prefix('/dashboard')->name('dashboard.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/dashboard')->name('dashboard.')->middleware(['auth:sanctum', 'can:access dashboard'])->group(function () {
         Route::get('/index', [DashboardController::class, 'index'])->name('index');
     });
     // END Dashboard
 
     // START Patients
-    Route::prefix('/patients')->name('patients.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/patients')->name('patients.')->middleware(['auth:sanctum', 'can:list patients'])->group(function () {
         Route::get('/index', [PatientsController::class, 'index'])->name('index');
         Route::get('/{id}', [PatientsController::class, 'show'])->name('show');
         Route::post('/store', [PatientsController::class, 'store'])->name('store');
@@ -78,7 +78,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Patients
 
     // START Diagnosis
-    Route::prefix('/diagnosis')->name('diagnosis.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/diagnosis')->name('diagnosis.')->middleware(['auth:sanctum', 'can:list diagnosis'])->group(function () {
         Route::get('/index', [DiagnosisController::class, 'indexAll'])->middleware('can:list diagnosis')->name('index');
         Route::post('/store', [DiagnosisController::class, 'store'])->name('store');
         Route::delete('/destroy/{id}/{uuid}', [DiagnosisController::class, 'destroy'])->name('destroy');
@@ -88,7 +88,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Diagnosis
 
     // START Diagnosis Types
-    Route::prefix('/diagnosis-types')->name('diagnosis-types.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/diagnosis-types')->name('diagnosis-types.')->middleware(['auth:sanctum', 'can:list diagnosis'])->group(function () {
         Route::get('/index', [DiagnosisTypesController::class, 'index'])->name('index');
         Route::post('/store', [DiagnosisTypesController::class, 'store'])->name('store');
         Route::post('/update', [DiagnosisTypesController::class, 'update'])->name('update');
@@ -97,7 +97,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Diagnosis Types
 
     // START Symptoms Types
-    Route::prefix('/symptoms-types')->name('symptoms-types.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/symptoms-types')->name('symptoms-types.')->middleware(['auth:sanctum', 'can:list symptoms type'])->group(function () {
         Route::get('/index', [SymptomsTypesController::class, 'index'])->name('index');
         Route::post('/store', [SymptomsTypesController::class, 'store'])->name('store');
         Route::post('/update', [SymptomsTypesController::class, 'update'])->name('update');
@@ -106,7 +106,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Symptoms Types
 
     // START Symptoms
-    Route::prefix('/symptoms')->name('symptoms.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/symptoms')->name('symptoms.')->middleware(['auth:sanctum', 'can:list symptoms type'])->group(function () {
         Route::get('/index', [SymptomsController::class, 'index'])->name('index');
         Route::post('/store', [SymptomsController::class, 'store'])->name('store');
         Route::get('/show/{uuid}', [SymptomsController::class, 'show'])->name('show');
@@ -116,7 +116,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Symptoms
 
     // START Medical Lab
-    Route::prefix('/lab')->name('lab.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/lab')->name('lab.')->middleware(['auth:sanctum', 'can:list medical lab tests'])->group(function () {
         Route::get('/index/{patient_id}', [MedicalLabController::class, 'index'])->name('index'); // Show all tests
         Route::get('/{uuid}', [MedicalLabController::class, 'show'])->name('show'); // show the current test related to the current history
         Route::post('/store', [MedicalLabController::class, 'store'])->name('store');
@@ -128,19 +128,19 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Medical Lab
 
     // START Lab Sampling
-    Route::prefix('/lab-sampling')->name('lab_sampling.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/lab-sampling')->name('lab_sampling.')->middleware(['auth:sanctum', 'can:list medical lab tests'])->group(function () {
         Route::post('/store', [LabSamplingController::class, 'store'])->name('store');
     });
     // END Lab Sampling
 
     // START Lab Results
-    Route::prefix('/lab-results')->name('lab_results.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/lab-results')->name('lab_results.')->middleware(['auth:sanctum', 'can:list medical lab tests'])->group(function () {
         Route::post('/store', [LabResultsController::class, 'store'])->name('store');
     });
     // END Lab Results
 
     // START Lab Test Groups
-    Route::prefix('/lab-test-groups')->name('test-groups.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/lab-test-groups')->name('test-groups.')->middleware(['auth:sanctum', 'can:list medical lab tests'])->group(function () {
         Route::get('/index', [LabTestGroupsController::class, 'index'])->name('index');
         Route::post('/store', [LabTestGroupsController::class, 'store'])->name('store');
         Route::post('/update', [LabTestGroupsController::class, 'update'])->name('update');
@@ -151,7 +151,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Lab Test Groups
 
     // START Treatment
-    Route::prefix('/treatment')->name('treatment.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/treatment')->name('treatment.')->middleware(['auth:sanctum', 'can:access doctor department'])->group(function () {
 //        Route::get('/index/{patient_id}', [TreatmentController::class, 'index'])->name('index'); //
         Route::get('/{patient_history_id}', [TreatmentController::class, 'show'])->name('show'); // show the current treatment related to the current history
         Route::post('/store', [TreatmentController::class, 'store'])->name('store');
@@ -161,7 +161,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Treatment
 
     // START Pharmacy Inventory
-    Route::prefix('/pharmacy')->name('pharmacy.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/pharmacy')->name('pharmacy.')->middleware(['auth:sanctum', 'can:list pharmacy'])->group(function () {
         Route::get('/index', [PharmacyController::class, 'index'])->name('index'); // List all
         Route::get('/{id}', [PharmacyController::class, 'show'])->name('show');
         Route::post('/store', [PharmacyController::class, 'store'])->name('store');
@@ -171,20 +171,20 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Pharmacy Inventory
 
     // START User Permissions
-    Route::prefix('/permissions')->name('permissions.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/permissions')->name('permissions.')->middleware(['auth:sanctum', 'can:list users'])->group(function () {
         Route::get('/index', [PermissionsController::class, 'index'])->name('permissions.index'); // List all
 
     });
     // END User Permissions
 
     // START Antho
-    Route::prefix('/antho')->name('antho.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/antho')->name('antho.')->middleware(['auth:sanctum', 'can:access antho department'])->group(function () {
         Route::post('/show', [AnthoController::class, 'show'])->name('show');
     });
     // END Antho
 
     // START Providers
-    Route::prefix('/providers')->name('providers.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/providers')->name('providers.')->middleware(['auth:sanctum', 'can:list providers'])->group(function () {
         Route::get('/index', [ProvidersController::class, 'index'])->name('index');
         Route::post('/store', [ProvidersController::class, 'store'])->name('store');
         Route::post('/update', [ProvidersController::class, 'update'])->name('update');
@@ -193,7 +193,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Providers
 
     // START Drugs
-    Route::prefix('/drugs')->name('drugs.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/drugs')->name('drugs.')->middleware(['auth:sanctum', 'can:list drugs'])->group(function () {
         Route::get('/index', [DrugsController::class, 'index'])->name('index');
         Route::post('/store', [DrugsController::class, 'store'])->name('store');
         Route::post('/update', [DrugsController::class, 'update'])->name('update');
@@ -202,7 +202,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Drugs
 
     // START Documents
-    Route::prefix('/documents')->name('documents.')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('/documents')->name('documents.')->middleware(['auth:sanctum', 'can:list inventory'])->group(function () {
         Route::post('/store', [DocumentsController::class, 'store'])->name('store');
         Route::get('/index-inventory', [DocumentsController::class, 'indexInventory'])->name('index-inventory');
         Route::get('/available-drugs', [DocumentsController::class, 'indexAvailableDrugs'])->name('available-drugs');
