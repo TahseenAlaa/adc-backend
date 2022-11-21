@@ -154,39 +154,25 @@ class PatientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param $id
      * @return Application|Response|ResponseFactory
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        // Patient with History
-        $getPatientInfo = Patients::where('uuid', '=', $id)->first();
-        $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
-//        $getDoctorName = $this->getDoctorNamebyId($getPatientLatestVisitHistory->created_by);
-//        $getDiagnosis = Diagnosis::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
-//        $getTreatment = Treatment::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
-//        $getTests     = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
-//        $getMedicalHistory = MedicalLab::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->orderBy('id', 'desc')->latest()->first();
-//        $getDrugsList = Pharmacy::where('patient_history_id', '=', $getPatientLatestVisitHistory->id)->get();
+        if ($request->patient_history_uuid) {
+            $getPatientLatestVisitHistory = PatientsHistory::where('uuid', '=', $request->patient_history_uuid)->orderBy('id', 'desc')->latest()->first();
+            $getPatientInfo = Patients::where('id', '=', $getPatientLatestVisitHistory->patient_id)->first();
 
+        } else if ($request->patient_uuid) {
+            // Patient with History
+            $getPatientInfo = Patients::where('uuid', '=', $request->patient_uuid)->first();
+            $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
+        }
 
         return response([
             'patient_info'           => $getPatientInfo,
             'patient_latest_history' => $getPatientLatestVisitHistory,
-//            'doctorName'             => $getDoctorName,
-//            'diagnosis'              => $getDiagnosis,
-//            'treatment'              => $getTreatment,
-//            'tests'                  => $getTests,
-//            'medical_history'        => $getMedicalHistory,
-//            'drugs_list'             => $getDrugsList,
-
         ]);
-
-//
-//        return response([
-//            'data' => $getPatientInfo, // TODO return picture with results
-////            'picture' => PatientsHistoryResource::collection(PatientsHistory::where('patient_id', '=', $getPatientInfo[0]->id)->get())[0]->getMedia('patient_picture')[0]->original_url
-//        ]);
     }
 
     /**

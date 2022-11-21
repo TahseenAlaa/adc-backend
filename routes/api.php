@@ -60,7 +60,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Patients
     Route::prefix('/patients')->name('patients.')->middleware(['auth:sanctum', 'can:list patients'])->group(function () {
         Route::get('/index', [PatientsController::class, 'index'])->name('index');
-        Route::get('/{id}', [PatientsController::class, 'show'])->name('show');
+        Route::post('/show', [PatientsController::class, 'show'])->name('show');
         Route::post('/store', [PatientsController::class, 'store'])->name('store');
         Route::post('/update/{id}', [PatientsController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [PatientsController::class, 'destroy'])->name('destroy');

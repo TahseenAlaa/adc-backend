@@ -22,7 +22,7 @@ class CommitteeApprovalController extends Controller
         $drugsListInTreatment = Treatment::whereIn('drug_id', $committeeDrugsList)
             ->where('status', '=', 0)
             ->with([
-                'patient:id,full_name,phone,last_visit',
+                'patient:id,full_name,phone,last_visit,uuid',
                 'patient_history:id,uuid'
             ])
             ->get();
