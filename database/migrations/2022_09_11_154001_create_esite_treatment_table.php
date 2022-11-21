@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('day_we_mo')->comment('1: Day, 2: Week , 3: Month');
             $table->integer('meal')->comment('1: Before Meal, 2: With meal, 3: After meal, 4: On-demand, 5: Anytime');
             $table->string('notes')->comment('Instructions, Dosage, Notes, etc')->nullable();
-            $table->boolean('status')->comment('0: Pending, 1: Dispensed from Pharmacy')->nullable();
+            $table->boolean('status')->comment('0: Pending, 1: Dispensed from Pharmacy, 2: Rejected')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->timestamps();
