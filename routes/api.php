@@ -157,6 +157,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store', [TreatmentController::class, 'store'])->name('store');
         Route::post('/update/{id}', [TreatmentController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [TreatmentController::class, 'destroy'])->name('destroy');
+        Route::post('/show', [TreatmentController::class, 'show'])->name('show');
     });
     // END Treatment
 
