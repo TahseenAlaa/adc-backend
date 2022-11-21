@@ -26,4 +26,12 @@ class Treatment extends Model implements HasMedia
     public function drugs() {
         return $this->hasOne(Drugs::class, 'id', 'drug_id')->withTrashed();
     }
+
+    public function patient() {
+        return $this->belongsTo(Patients::class, 'patient_id', 'id');
+    }
+
+    public function patient_history() {
+        return $this->belongsTo(PatientsHistory::class, 'patient_history_id', 'id');
+    }
 }

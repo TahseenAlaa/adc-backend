@@ -20,6 +20,7 @@ use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\DrugsController;
 use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\DiagnosisTypesController;
+use App\Http\Controllers\CommitteeApprovalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -210,5 +211,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/output-document', [DocumentsController::class, 'indexOutputDocuments'])->name('output-documents');
     });
     // END Documents
+
+    // START Committee Approval
+    Route::prefix('/committee-approval')->name('committee-approval.')->middleware(['auth:sanctum', 'can:access committee approval'])->group(function () {
+        Route::get('/index', [CommitteeApprovalController::class, 'index'])->name('index');
+    });
+    // END Committee Approval
 });
 // END API v1
