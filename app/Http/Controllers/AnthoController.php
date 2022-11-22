@@ -47,8 +47,13 @@ class AnthoController extends Controller
      */
     public function show(Request $request)
     {
-        $getPatientInfo = Patients::where('uuid', '=', $request->patient_uuid)->first();
-        $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
+        if ($request->patient_history_uuid) {
+            $getPatientLatestVisitHistory = PatientsHistory::where('uuid', '=', $request->patient_history_uuid)->orderBy('id', 'desc')->latest()->first();
+
+        } else if ($request->patient_uuid) {
+            $getPatientInfo = Patients::where('uuid', '=', $request->patient_uuid)->first();
+            $getPatientLatestVisitHistory = PatientsHistory::where('patient_id', '=', $getPatientInfo->id)->orderBy('id', 'desc')->latest()->first();
+        }
 
         return response([
             'patient_latest_history' => $getPatientLatestVisitHistory,

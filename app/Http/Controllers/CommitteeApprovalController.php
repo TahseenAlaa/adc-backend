@@ -23,7 +23,10 @@ class CommitteeApprovalController extends Controller
             ->where('status', '=', 0)
             ->with([
                 'patient:id,full_name,phone,last_visit,uuid',
-                'patient_history:id,uuid'
+                'patient_history:id,uuid',
+                'drugs:id,title',
+                'user:id,full_name',
+                'updatedUser:id,full_name'
             ])
             ->get();
 
