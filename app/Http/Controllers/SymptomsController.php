@@ -104,12 +104,21 @@ class SymptomsController extends Controller
      */
     public function edit(Request $request)
     {
-        Symptoms::where('id', '=', $request->id)
-            ->update([
-                'symptoms_id'     => $request->symptoms_id,
-                'clinical_notes'  => $request->clinical_notes,
-                'updated_by'      => auth('sanctum')->user()->id
-            ]);
+        if ($request->symptoms_id) {
+            Symptoms::where('id', '=', $request->id)
+                ->update([
+                    'symptoms_id'     => $request->symptoms_id,
+                    'clinical_notes'  => $request->clinical_notes,
+                    'updated_by'      => auth('sanctum')->user()->id
+                ]);
+        } else {
+            Symptoms::where('id', '=', $request->id)
+                ->update([
+                    'clinical_notes'  => $request->clinical_notes,
+                    'updated_by'      => auth('sanctum')->user()->id
+                ]);
+        }
+
 
         return $this->show($request->patient_uuid);
     }
