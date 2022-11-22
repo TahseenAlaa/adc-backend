@@ -146,8 +146,8 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store', [LabTestGroupsController::class, 'store'])->name('store');
         Route::post('/update', [LabTestGroupsController::class, 'update'])->name('update');
         Route::post('/delete', [LabTestGroupsController::class, 'destroy'])->name('delete');
-//        Route::get('/index-group-names', [LabTestGroupsController::class, 'indexGroupNames'])->name('group.names');
-//        Route::post('/index-test-names', [LabTestGroupsController::class, 'indexTestNames'])->name('test.names');
+        Route::get('/index-group-names', [LabTestGroupsController::class, 'indexGroupNames'])->name('group.names');
+        Route::post('/index-test-names', [LabTestGroupsController::class, 'indexTestNames'])->name('test.names');
     });
     // END Lab Test Groups
 

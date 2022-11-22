@@ -25,26 +25,26 @@ class LabTestGroupsController extends Controller
         ]);
     }
 
-//    public function indexGroupNames() {
-//        $groupNames = TestGroups::with([
-//            'user:id,full_name',
-//            'updatedUser:id,full_name',
-//        ])->get();
-//
-//        return response([
-//            'data' => $groupNames
-//        ]);
-//    }
+    public function indexGroupNames() {
+        $groupNames = TestGroups::with([
+            'user:id,full_name',
+            'updatedUser:id,full_name',
+        ])->get();
 
-//    public function indexTestNames(Request $request) {
-//        $testNames = TestGroups::select('id', 'test_name')
-//            ->where('test_group', '=', $request->test_group)
-//            ->get();
-//
-//        return response([
-//            'data' => $testNames
-//        ]);
-//    }
+        return response([
+            'data' => $groupNames
+        ]);
+    }
+
+    public function indexTestNames(Request $request) {
+        $testNames = TestGroups::select('id', 'test_name')
+            ->where('test_group', '=', $request->test_group)
+            ->get();
+
+        return response([
+            'data' => $testNames
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
