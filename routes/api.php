@@ -122,7 +122,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/{uuid}', [MedicalLabController::class, 'show'])->name('show'); // show the current test related to the current history
         Route::post('/store', [MedicalLabController::class, 'store'])->name('store');
         Route::post('/update', [MedicalLabController::class, 'update'])->name('update');
-        Route::delete('/destroy', [MedicalLabController::class, 'destroy'])->name('destroy');
+        Route::delete('/destroy/{id}/{uuid}', [MedicalLabController::class, 'destroy'])->name('destroy');
         Route::get('/show-history/{id}', [MedicalLabController::class, 'showHistory'])->name('history.show');
         Route::post('/edit', [MedicalLabController::class, 'edit'])->name('edit.test');
     });
