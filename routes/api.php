@@ -154,7 +154,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Treatment
     Route::prefix('/treatment')->name('treatment.')->middleware(['auth:sanctum', 'can:access doctor department'])->group(function () {
 //        Route::get('/index/{patient_id}', [TreatmentController::class, 'index'])->name('index'); //
-        Route::get('/{patient_history_id}', [TreatmentController::class, 'show'])->name('show'); // show the current treatment related to the current history
+        Route::get('/{patient_history_id}', [TreatmentController::class, 'show'])->name('show.history'); // show the current treatment related to the current history
         Route::post('/store', [TreatmentController::class, 'store'])->name('store');
         Route::post('/update', [TreatmentController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}/{uuid}', [TreatmentController::class, 'destroy'])->name('destroy');
