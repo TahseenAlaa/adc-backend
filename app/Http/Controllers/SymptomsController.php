@@ -59,13 +59,13 @@ class SymptomsController extends Controller
             $newSymptoms->save();
         }
 
-        $symptomWithUser = Symptoms::with([
-            'user:id,full_name',
-            'symptom:id,title'
-        ])
-            ->orderBy('id', 'desc')
-            ->latest()
-            ->first();
+        $symptomWithUser = Symptoms::where('patient_history_id', '=', $patientHistoryId->id)
+            ->with([
+                'user:id,full_name',
+                'updatedUser:id,full_name',
+                'symptom:id,title'
+            ])
+            ->get();
 
         return response([
             'data' => $symptomWithUser,
