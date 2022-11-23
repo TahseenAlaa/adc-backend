@@ -166,6 +166,16 @@ class TreatmentController extends Controller
     {
         Treatment::where('id', '=', $id)->delete();
 
-        return $this->show($uuid);
+        $patientId = Patients::select('id')->where('uuid', '=', $uuid)->first();
+        $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
+
+        return response([
+            'data' => Treatment::where('patient_history_id', '=', $patientHistoryId->id)
+                ->with([
+                    'user:id,full_name',
+                    'updatedUser:id,full_name',
+                    'drugs:id,title,drug_type',
+                ])->get()
+        ]);
     }
 }
