@@ -97,7 +97,6 @@ class TreatmentController extends Controller
      */
     public function show(Request $request)
     {
-
         $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
         $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
 
@@ -129,42 +128,32 @@ class TreatmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TreatmentUpdateRequest $request, $id)
+    public function update(Request $request)
     {
         // Update status
-        Treatment::where('patient_history_id', '=', $id)->update([
-            'drug_id'  => $request->drug_id,
-            'name'     => $request->name,
-            'dose'     => $request->dose,
-            'status'   => $request->status,
-            'updated_by' => 2 // TODO Auth ID
+        Treatment::where('id', '=', $request->id)->update([
+            'drug_id'       => $request->drug_id,
+            'frequency'     => $request->frequency,
+            'day_we_mo'     => $request->per,
+            'meal'          => $request->meal,
+            'dose'          => $request->dose,
+            'notes'         => $request->notes,
+            'status'        => $request->status,
+            'updated_by'    => auth('sanctum')->user()->id,
+            'updated_at'    => Carbon::now()
         ]);
 
-        // Store patient history
-        if ($request->hasFile('patient_picture')) {
-            try {
-                Treatment::where('patient_history_id', '=', $id)->latest()->first()->clearMediaCollection('patient_picture');
-            } finally {
-                Treatment::where('patient_id', '=', $id)->latest()->first()->addMediaFromRequest('patient_picture')
-                    ->usingName(Carbon::now()->format('d_M_Y,_h_m_s_a'))
-                    ->usingFileName(Carbon::now()->format('d_M_Y,_h_m_s_a') . '.jpg')
-                    ->withResponsiveImages()
-                    ->toMediaCollection('patient_picture');
-            }
-        }
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        $patientHistoryId = PatientsHistory::select('id')->where('patient_id', '=', $patientId->id)->orderBy('id', 'desc')->latest()->first();
 
-        $getTreatmentInfo = Treatment::where('patient_history_id', '=', $id)->latest()->first();
-
-        if (isset($getTreatmentInfo->getMedia('patient_picture')[0])) {
-            return response([
-                'data' => $getTreatmentInfo,
-                'picture' => $getTreatmentInfo->getMedia('patient_picture')[0]->original_url
-            ]);
-        } else {
-            return response([
-                'data' => $getTreatmentInfo
-            ]);
-        }
+        return response([
+            'data' => Treatment::where('patient_history_id', '=', $patientHistoryId->id)
+                ->with([
+                    'user:id,full_name',
+                    'updatedUser:id,full_name',
+                    'drugs:id,title,drug_type',
+                ])->get()
+        ]);
     }
 
     /**
@@ -173,17 +162,10 @@ class TreatmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $uuid)
     {
         Treatment::where('id', '=', $id)->delete();
 
-        // TODO update pharmacy inventory
-
-        return response([
-            'data' => 'Items deleted successfully!'
-        ]);
-
-
-
+        return $this->show($uuid);
     }
 }
