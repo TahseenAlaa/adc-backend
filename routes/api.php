@@ -169,6 +169,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/store', [PharmacyController::class, 'store'])->name('store');
         Route::post('/update/{id}', [PharmacyController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [PharmacyController::class, 'destroy'])->name('destroy');
+        Route::post('/store-treatment', [PharmacyController::class, 'storeTreatment'])->name('store-treatment');
     });
     // END Pharmacy Inventory
 

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PharmacyResource;
+use App\Models\Documents;
 use App\Models\DocumentsItems;
 use App\Models\MedicalLab;
 use App\Models\Patients;
 use App\Models\Pharmacy;
 use App\Http\Requests\PharmacyStoreRequest;
 use App\Http\Requests\PharmacyUpdateRequest;
+use App\Models\Treatment;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class PharmacyController extends Controller
 {
@@ -93,6 +97,46 @@ class PharmacyController extends Controller
 
         return response([
             'data' => $newDrug
+        ]);
+    }
+
+    public function storeTreatment(Request $request) {
+        $patientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+
+        // Update Treatment status
+        foreach ($request->treatments as $item) {
+            Treatment::where('id', '=', $item['id'])->update([
+                'status'      => 1,
+                'updated_by'  => auth('sanctum')->user()->id
+            ]);
+        }
+
+        // Set output document to patient
+        $newDoc = new Documents;
+        $newDoc->doc_type = 2;
+        $newDoc->to_pharmacy = 0;
+        $newDoc->created_by = auth('sanctum')->user()->id;
+        $newDoc->save();
+
+        // Store documents items
+        foreach ($request->newItems as $item) {
+            $newDocumentItem = new DocumentsItems;
+            $newDocumentItem->drug_id = $item['drug_id'];
+            $newDocumentItem->notes = $item['notes'];
+            $newDocumentItem->parent_doc = $newDoc->id;
+            $newDocumentItem->batch_no = $item['batch'];
+            $newDocumentItem->expire_date = $item['expire_date'];
+            $newDocumentItem->doc_type = 2;
+            $newDocumentItem->to_pharmacy = 0;
+            $newDocumentItem->to_patient = $patientId->id;
+            $newDocumentItem->quantity = $item['quantity'];
+            $newDocumentItem->created_by = auth('sanctum')->user()->id;
+            $newDocumentItem->created_at = Carbon::now();
+            $newDocumentItem->save();
+        }
+
+        return response([
+            'data' => 'Stores successfully'
         ]);
     }
 
