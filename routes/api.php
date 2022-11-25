@@ -58,24 +58,24 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END Dashboard
 
     // START Patients
-    Route::prefix('/patients')->name('patients.')->middleware(['auth:sanctum', 'can:list patients'])->group(function () {
-        Route::get('/index', [PatientsController::class, 'index'])->name('index');
-        Route::post('/show', [PatientsController::class, 'show'])->name('show');
-        Route::post('/store', [PatientsController::class, 'store'])->name('store');
-        Route::post('/update/{id}', [PatientsController::class, 'update'])->name('update');
-        Route::post('/delete', [PatientsController::class, 'destroy'])->name('destroy');
+    Route::prefix('/patients')->name('patients.')->middleware(['auth:sanctum'])->group(function () {
+        Route::get('/index', [PatientsController::class, 'index'])->middleware('can:list patients')->name('index');
+        Route::post('/show', [PatientsController::class, 'show'])->middleware('can:list patients')->name('show');
+        Route::post('/store', [PatientsController::class, 'store'])->middleware('can:list patients')->name('store');
+        Route::post('/update/{id}', [PatientsController::class, 'update'])->middleware('can:list patients')->name('update');
+        Route::post('/delete', [PatientsController::class, 'destroy'])->middleware('can:list patients')->name('destroy');
 //        Route::post('/search-by-full-name/{name}', [PatientsController::class, 'searchByFullName'])->name('searchByFullName');
 //        Route::post('/search-by-phone/{phone}', [PatientsController::class, 'searchByPhone'])->name('searchByPhone');
 //        Route::post('/search-by-patient-id/{patient}', [PatientsController::class, 'searchByPatientID'])->name('searchByPatientID');
-        Route::post('/search-for-patients', [PatientsController::class, 'searchForPatient'])->name('searchForPatient');
+        Route::post('/search-for-patients', [PatientsController::class, 'searchForPatient'])->middleware('can:list patients')->name('searchForPatient');
 //        Route::post('/store-by-dr', [PatientsController::class, 'storePatientInfoByDr'])->name('storeByDoctor');
-        Route::post('/store/newvisit', [PatientsController::class, 'storePatientNewVisit'])->name('storePatientNewVisit');
-        Route::get('/patient-info-for-new-visit/{patient_uuid}', [PatientsController::class, 'getPatientInfoForNewVisit'])->name('getPatientInfoForNewVisit');
-        Route::get('/show-patient-history/{patient_uuid}', [PatientsController::class, 'showPatientHistory'])->name('showPatientHistory');
-        Route::get('/show-patient-info/{patient_uuid}', [PatientsController::class, 'showPatientInfo'])->name('showPatientInfo');
-        Route::post('/updatePatientHistory', [PatientsController::class, 'updatePatientHistory'])->name('updatePatientHistory');
-        Route::post('/update-patient-history-by-antho/{uuid}', [PatientsController::class, 'updatePatientHistoryByAntho'])->name('updatePatientHistoryByAntho');
-        Route::post('/fetch-gender', [PatientsController::class, 'fetchGender'])->name('fetch-gender');
+        Route::post('/store/newvisit', [PatientsController::class, 'storePatientNewVisit'])->middleware('can:list patients')->name('storePatientNewVisit');
+        Route::get('/patient-info-for-new-visit/{patient_uuid}', [PatientsController::class, 'getPatientInfoForNewVisit'])->middleware('can:list patients')->name('getPatientInfoForNewVisit');
+        Route::get('/show-patient-history/{patient_uuid}', [PatientsController::class, 'showPatientHistory'])->middleware('can:list patients')->name('showPatientHistory');
+        Route::get('/show-patient-info/{patient_uuid}', [PatientsController::class, 'showPatientInfo'])->middleware('can:list patients')->name('showPatientInfo');
+        Route::post('/updatePatientHistory', [PatientsController::class, 'updatePatientHistory'])->middleware('can:list patients')->name('updatePatientHistory');
+        Route::post('/update-patient-history-by-antho/{uuid}', [PatientsController::class, 'updatePatientHistoryByAntho'])->middleware('can:list patients')->name('updatePatientHistoryByAntho');
+        Route::post('/fetch-gender', [PatientsController::class, 'fetchGender'])->middleware('can:list patients')->name('fetch-gender');
     });
     // END Patients
 
