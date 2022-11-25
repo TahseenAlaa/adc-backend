@@ -27,12 +27,17 @@ class PatientsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return AnonymousResourceCollection
+     * @return
      */
     public function index()
     {
         // Fetch all patients records
-        return PatientsResource::collection(Patients::all());
+        return response([
+            'data' => Patients::with([
+                'user:id,full_name',
+                'updatedUser:id,full_name',
+            ])->get()
+        ]);
     }
 
     /**
