@@ -63,7 +63,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/show', [PatientsController::class, 'show'])->name('show');
         Route::post('/store', [PatientsController::class, 'store'])->name('store');
         Route::post('/update/{id}', [PatientsController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [PatientsController::class, 'destroy'])->name('destroy');
+        Route::post('/delete', [PatientsController::class, 'destroy'])->name('destroy');
 //        Route::post('/search-by-full-name/{name}', [PatientsController::class, 'searchByFullName'])->name('searchByFullName');
 //        Route::post('/search-by-phone/{phone}', [PatientsController::class, 'searchByPhone'])->name('searchByPhone');
 //        Route::post('/search-by-patient-id/{patient}', [PatientsController::class, 'searchByPatientID'])->name('searchByPatientID');

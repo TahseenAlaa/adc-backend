@@ -296,18 +296,20 @@ class PatientsController extends Controller
      * @param int $id
      * @return Application|ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         // Delete patient record (Soft Delete)
         try {
-            Patients::find($id)->delete();
+            Patients::find($request->id)->delete();
 
             return response([
-                'date' => 'Delete Succeed!'
+                'date' => $this->index(),
+                'result' => 'Delete Succeed!'
             ]);
         } catch (\Exception $e) {
             return response([
-                'data' => 'Delete Failed!' . $e
+                'data' => $this->index(),
+                'result' => 'Delete Failed!' . $e
             ]);
         }
     }
