@@ -112,8 +112,6 @@ class PatientsController extends Controller
         $newPatientHistory = new PatientsHistory;
         $newPatientHistory->uuid                        = Str::uuid()->toString();
         $newPatientHistory->patient_id                  = $newPatient->id;
-        $newPatientHistory->blood_pressure_systolic     = $request->blood_pressure_systolic;
-        $newPatientHistory->blood_pressure_diastolic    = $request->blood_pressure_diastolic;
         $newPatientHistory->age_at_visit                = Carbon::parse($newPatient->birthday)->age;
         $newPatientHistory->created_by                  = auth('sanctum')->user()->id;
         $newPatientHistory->save();
@@ -444,31 +442,6 @@ class PatientsController extends Controller
         ]);
     }
 
-//    public function storePatientInfoByDr(Request $r) {
-//        $patientId = Patients::select('id')->where('uuid', '=', $r->patient_uuid)->first();
-//
-//        PatientsHistory::where('patient_id', '=', $patientId->id)
-//            ->orderBy('id','desc')
-//            ->take(1)
-//            ->update([
-//            'patient_number'            => $r->patient_number,
-//            'age_at_visit'              => $r->age_at_visit,
-//            'blood_pressure_systolic'   => $r->blood_pressure_systolic,
-//            'blood_pressure_diastolic'  => $r->blood_pressure_diastolic,
-//            'weight_by_dr'              => $r->weight_by_dr,
-//            'height_by_dr'              => $r->height_by_dr,
-//            'waist_circumference_by_dr' => $r->waist_circumference_by_dr,
-//            'bmi_by_dr'                 => $r->bmi_by_dr,
-//            'clinical_notes'            => $r->clinical_notes,
-//            'next_visit'                => $r->next_visit,
-//            'created_by_dr'             => auth('sanctum')->user()->id
-//        ]);
-//
-//        return response([
-//            'date' => 'Save Successfully!'
-//        ]);
-//    }
-
     public function storePatientNewVisit(Request $request) {
         $patientId = Patients::select('id', 'birthday')->where('uuid', '=', $request->patient_uuid)->first();
 
@@ -478,8 +451,6 @@ class PatientsController extends Controller
         $newPatientHistory->uuid                       = Str::uuid()->toString();
         $newPatientHistory->patient_id                 = $patientId->id;
         $newPatientHistory->age_at_visit               = Carbon::parse($patientId->birthday)->age;
-        $newPatientHistory->blood_pressure_systolic    = $request->blood_pressure_systolic;
-        $newPatientHistory->blood_pressure_diastolic   = $request->blood_pressure_diastolic;
         $newPatientHistory->created_by                 = auth('sanctum')->user()->id;
         $newPatientHistory->save();
 
@@ -544,13 +515,20 @@ class PatientsController extends Controller
             'bmi'                          => $request->bmi,
             'father_height'                => $request->father_height,
             'mother_height'                => $request->mother_height,
-            'gender'                       => $request->gender,
             'mid_height'                   => $request->mid_height,
+            'blood_pressure_systolic'      => $request->blood_pressure_systolic,
+            'blood_pressure_diastolic'     => $request->blood_pressure_diastolic,
             'updated_by'                   => auth('sanctum')->user()->id
         ]);
 
         return response([
             'data' => 'Store Successfully!'
+        ]);
+    }
+
+    public function fetchGender(Request $request) {
+        return response([
+            'data' => Patients::select('id', 'gender')->where('uuid', '=', $request->patient_uuid)->first()
         ]);
     }
 }
