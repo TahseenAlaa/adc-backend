@@ -65,6 +65,7 @@ class PatientsController extends Controller
         $newPatient->birthday                    = $request->birthday;
         $newPatient->phone                       = $request->phone;
         $newPatient->occupation                  = $request->occupation;
+        $newPatient->gender                      = $request->gender;
         $newPatient->patient_number              = $request->patient_number;
         $newPatient->education_qualification     = $request->education_qualification;
         $newPatient->marital_status              = $request->marital_status;
