@@ -363,7 +363,7 @@ class PatientsController extends Controller
     public function searchForPatient(Request $request) {
         if ($request->department === 'reception') {
             if (!is_null($request->patient)) {
-                $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
+                $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                     ->where('id', '=', $request->patient)
                     ->with('latestPatientHistory')
                     ->get();
@@ -371,7 +371,7 @@ class PatientsController extends Controller
                     'data' => $patientInfo
                 ]);
             } else if (!is_null($request->patient_number)) {
-                $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
+                $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                     ->where('patient_number', '=', $request->patient_number)
                     ->with('latestPatientHistory')
                     ->get();
@@ -379,7 +379,7 @@ class PatientsController extends Controller
                     'data' => $patientInfo
                 ]);
             } else if (!is_null($request->phone)) {
-                $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
+                $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                     ->where('phone', '=', $request->phone)
                     ->with('latestPatientHistory')
                     ->get();
@@ -387,7 +387,7 @@ class PatientsController extends Controller
                     'data' => $patientInfo
                 ]);
             } else if (!is_null($request->full_name)) {
-                $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
+                $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                     ->where('full_name', 'LIKE', '%' . $request->full_name . '%')
                     ->with('latestPatientHistory')
                     ->get();
@@ -398,7 +398,7 @@ class PatientsController extends Controller
 
         } else {
             if (!is_null($request->patient)) {
-                $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at', 'last_visit'])
+                $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at', 'last_visit'])
                     ->whereDate('last_visit', Carbon::today())
                     ->where('id', '=', $request->patient)
                     ->with('latestPatientHistory')
@@ -407,7 +407,7 @@ class PatientsController extends Controller
                     'data' => $patientInfo
                 ]);
             } else if (!is_null($request->patient_number)) {
-                    $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
+                    $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                         ->whereDate('last_visit', Carbon::today())
                         ->where('patient_number', '=', $request->patient_number)
                         ->with('latestPatientHistory')
@@ -417,7 +417,7 @@ class PatientsController extends Controller
                     ]);
 
             } else if (!is_null($request->phone)) {
-                $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
+                $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                     ->whereDate('last_visit', Carbon::today())
                     ->where('phone', '=', $request->phone)
                     ->with('latestPatientHistory')
@@ -427,7 +427,7 @@ class PatientsController extends Controller
                 ]);
 
             } else if (!is_null($request->full_name)) {
-                $patientInfo = Patients::select(['id', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
+                $patientInfo = Patients::select(['id', 'gender', 'patient_number', 'uuid', 'full_name', 'phone', 'birthday', 'updated_at','last_visit'])
                     ->whereDate('last_visit', Carbon::today())
                     ->where('full_name', 'LIKE', '%' . $request->full_name . '%')
                     ->with('latestPatientHistory')
