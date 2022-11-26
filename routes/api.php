@@ -62,7 +62,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index', [PatientsController::class, 'index'])->middleware('can:list patients')->name('index');
         Route::post('/show', [PatientsController::class, 'show'])->middleware('can:list patients')->name('show');
         Route::post('/store', [PatientsController::class, 'store'])->middleware('can:list patients')->name('store');
-        Route::post('/update/{id}', [PatientsController::class, 'update'])->middleware('can:list patients')->name('update');
+        Route::post('/update', [PatientsController::class, 'update'])->middleware('can:edit patient')->name('update');
         Route::post('/delete', [PatientsController::class, 'destroy'])->middleware('can:list patients')->name('destroy');
 //        Route::post('/search-by-full-name/{name}', [PatientsController::class, 'searchByFullName'])->name('searchByFullName');
 //        Route::post('/search-by-phone/{phone}', [PatientsController::class, 'searchByPhone'])->name('searchByPhone');
