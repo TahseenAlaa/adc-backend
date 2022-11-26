@@ -197,8 +197,7 @@ class PatientsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
         // Update patients data
         $updatePatient = Patients::where('uuid', '=', $request->patient_uuid)->update([
             'full_name'                   => $request->full_name,
