@@ -132,7 +132,7 @@ class DocumentsController extends Controller
 
         return response([
             'data' => Documents::where('doc_type', '=', 2)
-//                ->where('provider_id', '<>', null) // TODO temporary
+                ->where('provider_id', '<>', null)
                 ->with([
                     'user:id,full_name',
                     'updatedUser:id,full_name',
