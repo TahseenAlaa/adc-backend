@@ -16,11 +16,11 @@ class Treatment extends Model implements HasMedia
     protected $table = "esite_treatment";
 
     public function user() {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasOne(User::class, 'id', 'created_by')->withTrashed();
     }
 
     public function updatedUser() {
-        return $this->hasOne(User::class, 'id', 'updated_by');
+        return $this->hasOne(User::class, 'id', 'updated_by')->withTrashed();
     }
 
     public function drugs() {
@@ -28,10 +28,10 @@ class Treatment extends Model implements HasMedia
     }
 
     public function patient() {
-        return $this->belongsTo(Patients::class, 'patient_id', 'id');
+        return $this->belongsTo(Patients::class, 'patient_id', 'id')->withTrashed();
     }
 
     public function patient_history() {
-        return $this->belongsTo(PatientsHistory::class, 'patient_history_id', 'id');
+        return $this->belongsTo(PatientsHistory::class, 'patient_history_id', 'id')->withTrashed();
     }
 }

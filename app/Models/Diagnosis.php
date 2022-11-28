@@ -14,14 +14,14 @@ class Diagnosis extends Model
     protected $table = "esite_diagnosis";
 
     public function diagnosis() {
-        return $this->hasOne(DiagnosisTypesModel::class, 'id', 'diagnosis_id');
+        return $this->hasOne(DiagnosisTypesModel::class, 'id', 'diagnosis_id')->withTrashed();
     }
 
     public function user() {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasOne(User::class, 'id', 'created_by')->withTrashed();
     }
 
     public function updatedUser() {
-        return $this->hasOne(User::class, 'id', 'updated_by');
+        return $this->hasOne(User::class, 'id', 'updated_by')->withTrashed();
     }
 }

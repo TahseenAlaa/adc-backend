@@ -14,22 +14,22 @@ class MedicalLab extends Model
     protected $table = "esite_medical_lab";
 
     public function user() {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasOne(User::class, 'id', 'created_by')->withTrashed();
     }
 
     public function updatedUser() {
-        return $this->hasOne(User::class, 'id', 'updated_by');
+        return $this->hasOne(User::class, 'id', 'updated_by')->withTrashed();
     }
 
     public function samplingUser() {
-        return $this->hasOne(User::class, 'id', 'sampling_by');
+        return $this->hasOne(User::class, 'id', 'sampling_by')->withTrashed();
     }
 
     public function resultUser() {
-        return $this->hasOne(User::class, 'id', 'result_by');
+        return $this->hasOne(User::class, 'id', 'result_by')->withTrashed();
     }
 
     public function testGroups() {
-        return $this->hasOne(TestGroups::class, 'id', 'test_id');
+        return $this->hasOne(TestGroups::class, 'id', 'test_id')->withTrashed();
     }
 }

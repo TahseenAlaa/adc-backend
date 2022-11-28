@@ -14,15 +14,15 @@ class Documents extends Model
     protected $table = "esite_docs";
 
     public function user() {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasOne(User::class, 'id', 'created_by')->withTrashed();
     }
 
     public function updatedUser() {
-        return $this->hasOne(User::class, 'id', 'updated_by');
+        return $this->hasOne(User::class, 'id', 'updated_by')->withTrashed();
     }
 
     public function source() {
-        return $this->hasOne(Providers::class, 'id', 'provider_id');
+        return $this->hasOne(Providers::class, 'id', 'provider_id')->withTrashed();
     }
 
     public function destination() {

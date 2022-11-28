@@ -14,10 +14,10 @@ class DiagnosisTypesModel extends Model
     protected $table = "esite_diagnosis_types";
 
     public function user() {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasOne(User::class, 'id', 'created_by')->withTrashed();
     }
 
     public function updatedUser() {
-        return $this->hasOne(User::class, 'id', 'updated_by');
+        return $this->hasOne(User::class, 'id', 'updated_by')->withTrashed();
     }
 }

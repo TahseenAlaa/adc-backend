@@ -14,14 +14,14 @@ class Symptoms extends Model
     protected $table = "esite_symptoms";
 
     public function user() {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasOne(User::class, 'id', 'created_by')->withTrashed();
     }
 
     public function updatedUser() {
-        return $this->hasOne(User::class, 'id', 'updated_by');
+        return $this->hasOne(User::class, 'id', 'updated_by')->withTrashed();
     }
 
     public function symptom() {
-        return $this->hasOne(SymptomsTypes::class, 'id', 'symptoms_id');
+        return $this->hasOne(SymptomsTypes::class, 'id', 'symptoms_id')->withTrashed();
     }
 }
