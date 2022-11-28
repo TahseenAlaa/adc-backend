@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Documents;
 use App\Models\DocumentsItems;
+use App\Models\Drugs;
 use App\Models\Providers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -252,11 +253,42 @@ class DocumentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyInputDocument(Request $request)
     {
-        //
+        if ($request->id) {
+//             Delete Document
+            $getDocument = Documents::where('id', '=',$request->id)->first();
+            Documents::where('id', '=',$request->id)->delete();
+
+            // Delete Drugs related to this document
+            DocumentsItems::where('parent_doc', '=', $getDocument->id)->delete();
+
+            return $this->indexInventory();
+        }
+
+        return response([
+            'data' => 'Error'
+        ]);
+    }
+
+    public function destroyOutputDocument(Request $request)
+    {
+        if ($request->id) {
+            // Delete Document
+            $getDocument = Documents::where('id', '=',$request->id)->first();
+            Documents::where('id', '=',$request->id)->delete();
+
+            // Delete Drugs related to this document
+            DocumentsItems::where('parent_doc', '=', $getDocument->id)->delete();
+
+            return $this->indexOutputDocuments();
+        }
+
+        return response([
+            'data' => 'Error'
+        ]);
     }
 }

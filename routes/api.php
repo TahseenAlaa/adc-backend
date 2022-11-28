@@ -211,6 +211,8 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index-inventory', [DocumentsController::class, 'indexInventory'])->name('index-inventory');
         Route::get('/available-drugs', [DocumentsController::class, 'indexAvailableDrugs'])->name('available-drugs');
         Route::get('/output-document', [DocumentsController::class, 'indexOutputDocuments'])->name('output-documents');
+        Route::post('/delete-input-document', [DocumentsController::class, 'destroyInputDocument'])->name('delete');
+        Route::post('/delete-output-document', [DocumentsController::class, 'destroyOutputDocument'])->name('delete');
     });
     // END Documents
 
