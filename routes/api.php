@@ -21,6 +21,7 @@ use App\Http\Controllers\DrugsController;
 use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\DiagnosisTypesController;
 use App\Http\Controllers\CommitteeApprovalController;
+use App\Http\Controllers\HistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -223,5 +224,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/index', [CommitteeApprovalController::class, 'index'])->name('index');
     });
     // END Committee Approval
+
+    // START History
+    Route::prefix('/history')->name('history.')->middleware(['auth:sanctum'])->group(function () {
+        Route::post('/index', [HistoryController::class, 'index'])->name('index');
+    });
+    // END History
 });
 // END API v1
