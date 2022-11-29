@@ -232,6 +232,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/show-treatments', [HistoryController::class, 'showTreatments'])->name('show-treatments');
         Route::post('/show-tests', [HistoryController::class, 'showTests'])->name('show-tests');
         Route::post('/show-diagnosis', [HistoryController::class, 'showDiagnosis'])->name('show-diagnosis');
+        Route::post('/show-history', [HistoryController::class, 'showPatientHistory'])->name('show-history');
     });
     // END History
 });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diagnosis;
+use App\Models\MedicalLab;
 use App\Models\Patients;
 use App\Models\PatientsHistory;
 use App\Models\Symptoms;
@@ -58,10 +60,43 @@ class HistoryController extends Controller
 
     public function showTests(Request $request) {
         $patientHistoryId = $this->getPatientHistoryIdFromPatientHistoryUUID($request->patient_history_uuid);
+
+        $patientTestsList = MedicalLab::where('patient_history_id', '=', $patientHistoryId->id)
+            ->with([
+                'user:id,full_name',
+                'updatedUser:id,full_name',
+                'samplingUser:id,full_name',
+                'resultUser:id,full_name',
+                'testGroups'
+            ])
+            ->get();
+
+        return response([
+            'data' => $patientTestsList
+        ]);
     }
 
     public function showDiagnosis(Request $request) {
         $patientHistoryId = $this->getPatientHistoryIdFromPatientHistoryUUID($request->patient_history_uuid);
+
+        $diagnosisWithUser = Diagnosis::where('patient_history_id', '=', $patientHistoryId->id)
+            ->with([
+                'user:id,full_name',
+                'updatedUser:id,full_name',
+                'diagnosis:id,title'
+            ])
+            ->get();
+
+        return response([
+            'data' => $diagnosisWithUser,
+        ]);
+    }
+
+    public function showPatientHistory(Request $request) {
+        return response([
+            'data' => PatientsHistory::where('uuid', '=', $request->patient_history_uuid)->first()
+        ]);
+
     }
 
 }
