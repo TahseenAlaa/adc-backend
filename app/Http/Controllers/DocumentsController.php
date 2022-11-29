@@ -219,12 +219,27 @@ class DocumentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function showInputDocument(Request $request) {
+        $getDocumentInfo = Documents::where('id', '=', $request->doc_id)->with([
+            'items'
+        ])->first();
+
+        return response([
+            'data' => $getDocumentInfo
+        ]);
+    }
+
+    public function showOutputDocument(Request $request) {
+        $getDocumentInfo = Documents::where('id', '=', $request->doc_id)->with([
+            'items'
+        ])->first();
+
+        return response([
+            'data' => $getDocumentInfo
+        ]);
     }
 
     /**

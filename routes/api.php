@@ -213,6 +213,8 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::get('/output-document', [DocumentsController::class, 'indexOutputDocuments'])->name('output-documents');
         Route::post('/delete-input-document', [DocumentsController::class, 'destroyInputDocument'])->name('delete');
         Route::post('/delete-output-document', [DocumentsController::class, 'destroyOutputDocument'])->name('delete');
+        Route::post('/show-input-document', [DocumentsController::class, 'showInputDocument'])->name('show-input-document');
+        Route::post('/show-output-document', [DocumentsController::class, 'showOutputDocument'])->name('show-output-document');
     });
     // END Documents
 
