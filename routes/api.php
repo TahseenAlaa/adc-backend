@@ -228,6 +228,10 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START History
     Route::prefix('/history')->name('history.')->middleware(['auth:sanctum'])->group(function () {
         Route::post('/index', [HistoryController::class, 'index'])->name('index');
+        Route::post('/show-symptoms', [HistoryController::class, 'showSymptoms'])->name('show-symptoms');
+        Route::post('/show-treatments', [HistoryController::class, 'showTreatments'])->name('show-treatments');
+        Route::post('/show-tests', [HistoryController::class, 'showTests'])->name('show-tests');
+        Route::post('/show-diagnosis', [HistoryController::class, 'showDiagnosis'])->name('show-diagnosis');
     });
     // END History
 });
