@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Diagnosis;
+use App\Models\Documents;
+use App\Models\DocumentsItems;
 use App\Models\MedicalLab;
 use App\Models\Patients;
 use App\Models\PatientsHistory;
@@ -13,7 +15,7 @@ use Illuminate\Http\Request;
 class HistoryController extends Controller
 {
     public function getPatientHistoryIdFromPatientHistoryUUID($patient_history_uuid) {
-        return PatientsHistory::select('id')
+        return PatientsHistory::select(['id', 'patient_id'])
             ->where('uuid', '=', $patient_history_uuid)
             ->first();
     }
@@ -99,4 +101,17 @@ class HistoryController extends Controller
 
     }
 
+    public function showDrugsHistory(Request $request) {
+        $patientHistoryId = $this->getPatientHistoryIdFromPatientHistoryUUID($request->patient_history_uuid);
+
+        return response([
+            'data' => DocumentsItems::where('to_patient', '=', $patientHistoryId->patient_id)
+            ->with([
+                'user:id,full_name',
+                'updatedUser:id,full_name',
+                'drugs:id,title,drug_type'
+            ])
+            ->get()
+        ]);
+    }
 }

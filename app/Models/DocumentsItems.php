@@ -16,4 +16,12 @@ class DocumentsItems extends Model
     public function drugs() {
         return $this->hasOne(Drugs::class, 'id', 'drug_id')->withTrashed()->withTrashed();
     }
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'created_by')->withTrashed();
+    }
+
+    public function updatedUser() {
+        return $this->hasOne(User::class, 'id', 'updated_by')->withTrashed();
+    }
 }
