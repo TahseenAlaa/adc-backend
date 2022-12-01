@@ -183,7 +183,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // END User Permissions
 
     // START Antho
-    Route::prefix('/antho')->name('antho.')->middleware(['auth:sanctum', 'can:access antho department'])->group(function () {
+    Route::prefix('/antho')->name('antho.')->middleware(['auth:sanctum', 'can:access antho department', 'can:access doctor department'])->group(function () {
         Route::post('/show', [AnthoController::class, 'show'])->name('show');
     });
     // END Antho
