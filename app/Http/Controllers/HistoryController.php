@@ -17,6 +17,7 @@ class HistoryController extends Controller
     public function getPatientHistoryIdFromPatientHistoryUUID($patient_history_uuid) {
         return PatientsHistory::select(['id', 'patient_id'])
             ->where('uuid', '=', $patient_history_uuid)
+            ->orderBy('created_at', 'desc')
             ->first();
     }
 
