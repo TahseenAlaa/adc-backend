@@ -67,10 +67,7 @@ class LabTestGroupsController extends Controller
         $newTest = new TestGroups;
         $newTest->test_group          = $request->test_group;
         $newTest->test_name           = $request->test_name;
-        $newTest->min_range           = $request->min_range;
-        $newTest->max_range           = $request->max_range;
-        $newTest->measurement_unit    = $request->unit;
-        $newTest->gender              = $request->gender;
+        $newTest->value               = $request->value;
         $newTest->created_by          = auth('sanctum')->user()->id;
         $newTest->created_at          = Carbon::now();
         $newTest->save();
@@ -112,10 +109,7 @@ class LabTestGroupsController extends Controller
         TestGroups::where('id', '=', $request->id)->update([
             'test_group'          => $request->test_group,
             'test_name'           => $request->test_name,
-            'min_range'           => $request->min_range,
-            'max_range'           => $request->max_range,
-            'measurement_unit'    => $request->unit,
-            'gender'              => $request->gender,
+            'value'               => $request->value,
             'updated_by'          => auth('sanctum')->user()->id,
             'updated_at'          => Carbon::now(),
         ]);

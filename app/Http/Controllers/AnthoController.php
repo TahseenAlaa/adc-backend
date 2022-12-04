@@ -49,6 +49,7 @@ class AnthoController extends Controller
     {
         if ($request->patient_history_uuid) {
             $getPatientLatestVisitHistory = PatientsHistory::where('uuid', '=', $request->patient_history_uuid)->orderBy('id', 'desc')->latest()->first();
+            $getPatientInfo = Patients::select(['id', 'gender'])->where('id', '=', $getPatientLatestVisitHistory->patient_id)->first();
 
         } else if ($request->patient_uuid) {
             $getPatientInfo = Patients::where('uuid', '=', $request->patient_uuid)->first();
@@ -57,6 +58,7 @@ class AnthoController extends Controller
 
         return response([
             'patient_latest_history' => $getPatientLatestVisitHistory,
+            'patient_info'           => $getPatientInfo
         ]);
     }
 
