@@ -216,6 +216,8 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/delete-output-document', [DocumentsController::class, 'destroyOutputDocument'])->name('delete-output-document');
         Route::post('/show-input-document', [DocumentsController::class, 'showInputDocument'])->name('show-input-document');
         Route::post('/show-output-document', [DocumentsController::class, 'showOutputDocument'])->name('show-output-document');
+        Route::post('/show-document-with-details', [DocumentsController::class, 'showDocumentWithDetails'])->name('show-document-with-details');
+
     });
     // END Documents
 

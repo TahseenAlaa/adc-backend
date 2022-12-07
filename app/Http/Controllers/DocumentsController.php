@@ -306,4 +306,23 @@ class DocumentsController extends Controller
             'data' => 'Error'
         ]);
     }
+
+    public function showDocumentWithDetails(Request $request) {
+        $getInputDocumentInfo = Documents::where('id', '=', $request->doc_id)
+            ->with([
+                'source:id,title',
+                'destination:id,title',
+                'items.drugs',
+            ])
+            ->first();
+
+
+        return response([
+            'data'      => $getInputDocumentInfo,
+        ]);
+    }
+
+    public function showOutputDocumentWithDetails(Request $request) {
+        //
+    }
 }
