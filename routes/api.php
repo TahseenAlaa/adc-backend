@@ -238,5 +238,11 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
         Route::post('/show-drugs-history', [HistoryController::class, 'showDrugsHistory'])->name('show-drugs-history');
     });
     // END History
+
+    // START Sentry
+    Route::get('/debug-sentry', function () {
+        throw new Exception('My first Sentry error!');
+    });
+    // END Sentry
 });
 // END API v1
