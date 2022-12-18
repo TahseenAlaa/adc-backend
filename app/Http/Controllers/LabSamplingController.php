@@ -38,14 +38,12 @@ class LabSamplingController extends Controller
      */
     public function store(Request $request)
     {
-        foreach ($request->tests as $test) {
-            MedicalLab::where('id', '=', $test['id'])
+            MedicalLab::where('id', '=', $request->test_id)
                 ->update([
                     'sampling_status' => true,
                     'sampling_by'     => auth('sanctum')->user()->id,
                     'sampling_at'     => Carbon::now()
                 ]);
-        }
 
         return $this->show($request->patient_uuid);
     }
