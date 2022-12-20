@@ -26,7 +26,8 @@ class CommitteeApprovalController extends Controller
                 'patient_history:id,uuid',
                 'drugs:id,title',
                 'user:id,full_name',
-                'updatedUser:id,full_name'
+                'updatedUser:id,full_name',
+                'committee_approvals'
             ])
             ->get();
 

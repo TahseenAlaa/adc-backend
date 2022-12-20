@@ -34,4 +34,11 @@ class Treatment extends Model implements HasMedia
     public function patient_history() {
         return $this->belongsTo(PatientsHistory::class, 'patient_history_id', 'id')->withTrashed();
     }
+
+    public function committee_approvals() {
+        return $this->hasMany(CommitteeApprovals::class, 'treatment_id', 'id')->with([
+            'user:id,full_name',
+            'updatedUser:id,full_name',
+        ]);
+    }
 }
