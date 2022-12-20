@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('esite_committee_approvals', function (Blueprint $table) {
             $table->id();
+            $table->integer('treatment_id');
             $table->integer('status')->comment('1: Approved, 0: Rejected');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
