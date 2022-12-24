@@ -8,6 +8,7 @@ use App\Models\PatientsHistory;
 use App\Models\Treatment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommitteeApprovalController extends Controller
 {
@@ -21,10 +22,24 @@ class CommitteeApprovalController extends Controller
         // Fetch all drug need committee approval
         $committeeDrugsList = Drugs::select('id')->where('drug_type', '=', 1)->get();
 
+        // Fetch approvals count
+        $committeeApprovals = CommitteeApprovals::select('treatment_id', DB::raw('count(*) as approvals_count'))
+            ->groupBy('treatment_id')
+            ->get();
+
+        // Exclude treatment cases on approval equal to 3
+        $finishedCommitteeApprovals = [];
+
+        foreach ($committeeApprovals as $key => $element) {
+            if ($element->approvals_count >= 3) {
+                $finishedCommitteeApprovals[] = $element->treatment_id;
+            }
+        }
 
         // fetch all treatment contain drugs need approval and still pending
         $drugsListInTreatment = Treatment::whereIn('drug_id', $committeeDrugsList)
             ->where('status', '=', 0)
+            ->whereNotIn('id', $finishedCommitteeApprovals)
             ->with([
                 'patient:id,full_name,phone,last_visit,uuid',
                 'patient_history:id,uuid',
@@ -34,6 +49,7 @@ class CommitteeApprovalController extends Controller
                 'committee_approvals'
             ])
             ->get();
+
 
 
 
