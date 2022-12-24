@@ -27,6 +27,10 @@ class CommitteeApprovalController extends Controller
             ->groupBy('treatment_id')
             ->get();
 
+        // Fetch committee approved by the account holder
+        $committeeApprovalsByAccountHolder = CommitteeApprovals::select('treatment_id')
+            ->where('created_by', '=', auth('sanctum')->user()->id);
+
         // Exclude treatment cases on approval equal to 3
         $finishedCommitteeApprovals = [];
 
@@ -40,6 +44,7 @@ class CommitteeApprovalController extends Controller
         $drugsListInTreatment = Treatment::whereIn('drug_id', $committeeDrugsList)
             ->where('status', '=', 0)
             ->whereNotIn('id', $finishedCommitteeApprovals)
+            ->whereNotIn('id', $committeeApprovalsByAccountHolder)
             ->with([
                 'patient:id,full_name,phone,last_visit,uuid',
                 'patient_history:id,uuid',
