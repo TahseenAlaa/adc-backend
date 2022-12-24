@@ -81,6 +81,8 @@ class CommitteeApprovalController extends Controller
      */
     public function store(Request $request)
     {
+        $treatmentItemsList = [];
+
         foreach ($request->treatments as $item) {
             $newCommitteeApproval = new CommitteeApprovals;
             $newCommitteeApproval->treatment_Id = $item['id'];
@@ -88,10 +90,29 @@ class CommitteeApprovalController extends Controller
             $newCommitteeApproval->created_by = auth('sanctum')->user()->id;
             $newCommitteeApproval->created_at = Carbon::now();
             $newCommitteeApproval->save();
+
+            // Add Items to the treatment array
+            $treatmentItemsList[] = $item['id'];
+        }
+
+        // Fetch approvals count
+        $committeeApprovals = CommitteeApprovals::select('treatment_id', DB::raw('count(*) as approvals_count'))
+            ->whereIn('treatment_id', $treatmentItemsList)
+            ->where('status', '=', 1)
+            ->groupBy('treatment_id')
+            ->get();
+
+        foreach ($committeeApprovals as $item) {
+            if ($item->approvals_count >= 3) {
+                Treatment::where('id', '=', $item->treatment_id)
+                    ->update([
+                        'status' => 1
+                    ]);
+            }
         }
 
         return response([
-            'data' => 'Done Successfully!'
+            'data' => $committeeApprovals
         ]);
     }
 
