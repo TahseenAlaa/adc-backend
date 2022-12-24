@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Drugs;
+use App\Models\PatientsHistory;
 use App\Models\Treatment;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class CommitteeApprovalController extends Controller
         // Fetch all drug need committee approval
         $committeeDrugsList = Drugs::select('id')->where('drug_type', '=', 1)->get();
 
+
         // fetch all treatment contain drugs need approval and still pending
         $drugsListInTreatment = Treatment::whereIn('drug_id', $committeeDrugsList)
             ->where('status', '=', 0)
@@ -30,6 +32,8 @@ class CommitteeApprovalController extends Controller
                 'committee_approvals'
             ])
             ->get();
+
+
 
         return response([
             'data' => $drugsListInTreatment
