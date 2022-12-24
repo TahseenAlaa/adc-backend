@@ -98,7 +98,7 @@ class CommitteeApprovalController extends Controller
         // Fetch approvals count
         $committeeApprovals = CommitteeApprovals::select('treatment_id', DB::raw('count(*) as approvals_count'))
             ->whereIn('treatment_id', $treatmentItemsList)
-            ->where('status', '=', 1)
+            ->where('committee_status', '=', 1)
             ->groupBy('treatment_id')
             ->get();
 
