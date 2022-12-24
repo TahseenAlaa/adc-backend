@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CommitteeApprovals;
 use App\Models\Drugs;
 use App\Models\PatientsHistory;
 use App\Models\Treatment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CommitteeApprovalController extends Controller
@@ -58,7 +60,18 @@ class CommitteeApprovalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        foreach ($request->treatments as $item) {
+            $newCommitteeApproval = new CommitteeApprovals;
+            $newCommitteeApproval->treatment_Id = $item['id'];
+            $newCommitteeApproval->status = $request->status;
+            $newCommitteeApproval->created_by = auth('sanctum')->user()->id;
+            $newCommitteeApproval->created_at = Carbon::now();
+            $newCommitteeApproval->save();
+        }
+
+        return response([
+            'data' => 'Done Successfully!'
+        ]);
     }
 
     /**
