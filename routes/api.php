@@ -224,6 +224,7 @@ Route::prefix('/v1')->name('api.v1.')->group(function () {
     // START Committee Approval
     Route::prefix('/committee-approval')->name('committee-approval.')->middleware(['auth:sanctum', 'can:access committee approval'])->group(function () {
         Route::get('/index', [CommitteeApprovalController::class, 'index'])->name('index');
+        Route::post('/show', [CommitteeApprovalController::class, 'show'])->name('show');
     });
     // END Committee Approval
 

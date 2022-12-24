@@ -67,9 +67,27 @@ class CommitteeApprovalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        // Fetch all drug need committee approval
+        $committeeDrugsList = Drugs::select('id')->where('drug_type', '=', 1)->get();
+        $patientHistoryId = PatientsHistory::select('id')->where('uuid', '=', $request->patient_history_uuid)->first()->id;
+
+        $patientHistoryTreatment = Treatment::where('patient_history_id', '=', $patientHistoryId)
+            ->whereIn('drug_id', $committeeDrugsList)
+            ->with([
+                'patient:id,full_name,phone,last_visit,uuid',
+                'patient_history:id,uuid',
+                'drugs:id,title',
+                'user:id,full_name',
+                'updatedUser:id,full_name',
+                'committee_approvals'
+            ])
+            ->get();
+
+        return response([
+            'data' => $patientHistoryTreatment
+        ]);
     }
 
     /**
