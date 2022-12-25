@@ -42,6 +42,7 @@ class LabSamplingController extends Controller
                 ->update([
                     'sampling_status' => true,
                     'sampling_by'     => auth('sanctum')->user()->id,
+                    'sample_no'       => $request->sample_no,
                     'sampling_at'     => Carbon::now()
                 ]);
 
