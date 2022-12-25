@@ -23,14 +23,25 @@ class HistoryController extends Controller
 
     public function index(Request $request)
     {
-        $getPatientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+        if ($request->patient_history_uuid) {
+            $getPatientId = PatientsHistory::select('patient_id')->where('uuid', '=', $request->patient_history_uuid)->first();
 
-        return response([
-            'data' => PatientsHistory::select(['id', 'uuid', 'created_at'])
-                ->where('patient_id', '=', $getPatientId->id)
-                ->distinct()
-                ->get()
-        ]);
+            return response([
+                'data' => PatientsHistory::select(['id', 'uuid', 'created_at'])
+                    ->where('patient_id', '=', $getPatientId->patient_id)
+                    ->distinct()
+                    ->get()
+            ]);
+        } else {
+            $getPatientId = Patients::select('id')->where('uuid', '=', $request->patient_uuid)->first();
+
+            return response([
+                'data' => PatientsHistory::select(['id', 'uuid', 'created_at'])
+                    ->where('patient_id', '=', $getPatientId->id)
+                    ->distinct()
+                    ->get()
+            ]);
+        }
     }
 
     public function showSymptoms(Request $request) {
