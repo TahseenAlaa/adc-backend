@@ -20,7 +20,8 @@ class DashboardController extends Controller
 
 
         return response([
-            'patientsCountMonth'      => $patientsCountMonth
+            'patientsCountMonth'      => $patientsCountMonth,
+            'totalDrugsCount'         => app('App\Http\Controllers\PharmacyController')->index()
         ], 200);
     }
 }
